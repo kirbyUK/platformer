@@ -32,7 +32,7 @@ Player::Player()
 	file.close();
 }
 
-bool checkCollision(sf::Sprite& s) const
+bool Player::checkCollision(sf::Sprite& s) const
 {
 	return _sprite.getGlobalBounds().intersects(s.getGlobalBounds());
 }
