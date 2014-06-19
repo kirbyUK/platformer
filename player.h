@@ -17,8 +17,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <SFML/Graphics.hpp>
+#include "constants.h"
 
-const int SPRITES = 5;
+const int SPRITES = 1;
 
 class Player
 {
@@ -31,7 +32,7 @@ class Player
 		Direction _facing;
 
 		unsigned int _score;
-		unsigned int _highScore;
+		unsigned int _highscore;
 
 	public:
 		//Load the sprites:

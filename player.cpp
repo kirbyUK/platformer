@@ -19,20 +19,56 @@
 
 const char* HIGHSCORE_FILE = "highscore";
 
-static sf::Image Player::_images[SPRITES];
+//sf::Image Player::_images[SPRITES];
+
+bool Player::init()
+{
+	//stuff
+	return true;
+}
 
 Player::Player()
 {
 	//Set the initial position:
-	_sprite.setPosition(x, y);
+	_sprite.setPosition(0, 0);
 
 	//Get the previous highscore:
 	std::ifstream file(HIGHSCORE_FILE);
-	_highscore >> file;
+	file >> _highscore;
 	file.close();
+
+	//Initalise everything else:
+	_score = 0;
+	_isJumping = false;
+	_facing = RIGHT;
 }
 
 bool Player::checkCollision(sf::Sprite& s) const
 {
 	return _sprite.getGlobalBounds().intersects(s.getGlobalBounds());
+}
+
+void jump()
+{
+	//stuff
+}
+
+void move(Direction d)
+{
+	//stuff
+}
+
+sf::Sprite& Player::getSprite()
+{
+	return _sprite;
+}
+
+unsigned int Player::getScore()
+{
+	return _score;
+}
+
+unsigned int Player::getHighScore()
+{
+	return _highscore;
 }
