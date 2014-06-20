@@ -6,8 +6,11 @@ BIN=platformer
 
 all: $(BIN)
 
-$(BIN): player.o
-	$(CC) $(LIBS) player.o -o $(BIN)
+$(BIN): main.o player.o
+	$(CC) $(LIBS) main.o player.o -o $(BIN)
+
+main.o: main.cpp
+	$(CC) $(FLAGS) main.cpp
 
 player.o: player.cpp player.h
 	$(CC) $(FLAGS) player.cpp 

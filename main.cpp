@@ -16,12 +16,14 @@
 */
 #include <SFML/Graphics.hpp>
 
+const sf::Color PURPLE(182, 48, 227);
+
 int main()
 {
-	sf::Window window(sf:VideoMode(600, 400), "Platformer");
+	sf::RenderWindow window(sf::VideoMode(600, 400), "Platformer");
 	sf::Event event;
 	sf::Clock fps;
-	float frameTime = 0.016;
+//	float frameTime = 0.016;
 
 	while(window.isOpen())
 	{
@@ -33,5 +35,8 @@ int main()
 				window.close();
 			}
 		}
+		window.clear(PURPLE);
+		window.display();
 	}
+	return 0;
 }
