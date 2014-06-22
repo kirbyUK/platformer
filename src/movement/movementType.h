@@ -14,36 +14,14 @@
 * You should have received a copy of the GNU General Purpose License
 * along with 'platformer'. If not, see <http://www.gnu.org/licenses/>.
 */
-#include <SFML/Graphics.hpp>
-#include "block.h"
-#include "staticBlock.h"
+#ifndef MOVEMENT_TYPE_H
+#define MOVEMENT_TYPE_H
 
-const sf::Color PURPLE(182, 48, 227);
-
-int main()
+class MovementType
 {
-	sf::RenderWindow window(sf::VideoMode(600, 400), "Platformer");
-	sf::Event event;
-	sf::Clock fps;
-//	float frameTime = 0.016;
+	public:
+		virtual ~MovementType() { }
+		virtual void handleEvents(float) = 0;
+};
 
-	StaticBlock b1(100, 250, 0, (400 - 250));
-	StaticBlock b2(100, 250, (600 - 100), (400 - 250));
-
-	while(window.isOpen())
-	{
-		while(window.pollEvent(event))
-		{
-			if(event.type == sf::Event::Closed)
-			{
-				//write highscore to file if needed
-				window.close();
-			}
-		}
-		window.clear(PURPLE);
-		window.draw(b1.getShape());
-		window.draw(b2.getShape());
-		window.display();
-	}
-	return 0;
-}
+#endif

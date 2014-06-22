@@ -17,7 +17,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <SFML/Graphics.hpp>
-#include "constants.h"
+#include "../constants.h"
 
 const int SPRITES = 1;
 

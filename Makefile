@@ -2,25 +2,49 @@ CC=g++
 FLAGS=-Wall -c
 LIBS=-lsfml-graphics -lsfml-window -lsfml-system
 DESTDIR=/usr/local
+SRC=src
+PDIR=$(SRC)/player
+BDIR=$(SRC)/block
+MDIR=$(SRC)/movement
 BIN=platformer
 
 all: $(BIN)
 
-$(BIN): main.o player.o block.o staticBlock.o
-	$(CC) $(LIBS) main.o player.o block.o staticBlock.o \
-				  -o $(BIN)
+#$(BIN): main.o player.o block.o staticBlock.o dynamicBlock.o movementType.o
+#	$(CC) $(LIBS) 	main.o player.o block.o staticBlock.o dynamicBlock.o 
+#					movementType.o \
+#					-o $(BIN)
+$(BIN): main.o player.o block.o staticBlock.o dynamicBlock.o
+	$(CC) $(LIBS) 	main.o player.o block.o staticBlock.o dynamicBlock.o \
+					-o $(BIN)
 
-main.o: main.cpp
-	$(CC) $(FLAGS) main.cpp
+# ./src/ -------------------------------------
 
-player.o: player.cpp player.h
-	$(CC) $(FLAGS) player.cpp 
+main.o: $(SRC)/main.cpp
+	$(CC) $(FLAGS) $(SRC)/main.cpp
 
-block.o: block.cpp block.h
-	$(CC) $(FLAGS) block.cpp
+# ./src/player/ ------------------------------
 
-staticBlock.o: staticBlock.cpp staticBlock.h
-	$(CC) $(FLAGS) staticBlock.cpp
+player.o: $(PDIR)/player.cpp $(PDIR)/player.h
+	$(CC) $(FLAGS) $(PDIR)/player.cpp 
+
+# ./src/block/ -------------------------------
+
+block.o: $(BDIR)/block.cpp $(BDIR)/block.h
+	$(CC) $(FLAGS) $(BDIR)/block.cpp
+
+staticBlock.o: $(BDIR)/staticBlock.cpp $(BDIR)/staticBlock.h
+	$(CC) $(FLAGS) $(BDIR)/staticBlock.cpp
+
+dynamicBlock.o: $(BDIR)/dynamicBlock.cpp $(BDIR)/dynamicBlock.h
+	$(CC) $(FLAGS) $(BDIR)/dynamicBlock.cpp
+
+# ./src/movement -----------------------------
+
+#movementType.o: $(MDIR)/movementType.cpp $(MDIR)/movementType.h
+#	$(CC) $(FLAGS) $(MDIR)/movementType.cpp
+
+# --------------------------------------------
 
 deinstall: uninstall
 uninstall:
