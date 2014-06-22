@@ -15,20 +15,56 @@
 * along with 'platformer'. If not, see <http://www.gnu.org/licenses/>.
 */
 #include "player.h"
+#include <iostream>
 #include <fstream>
 
-const char* HIGHSCORE_FILE = "highscore";
+//The total number of images:
+//const short int Player::SPRITES = 1;
 
-//sf::Image Player::_images[SPRITES];
+//there'll be an enum here to give each image a useful name
 
+//The filepaths to the images, with backticks for Windows:
+#ifdef _WIN32
+	const std::string Player::SPRITE_PATHS[SPRITES] = 
+	{
+		"assets\sprites\placeholder.png",
+	};
+#else
+	const std::string Player::SPRITE_PATHS[SPRITES] = 
+	{
+		"assets/sprites/placeholder.png",
+	};
+#endif
+
+//The colour to remove in the images and replace with transparency:
+const sf::Color Player::COLOUR_MASK(0, 0, 255);
+
+//The array storing all the images once they've been loaded:
+sf::Image Player::_sprites[Player::SPRITES];
+
+//The file path of the file containing the player's highscore:
+const char* Player::HIGHSCORE_FILE = "highscore";
+
+//Attempts to load up all the images, must be called before the constructor:
 bool Player::init()
 {
-	//stuff
+	for(short int i = 0; i < SPRITES; i++)
+	{
+		if(! _sprites[i].loadFromFile(SPRITE_PATHS[i]))
+		{
+			std::cerr << "Unable to load '" << SPRITE_PATHS[i] << "'.\n";
+			return false;
+		}
+		else
+			//If it loads fine, remove the green background:
+			_sprites[i].createMaskFromColor(COLOUR_MASK);
+	}
 	return true;
 }
 
 Player::Player()
-{
+{	
+
 	//Set the initial position:
 	_sprite.setPosition(0, 0);
 

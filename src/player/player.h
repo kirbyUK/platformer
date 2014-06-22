@@ -17,25 +17,34 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <SFML/Graphics.hpp>
+#include <string>
 #include "../constants.h"
-
-const int SPRITES = 1;
 
 class Player
 {
 	private:
+		//Static members relating to the loading of the image files for use
+		//as textures for the sprite:
+		static const short int SPRITES = 1;
+		static const std::string SPRITE_PATHS[SPRITES];
+		static const sf::Color COLOUR_MASK;
 		static sf::Image _sprites[SPRITES];
+
+		//The texture and the sprite:
 		sf::Texture _texture;
 		sf::Sprite _sprite;
 
+		//Movement related variables:
 		bool _isJumping;
 		Direction _facing;
 
+		//Score related variables:
+		static const char* HIGHSCORE_FILE;
 		unsigned int _score;
 		unsigned int _highscore;
 
 	public:
-		//Load the sprites:
+		//Load the images:
 		static bool init();
 
 		//Constructor:
