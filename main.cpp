@@ -15,6 +15,8 @@
 * along with 'platformer'. If not, see <http://www.gnu.org/licenses/>.
 */
 #include <SFML/Graphics.hpp>
+#include "block.h"
+#include "staticBlock.h"
 
 const sf::Color PURPLE(182, 48, 227);
 
@@ -24,6 +26,9 @@ int main()
 	sf::Event event;
 	sf::Clock fps;
 //	float frameTime = 0.016;
+
+	StaticBlock b1(100, 250, 0, (400 - 250));
+	StaticBlock b2(100, 250, (600 - 100), (400 - 250));
 
 	while(window.isOpen())
 	{
@@ -36,6 +41,8 @@ int main()
 			}
 		}
 		window.clear(PURPLE);
+		window.draw(b1.getShape());
+		window.draw(b2.getShape());
 		window.display();
 	}
 	return 0;

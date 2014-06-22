@@ -25,9 +25,6 @@ class StaticBlock : public Block
 		StaticBlock(float, float, float, float);
 
 		void handleEvents(float) { }
-
-		//Checks if the player is standing directly on top of the block:
-		bool isPlayerOnTop(sf::Sprite&);
 };
 
 #endif

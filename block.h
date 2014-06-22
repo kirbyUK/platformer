@@ -25,6 +25,10 @@ class Block
 		static const sf::Color BLOCK_COLOUR; 
 	public:
 		virtual void handleEvents(float) = 0;
+
+		//Checks if the player is standing directly on top of the block:
+		bool isPlayerOnTop(sf::Sprite&) const;
+
 		sf::RectangleShape getShape() const;
 };
 
