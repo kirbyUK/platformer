@@ -69,7 +69,7 @@ Player::Player()
 	_sprite.setTexture(_texture);
 
 	//Set the initial position:
-	_sprite.setPosition(0, 0);
+	_sprite.setPosition(37.5, 125);
 
 	//Get the previous highscore:
 	std::ifstream file(HIGHSCORE_FILE);
