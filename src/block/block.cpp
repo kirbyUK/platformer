@@ -30,7 +30,7 @@ bool Block::isPlayerOnTop(sf::Sprite& p) const
 	float playerHeight = p.getGlobalBounds().height + 1.0;
 	float boxWidth = _shape.getSize().x;
 	float x = _shape.getPosition().x;
-	float y = _shape.getPosition().y + playerHeight;
+	float y = _shape.getPosition().y - playerHeight;
 	sf::FloatRect r(x, y, boxWidth, playerHeight);
 
 	//Check if the top of the player is within this box:
