@@ -27,7 +27,7 @@
 #ifdef _WIN32
 	const std::string Player::SPRITE_PATHS[SPRITES] = 
 	{
-		"assets\sprites\placeholder.png",
+		"assets\\sprites\\placeholder.png",
 	};
 #else
 	const std::string Player::SPRITE_PATHS[SPRITES] = 
@@ -37,7 +37,7 @@
 #endif
 
 //The colour to remove in the images and replace with transparency:
-const sf::Color Player::COLOUR_MASK(0, 0, 255);
+const sf::Color Player::COLOUR_MASK(0, 255, 0);
 
 //The array storing all the images once they've been loaded:
 sf::Image Player::_sprites[Player::SPRITES];
@@ -64,6 +64,9 @@ bool Player::init()
 
 Player::Player()
 {	
+	//Load the texture from the image:
+	_texture.loadFromImage(_sprites[0]);
+	_sprite.setTexture(_texture);
 
 	//Set the initial position:
 	_sprite.setPosition(0, 0);
