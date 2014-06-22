@@ -14,18 +14,20 @@
 * You should have received a copy of the GNU General Purpose License
 * along with 'platformer'. If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef BLOCK_H
-#define BLOCK_H
-#include <SFML/Graphics.hpp>
+#ifndef STATIC_BLOCK_H
+#define STATIC_BLOCK_H
+#include "block.h"
 
-class Block
+class StaticBlock : public Block
 {
-	protected:
-		sf::RectangleShape _shape;
-		static const sf::Color BLOCK_COLOUR; 
 	public:
-		virtual void handleEvents(float) = 0;
-		sf::RectangleShape getShape() const;
+		//Constructor, takes the width, height and x/y co-ordinates:
+		StaticBlock(float, float, float, float);
+
+		void handleEvents(float) { }
+
+		//Checks if the player is standing directly on top of the block:
+		bool isPlayerOnTop(sf::Sprite&);
 };
 
 #endif
