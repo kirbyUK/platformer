@@ -29,7 +29,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(600, 400), "Platformer");
 	sf::Event event;
 	sf::Clock fps;
-//	float frameTime = 0.016;
+	float frameTime = 0.016;
 
 	Player p;
 
@@ -46,11 +46,23 @@ int main()
 				window.close();
 			}
 		}
+
+		//Handle keypresses:
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			p.move(LEFT);
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			p.move(RIGHT);
+
+		p.handleMovement(frameTime);
+
 		window.clear(PURPLE);
 		window.draw(b1.getShape());
 		window.draw(b2.getShape());
 		window.draw(p.getSprite());
 		window.display();
+
+		//Get the time of that frame:
+		frameTime = fps.restart().asSeconds();
 	}
 	return 0;
 }

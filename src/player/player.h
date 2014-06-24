@@ -34,9 +34,19 @@ class Player
 		sf::Texture _texture;
 		sf::Sprite _sprite;
 
-		//Movement related variables:
+		//The maximum height in pixels the character can go up before they
+		//start to fall back to the ground:
+		static const float MAX_JUMP_HEIGHT;
 		bool _isJumping;
+
 		Direction _facing;
+
+		//The direction vector, which can hold 1 or -1 in both the X and Y
+		//directions to represent the direction being travelled in. The
+		//magnitude is determined by the VELOCITY constants:
+		sf::Vector2i _directionVector;
+		static const float X_VELOCITY;
+		static const float Y_VELOCITY;
 
 		//Score related variables:
 		static const char* HIGHSCORE_FILE;

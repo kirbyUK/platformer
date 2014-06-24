@@ -18,9 +18,6 @@
 #include <iostream>
 #include <fstream>
 
-//The total number of images:
-//const short int Player::SPRITES = 1;
-
 //there'll be an enum here to give each image a useful name
 
 //The filepaths to the images, with backticks for Windows:
@@ -40,10 +37,15 @@
 const sf::Color Player::COLOUR_MASK(0, 255, 0);
 
 //The array storing all the images once they've been loaded:
-sf::Image Player::_sprites[Player::SPRITES];
+sf::Image Player::_sprites[SPRITES];
 
 //The file path of the file containing the player's highscore:
 const char* Player::HIGHSCORE_FILE = "highscore";
+
+//How many pixels the character will move after a second of constant motion in
+//that direction:
+const float Player::X_VELOCITY = 100.0;
+const float Player::Y_VELOCITY = 100.0;
 
 //Attempts to load up all the images, must be called before the constructor:
 bool Player::init()
@@ -80,6 +82,8 @@ Player::Player()
 	_score = 0;
 	_isJumping = false;
 	_facing = RIGHT;
+	_directionVector.x = 0;
+	_directionVector.y = 0;
 }
 
 bool Player::checkCollision(sf::Sprite& s) const
@@ -92,9 +96,41 @@ void jump()
 	//stuff
 }
 
-void move(Direction d)
+void Player::move(Direction d)
 {
-	//stuff
+	//Adjust the position vector:
+	switch(d)
+	{
+		case LEFT:  if(_directionVector.x > -1) _directionVector.x--; break;
+		case RIGHT: if(_directionVector.y < 1)  _directionVector.x++; break;
+	}
+}
+
+//Moves the player based on the values in the direction vector. This should be
+//called last, after everything involving collisions and all that has been done:
+void Player::handleMovement(float frameTime)
+{
+	_sprite.move
+	(
+		(_directionVector.x * (X_VELOCITY * frameTime)), //x
+		(_directionVector.y * (Y_VELOCITY * frameTime))  //y
+	);
+
+	//Flip the character if required:
+	if(_facing != _directionVector.x)
+	{
+		//Do the flip:
+		sf::IntRect rect = _sprite.getTextureRect();
+		rect.left += rect.width;
+		rect.width = -rect.width;
+		_sprite.setTextureRect(rect);
+
+		_facing = static_cast <Direction>(_directionVector.x);
+	}
+
+	//Reset the vector:
+	_directionVector.x = 0;
+	_directionVector.y = 0;
 }
 
 sf::Sprite& Player::getSprite()
