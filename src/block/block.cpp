@@ -18,11 +18,6 @@
 
 const sf::Color Block::BLOCK_COLOUR = sf::Color(242, 241, 235);
 
-sf::RectangleShape Block::getShape() const
-{
-	return _shape;
-}
-
 //Checks if the player is standing on top of the block:
 bool Block::isPlayerOnTop(sf::Sprite& p) const
 {
@@ -35,4 +30,9 @@ bool Block::isPlayerOnTop(sf::Sprite& p) const
 
 	//Check if the top of the player is within this box:
 	return r.contains(p.getPosition());
+}
+
+sf::RectangleShape Block::getShape() const
+{
+	return _shape;
 }

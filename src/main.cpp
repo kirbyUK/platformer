@@ -36,6 +36,9 @@ int main()
 	StaticBlock b1(100, 250, 0, (400 - 250));
 	StaticBlock b2(100, 250, (600 - 100), (400 - 250));
 
+	//This one is just for testing:
+	StaticBlock b3(100, 100, 250, 100);
+
 	while(window.isOpen())
 	{
 		while(window.pollEvent(event))
@@ -53,11 +56,15 @@ int main()
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			p.move(RIGHT);
 
+		p.handleCollision(b1.getShape(), frameTime);
+		p.handleCollision(b2.getShape(), frameTime);
+		p.handleCollision(b3.getShape(), frameTime);
 		p.handleMovement(frameTime);
 
 		window.clear(PURPLE);
 		window.draw(b1.getShape());
 		window.draw(b2.getShape());
+		window.draw(b3.getShape());
 		window.draw(p.getSprite());
 		window.display();
 

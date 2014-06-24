@@ -37,6 +37,7 @@ class Player
 		//The maximum height in pixels the character can go up before they
 		//start to fall back to the ground:
 		static const float MAX_JUMP_HEIGHT;
+		float _jumpDistanceCovered;
 		bool _isJumping;
 
 		Direction _facing;
@@ -44,7 +45,7 @@ class Player
 		//The direction vector, which can hold 1 or -1 in both the X and Y
 		//directions to represent the direction being travelled in. The
 		//magnitude is determined by the VELOCITY constants:
-		sf::Vector2i _directionVector;
+		sf::Vector2i _direction;
 		static const float X_VELOCITY;
 		static const float Y_VELOCITY;
 
@@ -60,9 +61,6 @@ class Player
 		//Constructor:
 		Player();
 
-		//Check for a collision between the player and the given sprite:
-		bool checkCollision(sf::Sprite&) const;
-
 		//Signal the player to jump:
 		void jump();
 
@@ -70,13 +68,14 @@ class Player
 		void move(Direction);
 
 		//Process events at the end of the frame:
+		bool handleCollision(sf::RectangleShape, float);
 		void handleMovement(float);
 		void handleAnimation(float);
 
 		//Getters:
 		sf::Sprite& getSprite();
-		unsigned int getScore();
-		unsigned int getHighScore();
+		unsigned int getScore() const;
+		unsigned int getHighScore() const;
 };
 
 #endif
