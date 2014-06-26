@@ -69,6 +69,7 @@ class Player
 
 		//Process events at the end of the frame:
 		bool handleCollision(sf::RectangleShape, float);
+		void handleCollision(sf::Window*, float);
 		void handleMovement(float);
 		void handleAnimation(float);
 

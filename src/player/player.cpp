@@ -141,6 +141,25 @@ bool Player::handleCollision(sf::RectangleShape s, float frameTime)
 		return false;
 }
 
+//Checks if the proposed movement will cause the character to go offscreen:
+void Player::handleCollision(sf::Window* window, float frameTime)
+{
+	//Create a new Rect representing the player after the proposed movement:
+	sf::FloatRect r
+	(
+		(_sprite.getGlobalBounds().left + (_direction.x * (frameTime * X_VELOCITY))),
+		(_sprite.getGlobalBounds().top + (_direction.y * (frameTime * Y_VELOCITY))),
+		_sprite.getGlobalBounds().width,
+		_sprite.getGlobalBounds().height
+	);
+
+	//Check if any of the points are outside the screen:
+	if((r.left < 0) || ((r.left + r.width) > window->getSize().x))
+		_direction.x = 0;
+	if((r.top < 0) || ((r.top + r.height) > window->getSize().y))
+		_direction.y = 0;
+}
+
 //Moves the player based on the values in the direction vector. This should be
 //called last, after everything involving collisions and all that has been done:
 void Player::handleMovement(float frameTime)

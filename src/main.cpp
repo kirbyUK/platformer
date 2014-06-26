@@ -59,6 +59,7 @@ int main()
 		p.handleCollision(b1.getShape(), frameTime);
 		p.handleCollision(b2.getShape(), frameTime);
 		p.handleCollision(b3.getShape(), frameTime);
+		p.handleCollision(&window, frameTime);
 		p.handleMovement(frameTime);
 
 		window.clear(PURPLE);
