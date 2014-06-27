@@ -44,11 +44,11 @@ const char* Player::HIGHSCORE_FILE = "highscore";
 
 //How many pixels the character will move after a second of constant motion in
 //that direction:
-const float Player::X_VELOCITY = 100.0;
-const float Player::Y_VELOCITY = 100.0;
+const float Player::X_VELOCITY = 180.0;
+const float Player::Y_VELOCITY = 220.0;
 
 //The maximum jump height in pixels:
-const float Player::MAX_JUMP_HEIGHT = 100.0;
+const float Player::MAX_JUMP_HEIGHT = 70.0;
 
 //Attempts to load up all the images, must be called before the constructor:
 bool Player::init()
