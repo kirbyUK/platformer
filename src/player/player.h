@@ -39,6 +39,8 @@ class Player
 		static const float MAX_JUMP_HEIGHT;
 		float _jumpDistanceCovered;
 		bool _isJumping;
+		bool _canJump;
+//		bool _isFalling;
 
 		Direction _facing;
 

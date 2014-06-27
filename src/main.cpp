@@ -55,6 +55,8 @@ int main()
 			p.move(LEFT);
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			p.move(RIGHT);
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			p.jump();
 
 		p.handleCollision(b1.getShape(), frameTime);
 		p.handleCollision(b2.getShape(), frameTime);

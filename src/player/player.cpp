@@ -84,15 +84,20 @@ Player::Player()
 	//Initalise everything else:
 	_score = 0;
 	_isJumping = false;
+	_canJump = true;
 	_jumpDistanceCovered = 0;
 	_facing = RIGHT;
 	_direction.x = 0;
-	_direction.y = 0;
+	_direction.y = 1;
 }
 
-void jump()
+void Player::jump()
 {
-	//stuff
+	if(_canJump)
+	{
+		_isJumping = true;
+		_canJump = false;
+	}
 }
 
 void Player::move(Direction d)
@@ -101,7 +106,7 @@ void Player::move(Direction d)
 	switch(d)
 	{
 		case LEFT:  if(_direction.x > -1) _direction.x--; break;
-		case RIGHT: if(_direction.y < 1)  _direction.x++; break;
+		case RIGHT: if(_direction.x < 1)  _direction.x++; break;
 	}
 }
 
@@ -170,6 +175,24 @@ void Player::handleMovement(float frameTime)
 		(_direction.y * (Y_VELOCITY * frameTime))  //y
 	);
 
+	//If the player is jumping, add the distance jumped to the total distance
+	//jumped so we know when to end the jump and start the player's descent:
+	if(_isJumping)
+	{
+		_jumpDistanceCovered += (Y_VELOCITY * frameTime);
+		if(_jumpDistanceCovered >= MAX_JUMP_HEIGHT)
+		{
+			_isJumping = false;
+			_jumpDistanceCovered = 0;
+		}
+	}
+
+	//Check if we collided with a platform this frame and allow jumping if so:
+	if(_direction.y == 0)
+		_canJump = true;
+	else
+		_canJump = false;
+
 	//Flip the character if required:
 	if(_facing != _direction.x)
 	{
@@ -184,7 +207,10 @@ void Player::handleMovement(float frameTime)
 
 	//Reset the vector:
 	_direction.x = 0;
-	_direction.y = 0;
+	if(_isJumping)
+		_direction.y = -1;
+	else
+		_direction.y = 1;
 }
 
 sf::Sprite& Player::getSprite()
