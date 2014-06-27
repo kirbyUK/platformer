@@ -1,11 +1,12 @@
 CC=g++
 FLAGS=-Wall -c
-LIBS=-lsfml-graphics -lsfml-window -lsfml-system
+LIBS=-lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 DESTDIR=/usr/local
 SRC=src
 PDIR=$(SRC)/player
 BDIR=$(SRC)/block
 MDIR=$(SRC)/movement
+SDIR=$(SRC)/sound
 BIN=platformer
 
 all: $(BIN)
@@ -14,8 +15,9 @@ all: $(BIN)
 #	$(CC) $(LIBS) 	main.o player.o block.o staticBlock.o dynamicBlock.o 
 #					movementType.o \
 #					-o $(BIN)
-$(BIN): main.o player.o block.o staticBlock.o dynamicBlock.o
+$(BIN): main.o player.o block.o staticBlock.o dynamicBlock.o sfx.o
 	$(CC) $(LIBS) 	main.o player.o block.o staticBlock.o dynamicBlock.o \
+					sfx.o \
 					-o $(BIN)
 
 # ./src/ -------------------------------------
@@ -43,6 +45,11 @@ dynamicBlock.o: $(BDIR)/dynamicBlock.cpp $(BDIR)/dynamicBlock.h
 
 #movementType.o: $(MDIR)/movementType.cpp $(MDIR)/movementType.h
 #	$(CC) $(FLAGS) $(MDIR)/movementType.cpp
+
+# ./src/sound --------------------------------
+
+sfx.o: $(SDIR)/sfx.cpp $(SDIR)/sfx.h
+	$(CC) $(FLAGS) $(SDIR)/sfx.cpp
 
 # --------------------------------------------
 
