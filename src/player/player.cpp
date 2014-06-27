@@ -97,6 +97,7 @@ void Player::jump()
 	{
 		_isJumping = true;
 		_canJump = false;
+		_sfx.play(JUMP);
 	}
 }
 

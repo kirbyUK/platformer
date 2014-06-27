@@ -19,6 +19,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "../constants.h"
+#include "../sound/sfx.h"
 
 class Player
 {
@@ -55,6 +56,9 @@ class Player
 		static const char* HIGHSCORE_FILE;
 		unsigned int _score;
 		unsigned int _highscore;
+
+		//Sound effects:
+		SoundEffect _sfx;
 
 	public:
 		//Load the images:

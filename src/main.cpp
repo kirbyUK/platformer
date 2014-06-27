@@ -36,7 +36,6 @@ int main()
 	float frameTime = 0.016;
 
 	Player p;
-	SoundEffect sfx;
 
 	StaticBlock b1(100, 250, 0, (400 - 250));
 	StaticBlock b2(100, 250, (600 - 100), (400 - 250));
@@ -61,10 +60,7 @@ int main()
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			p.move(RIGHT);
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		{
 			p.jump();
-			sfx.play(JUMP);
-		}
 
 		p.handleCollision(b1.getShape(), frameTime);
 		p.handleCollision(b2.getShape(), frameTime);
