@@ -194,15 +194,18 @@ void Player::handleMovement(float frameTime)
 		_canJump = false;
 
 	//Flip the character if required:
-	if(_facing != _direction.x)
+	if(_direction.x != 0)
 	{
-		//Do the flip:
-		sf::IntRect rect = _sprite.getTextureRect();
-		rect.left += rect.width;
-		rect.width = -rect.width;
-		_sprite.setTextureRect(rect);
+		if(static_cast <int>(_facing) != _direction.x)
+		{
+			//Do the flip:
+			sf::IntRect rect = _sprite.getTextureRect();
+			rect.left += rect.width;
+			rect.width = -rect.width;
+			_sprite.setTextureRect(rect);
 
-		_facing = static_cast <Direction>(_direction.x);
+			_facing = static_cast <Direction>(_direction.x);
+		}
 	}
 
 	//Reset the vector:
