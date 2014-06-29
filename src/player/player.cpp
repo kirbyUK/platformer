@@ -217,6 +217,12 @@ void Player::handleMovement(float frameTime)
 		_direction.y = 1;
 }
 
+void Player::addPoint()
+{
+	_score++;
+	_sfx.play(POINT);
+}
+
 sf::Sprite& Player::getSprite()
 {
 	return _sprite;

@@ -44,6 +44,8 @@ int main()
 
 	StaticBlock b1(100, 250, 0, (400 - 250));
 	StaticBlock b2(100, 250, (600 - 100), (400 - 250));
+	StaticBlock* targets[2] = { &b1, &b2 };
+	StaticBlock* target = targets[1];
 
 	//This one is just for testing:
 	StaticBlock b3(200, 100, 200, 150);
@@ -67,11 +69,22 @@ int main()
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			p.jump();
 
-		p.handleCollision(b1.getShape(), frameTime);
-		p.handleCollision(b2.getShape(), frameTime);
+		//Handle the player's movement:
+		for(int i = 0; i < 2; i++)
+			p.handleCollision(targets[i]->getShape(), frameTime);
 		p.handleCollision(b3.getShape(), frameTime);
 		p.handleCollision(&window, frameTime);
 		p.handleMovement(frameTime);
+
+		//Check if the player has reached the target block:
+		if(target->isPlayerOnTop(p.getSprite()))
+		{
+			p.addPoint();
+			if(target == targets[0])
+				target++;
+			else
+				target--;
+		}
 
 		window.clear(PURPLE);
 		window.draw(interface.getText(SCORE, p.getScore()));

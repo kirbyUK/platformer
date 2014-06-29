@@ -79,6 +79,9 @@ class Player
 		void handleMovement(float);
 		void handleAnimation(float);
 
+		//Give the player a point:
+		void addPoint();
+
 		//Getters:
 		sf::Sprite& getSprite();
 		unsigned int getScore() const;
