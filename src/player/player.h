@@ -82,6 +82,9 @@ class Player
 		//Give the player a point:
 		void addPoint();
 
+		//Write the highscore to the highscore file:
+		bool writeScoreToFile();
+
 		//Getters:
 		sf::Sprite& getSprite();
 		unsigned int getScore() const;

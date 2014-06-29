@@ -56,7 +56,12 @@ int main()
 		{
 			if(event.type == sf::Event::Closed)
 			{
-				//write highscore to file if needed
+				//Write highscore to file if needed:
+				if(p.getScore() > p.getHighScore())
+				{
+					if(! p.writeScoreToFile())
+						return -1;
+				}
 				window.close();
 			}
 		}

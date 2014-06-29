@@ -78,8 +78,13 @@ Player::Player()
 
 	//Get the previous highscore:
 	std::ifstream file(HIGHSCORE_FILE);
-	file >> _highscore;
-	file.close();
+	if(! file)
+		_highscore = 0;
+	else
+	{
+		file >> _highscore;
+		file.close();
+	}
 
 	//Initalise everything else:
 	_score = 0;
@@ -221,6 +226,22 @@ void Player::addPoint()
 {
 	_score++;
 	_sfx.play(POINT);
+}
+
+bool Player::writeScoreToFile()
+{
+	std::ofstream file(HIGHSCORE_FILE);
+	if(! file)
+	{
+		std::cerr << "Unable to write to '" << HIGHSCORE_FILE << "'\n";
+		return false;
+	}
+	else
+	{
+		file << _score;
+		file.close();
+		return true;
+	}
 }
 
 sf::Sprite& Player::getSprite()
