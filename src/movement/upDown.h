@@ -14,26 +14,26 @@
 * You should have received a copy of the GNU General Purpose License
 * along with 'platformer'. If not, see <http://www.gnu.org/licenses/>.
 */
-#include "dynamicBlock.h"
+#ifndef UP_DOWN_H
+#define UP_DOWN_H
+#include "movementType.h"
 
-DynamicBlock::DynamicBlock(float width, float height, float x, float y, 
-							MovementType* m)
+class UpDown : public MovementType
 {
-	//Create the rectangle:
-	_shape.setSize(sf::Vector2f(width, height));
-	_shape.setPosition(x, y);
-	_shape.setFillColor(BLOCK_COLOUR);
+	private:
+		//The direction the block is moving in. Works in a similar way to the
+		//player's '_direction' vector, but only in 1 dimension:
+		short int _direction;
 
-	//Set the movement type:
-	_movement = m;
-}
+		//The total pixels travelled in one second of constant movement:
+		float _velocity;
 
-DynamicBlock::~DynamicBlock()
-{
-	delete _movement;
-}
+		//The boundaries, which the block's origin while stay within:
+		float _boundaries[2];
 
-void DynamicBlock::handleEvents(float frameTime)
-{
-	_movement->handleEvents(_shape, frameTime);
-}
+	public:
+		UpDown(float, float, float);
+		void handleEvents(sf::RectangleShape&, float);
+};
+
+#endif

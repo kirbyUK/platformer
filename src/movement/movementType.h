@@ -16,12 +16,13 @@
 */
 #ifndef MOVEMENT_TYPE_H
 #define MOVEMENT_TYPE_H
+#include <SFML/Graphics.hpp>
 
 class MovementType
 {
 	public:
 		virtual ~MovementType() { }
-		virtual void handleEvents(float) = 0;
+		virtual void handleEvents(sf::RectangleShape&, float) = 0;
 };
 
 #endif

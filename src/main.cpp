@@ -18,6 +18,9 @@
 #include "player/player.h"
 #include "block/block.h"
 #include "block/staticBlock.h"
+#include "block/dynamicBlock.h"
+#include "movement/movementType.h"
+#include "movement/upDown.h"
 #include "sound/sfx.h"
 #include "interface/interface.h"
 
@@ -48,7 +51,8 @@ int main()
 	StaticBlock* target = targets[1];
 
 	//This one is just for testing:
-	StaticBlock b3(200, 100, 200, 150);
+	MovementType* m = new UpDown(100, 50, 250);
+	DynamicBlock b3(200, 100, 200, 150, m);
 
 	while(window.isOpen())
 	{
@@ -65,6 +69,8 @@ int main()
 				window.close();
 			}
 		}
+
+		b3.handleEvents(frameTime);
 
 		//Handle keypresses:
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
