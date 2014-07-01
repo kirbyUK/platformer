@@ -21,6 +21,7 @@
 #include "block/dynamicBlock.h"
 #include "movement/movementType.h"
 #include "movement/upDown.h"
+#include "movement/leftRight.h"
 #include "sound/sfx.h"
 #include "interface/interface.h"
 
@@ -56,8 +57,10 @@ int main()
 	StaticBlock* target = targets[1];
 
 	//This one is just for testing:
-	MovementType* m = new UpDown(100, 50, 250);
-	DynamicBlock b3(200, 100, 200, 150, m);
+//	MovementType* m = new UpDown(100, 50, 250);
+//	DynamicBlock b3(200, 100, 200, 150, m);
+	MovementType* m = new LeftRight(100, 100, 400);
+	DynamicBlock b3(100, 50, 100, 150, m);
 
 	while(window.isOpen())
 	{
