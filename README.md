@@ -1,6 +1,8 @@
 platformer
 ==========
 
+![preview](https://raw.github.com/kirbyman62/platformer/master/preview.png)
+
 An exceedingly simple platformer game because I need to make something I can 
 actually finish. SFML2 and C++ as always.
 
