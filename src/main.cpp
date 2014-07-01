@@ -28,6 +28,7 @@ const sf::Color PURPLE(182, 48, 227);
 
 int main()
 {
+	//Attempt to load all the nessecary files:
 	if(! Player::init())
 		return -1;
 
@@ -45,13 +46,17 @@ int main()
 	Player p;
 	Interface interface(&window);
 
+	//Initialises the two 'target' blocks that stand at either side of the
+	//screen. These are the blocks the player must jump back and forth between
+	//to score points. At any time, the 'target' block is stored in the pointer
+	//with the same name:
 	StaticBlock b1(100, 250, 0, (400 - 250));
 	StaticBlock b2(100, 250, (600 - 100), (400 - 250));
 	StaticBlock* targets[2] = { &b1, &b2 };
 	StaticBlock* target = targets[1];
 
 	//This one is just for testing:
-	MovementType* m = new UpDown(100, 50, 250);
+	MovementType* m = new UpDown(25, 50, 250);
 	DynamicBlock b3(200, 100, 200, 150, m);
 
 	while(window.isOpen())
@@ -97,6 +102,7 @@ int main()
 				target--;
 		}
 
+		//Clear the screen and draw everything:
 		window.clear(PURPLE);
 		window.draw(interface.getText(SCORE, p.getScore()));
 		window.draw(interface.getText(HIGHSCORE, p.getHighScore()));
