@@ -12,10 +12,10 @@ BIN=platformer
 
 all: $(BIN)
 
-$(BIN): main.o player.o block.o staticBlock.o dynamicBlock.o upDown.o sfx.o \
-		interface.o
+$(BIN): main.o player.o block.o staticBlock.o dynamicBlock.o movementType.o \
+		upDown.o sfx.o interface.o
 	$(CC) $(LIBS) 	main.o player.o block.o staticBlock.o dynamicBlock.o \
-					upDown.o sfx.o interface.o \
+					movementType.o upDown.o sfx.o interface.o \
 					-o $(BIN)
 
 # ./src/ -------------------------------------
@@ -41,7 +41,10 @@ dynamicBlock.o: $(BDIR)/dynamicBlock.cpp $(BDIR)/dynamicBlock.h
 
 # ./src/movement -----------------------------
 
-upDown.o: $(MDIR)/upDown.cpp $(MDIR)/upDown.h $(MDIR)/movementType.h
+movementType.o: $(MDIR)/movementType.cpp $(MDIR)/movementType.h
+	$(CC) $(FLAGS) $(MDIR)/movementType.cpp
+
+upDown.o: $(MDIR)/upDown.cpp $(MDIR)/upDown.h
 	$(CC) $(FLAGS) $(MDIR)/upDown.cpp
 
 # ./src/sound --------------------------------

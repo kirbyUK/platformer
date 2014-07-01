@@ -18,6 +18,9 @@
 
 UpDown::UpDown(float velocity, float boundary1, float boundary2)
 {
+	_distanceMoved.x = 0;
+	_distanceMoved.y = 0;
+
 	_velocity = velocity;
 	if(boundary1 > boundary2)
 	{
@@ -42,4 +45,7 @@ void UpDown::handleEvents(sf::RectangleShape& shape, float frameTime)
 
 	//Move the block:
 	shape.move(0, (_direction * (_velocity * frameTime)));
+
+	//Save the distance moved:
+	_distanceMoved.y = (_direction * (_velocity * frameTime));
 }

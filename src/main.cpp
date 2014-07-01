@@ -56,7 +56,7 @@ int main()
 	StaticBlock* target = targets[1];
 
 	//This one is just for testing:
-	MovementType* m = new UpDown(25, 50, 250);
+	MovementType* m = new UpDown(100, 50, 250);
 	DynamicBlock b3(200, 100, 200, 150, m);
 
 	while(window.isOpen())
@@ -76,6 +76,8 @@ int main()
 		}
 
 		b3.handleEvents(frameTime);
+		if(b3.isPlayerOnTop(p.getSprite()))
+			p.move(b3.getDistanceMoved());
 
 		//Handle keypresses:
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))

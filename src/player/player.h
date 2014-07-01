@@ -41,7 +41,6 @@ class Player
 		float _jumpDistanceCovered;
 		bool _isJumping;
 		bool _canJump;
-//		bool _isFalling;
 
 		Direction _facing;
 
@@ -72,6 +71,7 @@ class Player
 
 		//Signal the player to move in the given direction:
 		void move(Direction);
+		void move(sf::Vector2f);
 
 		//Process events at the end of the frame:
 		bool handleCollision(sf::RectangleShape, float);

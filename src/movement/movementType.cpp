@@ -14,25 +14,9 @@
 * You should have received a copy of the GNU General Purpose License
 * along with 'platformer'. If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef DYNAMIC_BLOCK_H
-#define DYNAMIC_BLOCK_H
-#include "block.h"
-#include "../movement/movementType.h"
+#include "movementType.h"
 
-class DynamicBlock : public Block
+sf::Vector2f MovementType::getDistanceMoved() const
 {
-	private:
-		MovementType* _movement;
-
-	public:
-		//Constructor, takes the width, height, initial x/y co-ordinates and
-		//the movement type:
-		DynamicBlock(float, float, float, float, MovementType*);
-		~DynamicBlock();
-
-		void handleEvents(float);
-
-		sf::Vector2f getDistanceMoved();
-};
-
-#endif
+	return _distanceMoved;
+}

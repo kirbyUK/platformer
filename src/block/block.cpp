@@ -28,8 +28,16 @@ bool Block::isPlayerOnTop(sf::Sprite& p) const
 	float y = _shape.getPosition().y - playerHeight;
 	sf::FloatRect r(x, y, boxWidth, playerHeight);
 
+	//Get the co-ordinates of the top left and top right corners of the player:
+	sf::Vector2f topleft = p.getPosition();
+	sf::Vector2f topright = p.getPosition();
+	topright.x += p.getGlobalBounds().width;
+
 	//Check if the top of the player is within this box:
-	return r.contains(p.getPosition());
+	if((r.contains(topleft)) || (r.contains(topright)))
+		return true;
+
+	return false;
 }
 
 sf::RectangleShape Block::getShape() const

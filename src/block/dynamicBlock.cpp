@@ -37,3 +37,8 @@ void DynamicBlock::handleEvents(float frameTime)
 {
 	_movement->handleEvents(_shape, frameTime);
 }
+
+sf::Vector2f DynamicBlock::getDistanceMoved()
+{
+	return _movement->getDistanceMoved();
+}

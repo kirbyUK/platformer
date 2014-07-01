@@ -20,9 +20,14 @@
 
 class MovementType
 {
+	protected:
+		//The distance moved this frame:
+		sf::Vector2f _distanceMoved;
+
 	public:
 		virtual ~MovementType() { }
 		virtual void handleEvents(sf::RectangleShape&, float) = 0;
+		sf::Vector2f getDistanceMoved() const;
 };
 
 #endif

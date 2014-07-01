@@ -116,6 +116,14 @@ void Player::move(Direction d)
 	}
 }
 
+//Forces the player to move in the given direction. This isn't very good, and
+//has been made exclusively so DynamicBlocks can move the player if needed. It
+//should not be used for general movement:
+void Player::move(sf::Vector2f d)
+{
+	_sprite.move(d);
+}
+
 //Checks if the proposed movement will cause a collision, and intervenes if so:
 bool Player::handleCollision(sf::RectangleShape s, float frameTime)
 {
