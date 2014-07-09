@@ -47,6 +47,10 @@ int main()
 	Player p;
 	Interface interface(&window);
 
+	//Used to time the difference between the player pressing and releasing space,
+	//allowing for 'short hops' if the player releases space bar quick enough:
+	sf::Clock jumpTimer;
+
 	//Initialises the two 'target' blocks that stand at either side of the
 	//screen. These are the blocks the player must jump back and forth between
 	//to score points. At any time, the 'target' block is stored in the pointer
@@ -76,6 +80,9 @@ int main()
 				}
 				window.close();
 			}
+			if(event.type == sf::Event::KeyReleased)
+				if(event.key.code == sf::Keyboard::Space)
+					p.setMaxJumpHeight(jumpTimer.restart().asSeconds());
 		}
 
 		b3.handleEvents(frameTime);

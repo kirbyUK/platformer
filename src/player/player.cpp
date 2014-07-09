@@ -90,6 +90,7 @@ Player::Player()
 	_score = 0;
 	_isJumping = false;
 	_canJump = true;
+	_maxJumpHeight = MAX_JUMP_HEIGHT;
 	_jumpDistanceCovered = 0;
 	_facing = RIGHT;
 	_direction.x = 0;
@@ -103,6 +104,18 @@ void Player::jump()
 		_isJumping = true;
 		_canJump = false;
 		_sfx.play(JUMP);
+	}
+}
+
+//Sets the maximum jump height to a fraction of the actual maximum, to allow
+//for short hopping:
+void Player::setMaxJumpHeight(float f)
+{
+	if(_isJumping)
+	{
+		f /= 2.2;
+		if(f < 1.0)
+			_maxJumpHeight = MAX_JUMP_HEIGHT * f;
 	}
 }
 
@@ -194,10 +207,11 @@ void Player::handleMovement(float frameTime)
 	if(_isJumping)
 	{
 		_jumpDistanceCovered += (Y_VELOCITY * frameTime);
-		if(_jumpDistanceCovered >= MAX_JUMP_HEIGHT)
+		if(_jumpDistanceCovered >= _maxJumpHeight)
 		{
 			_isJumping = false;
 			_jumpDistanceCovered = 0;
+			_maxJumpHeight = MAX_JUMP_HEIGHT;
 		}
 	}
 

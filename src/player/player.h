@@ -38,6 +38,7 @@ class Player
 		//The maximum height in pixels the character can go up before they
 		//start to fall back to the ground:
 		static const float MAX_JUMP_HEIGHT;
+		float _maxJumpHeight;
 		float _jumpDistanceCovered;
 		bool _isJumping;
 		bool _canJump;
@@ -68,6 +69,9 @@ class Player
 
 		//Signal the player to jump:
 		void jump();
+
+		//Set the maximum jump height to a fraction of the actual maximum:
+		void setMaxJumpHeight(float);
 
 		//Signal the player to move in the given direction:
 		void move(Direction);
