@@ -82,7 +82,7 @@ int main()
 			}
 			if(event.type == sf::Event::KeyReleased)
 				if(event.key.code == sf::Keyboard::Space)
-					p.setMaxJumpHeight(jumpTimer.restart().asSeconds());
+					p.setMaxJumpHeight(jumpTimer.getElapsedTime().asSeconds());
 		}
 
 		b3.handleEvents(frameTime);
@@ -95,7 +95,10 @@ int main()
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			p.move(RIGHT);
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
 			p.jump();
+			jumpTimer.restart();
+		}
 
 		//Handle the player's movement:
 		for(int i = 0; i < 2; i++)

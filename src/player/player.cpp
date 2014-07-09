@@ -111,11 +111,13 @@ void Player::jump()
 //for short hopping:
 void Player::setMaxJumpHeight(float f)
 {
+	std::cout << "Value passed = " << f << std::endl;
 	if(_isJumping)
 	{
-		f /= 2.2;
+		f *= 350;
 		if(f < 1.0)
 			_maxJumpHeight = MAX_JUMP_HEIGHT * f;
+		std::cout << "_maxJumpHeight = " << _maxJumpHeight << std::endl;
 	}
 }
 
