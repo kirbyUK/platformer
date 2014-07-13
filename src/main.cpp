@@ -24,6 +24,8 @@
 #include "movement/leftRight.h"
 #include "sound/sfx.h"
 #include "interface/interface.h"
+#include <vector>
+#include <iostream>
 
 const sf::Color PURPLE(182, 48, 227);
 
@@ -43,6 +45,17 @@ int main()
 	sf::Event event;
 	sf::Clock fps;
 	float frameTime = 0.016;
+
+	//Creates guidlines every 35 pixels, offset to match the top of the player:
+	std::vector <sf::RectangleShape*> guidelines;
+	for(unsigned int i = 0; i < window.getSize().y / 35; i++)
+	{
+		sf::RectangleShape* line = new sf::RectangleShape(sf::Vector2f(window.getSize().x, 1)); 
+		line->setPosition(0, (i * 35) - 15);
+		line->setOutlineColor(sf::Color::Red);
+		line->setFillColor(sf::Color::Red);
+		guidelines.push_back(line);
+	}
 
 	Player p;
 	Interface interface(&window);
@@ -126,10 +139,15 @@ int main()
 		window.draw(b2.getShape());
 		window.draw(b3.getShape());
 		window.draw(p.getSprite());
+		for(unsigned int i = 0; i < guidelines.size(); i++)
+			window.draw(*guidelines[i]);
 		window.display();
-
 		//Get the time of that frame:
 		frameTime = fps.restart().asSeconds();
 	}
+	//Cleanup the guidelines:
+	for(unsigned int i = 0; i < guidelines.size(); i++)
+		delete guidelines[i];
+
 	return 0;
 }
