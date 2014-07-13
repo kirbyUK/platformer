@@ -76,8 +76,10 @@ int main()
 	//This one is just for testing:
 //	MovementType* m = new UpDown(100, 50, 250);
 //	DynamicBlock b3(200, 100, 200, 150, m);
-	MovementType* m = new LeftRight(100, 100, 400);
-	DynamicBlock b3(100, 50, 100, 150, m);
+//	MovementType* m = new LeftRight(100, 100, 400);
+//	DynamicBlock b3(100, 50, 100, 150, m);
+	StaticBlock b3(100, 50, 175, 150);
+	StaticBlock b4(100, 50, 325, 150);
 
 	while(window.isOpen())
 	{
@@ -98,9 +100,9 @@ int main()
 					p.setMaxJumpHeight(jumpTimer.getElapsedTime().asSeconds());
 		}
 
-		b3.handleEvents(frameTime);
+/*		b3.handleEvents(frameTime);
 		if(b3.isPlayerOnTop(p.getSprite()))
-			p.move(b3.getDistanceMoved());
+			p.move(b3.getDistanceMoved());*/
 
 		//Handle keypresses:
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
@@ -117,6 +119,7 @@ int main()
 		for(int i = 0; i < 2; i++)
 			p.handleCollision(targets[i]->getShape(), frameTime);
 		p.handleCollision(b3.getShape(), frameTime);
+		p.handleCollision(b4.getShape(), frameTime);
 		p.handleCollision(&window, frameTime);
 		p.handleMovement(frameTime);
 
@@ -138,6 +141,7 @@ int main()
 		window.draw(b1.getShape());
 		window.draw(b2.getShape());
 		window.draw(b3.getShape());
+		window.draw(b4.getShape());
 		window.draw(p.getSprite());
 		for(unsigned int i = 0; i < guidelines.size(); i++)
 			window.draw(*guidelines[i]);

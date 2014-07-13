@@ -44,7 +44,7 @@ const char* Player::HIGHSCORE_FILE = "highscore";
 
 //How many pixels the character will move after a second of constant motion in
 //that direction:
-const float Player::X_VELOCITY = 180.0;
+const float Player::X_VELOCITY = 240.0;
 const float Player::Y_VELOCITY = 220.0;
 
 //The maximum jump height in pixels:
@@ -113,7 +113,7 @@ void Player::setMaxJumpHeight(float f)
 {
 	if(_isJumping)
 	{
-		f *= 350;
+		f *= 750;
 		if(f < 1.0)
 			_maxJumpHeight = MAX_JUMP_HEIGHT * f;
 	}
