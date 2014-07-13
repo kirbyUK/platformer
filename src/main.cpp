@@ -24,8 +24,6 @@
 #include "movement/leftRight.h"
 #include "sound/sfx.h"
 #include "interface/interface.h"
-#include <vector>
-#include <iostream>
 
 const sf::Color PURPLE(182, 48, 227);
 
