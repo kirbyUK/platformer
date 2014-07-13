@@ -35,9 +35,10 @@ class Player
 		sf::Texture _texture;
 		sf::Sprite _sprite;
 
-		//The maximum height in pixels the character can go up before they
-		//start to fall back to the ground:
+		//The maximum and minium height in pixels the character can go up 
+		//before they start to fall back to the ground:
 		static const float MAX_JUMP_HEIGHT;
+		static const float MIN_JUMP_HEIGHT;
 		float _maxJumpHeight;
 		float _jumpDistanceCovered;
 		bool _isJumping;

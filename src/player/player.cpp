@@ -47,8 +47,9 @@ const char* Player::HIGHSCORE_FILE = "highscore";
 const float Player::X_VELOCITY = 270.0;
 const float Player::Y_VELOCITY = 250.0;
 
-//The maximum jump height in pixels:
+//The maximum and minimum jump height in pixels:
 const float Player::MAX_JUMP_HEIGHT = 70.0;
+const float Player::MIN_JUMP_HEIGHT = MAX_JUMP_HEIGHT / 2;
 
 //Attempts to load up all the images, must be called before the constructor:
 bool Player::init()
@@ -113,9 +114,12 @@ void Player::setMaxJumpHeight(float f)
 {
 	if(_isJumping)
 	{
-		f *= 750;
-		if(f < 1.0)
-			_maxJumpHeight = MAX_JUMP_HEIGHT * f;
+		f *= 420;
+		_maxJumpHeight = MAX_JUMP_HEIGHT * f;
+		if(_maxJumpHeight < MIN_JUMP_HEIGHT)
+			_maxJumpHeight = MIN_JUMP_HEIGHT;
+		else if(_maxJumpHeight > MAX_JUMP_HEIGHT)
+			_maxJumpHeight = MAX_JUMP_HEIGHT;
 	}
 }
 
