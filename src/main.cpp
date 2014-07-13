@@ -78,8 +78,8 @@ int main()
 //	DynamicBlock b3(200, 100, 200, 150, m);
 //	MovementType* m = new LeftRight(100, 100, 400);
 //	DynamicBlock b3(100, 50, 100, 150, m);
-	StaticBlock b3(100, 50, 175, 150);
-	StaticBlock b4(100, 50, 325, 150);
+	StaticBlock b3(100, 50, 166, 150);
+	StaticBlock b4(100, 50, 332, 150);
 
 	while(window.isOpen())
 	{
@@ -146,6 +146,7 @@ int main()
 		for(unsigned int i = 0; i < guidelines.size(); i++)
 			window.draw(*guidelines[i]);
 		window.display();
+
 		//Get the time of that frame:
 		frameTime = fps.restart().asSeconds();
 	}
