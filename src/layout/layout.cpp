@@ -46,4 +46,5 @@ void cleanup(std::vector <std::vector<Block*>* >* v)
 			delete v->at(i)->at(j);
 		delete v->at(i);
 	}
+	delete v;
 }
