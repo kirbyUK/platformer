@@ -20,7 +20,6 @@
 #include "../movement/movementType.h"
 #include "../movement/upDown.h"
 #include "../movement/leftRight.h"
-#include <iostream>
 
 //Creates all the layouts, sticks them all in a vector array and returns it:
 std::vector <std::vector<Block*>* >* initLayouts()

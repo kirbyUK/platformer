@@ -15,7 +15,6 @@
 * along with 'platformer'. If not, see <http://www.gnu.org/licenses/>.
 */
 #include <vector>
-#include <iostream>
 #include <SFML/Graphics.hpp>
 #include "player/player.h"
 #include "block/block.h"
