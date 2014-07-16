@@ -14,16 +14,14 @@
 * You should have received a copy of the GNU General Purpose License
 * along with 'platformer'. If not, see <http://www.gnu.org/licenses/>.
 */
+#include <vector>
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include "player/player.h"
 #include "block/block.h"
 #include "block/staticBlock.h"
-#include "block/dynamicBlock.h"
-#include "movement/movementType.h"
-#include "movement/upDown.h"
-#include "movement/leftRight.h"
-#include "sound/sfx.h"
 #include "interface/interface.h"
+#include "layout/layout.h"
 
 const sf::Color PURPLE(182, 48, 227);
 
@@ -60,11 +58,11 @@ int main()
 	StaticBlock* targets[2] = { &b1, &b2 };
 	StaticBlock* target = targets[1];
 
-	//This one is just for testing:
-//	MovementType* m = new UpDown(100, 50, 250);
-//	DynamicBlock b3(200, 100, 200, 150, m);
-	MovementType* m = new LeftRight(100, 100, 400);
-	DynamicBlock b3(100, 50, 100, 150, m);
+	//The master layouts vector, containing all possible combinations of blocks
+	//that go in the middle. A pointer is used to reference the currently selected
+	//layout:
+	std::vector < std::vector<Block*>* >* layouts = initLayouts();
+	std::vector <Block*>* layout = layouts->front();
 
 	while(window.isOpen())
 	{
@@ -85,10 +83,6 @@ int main()
 					p.setMaxJumpHeight(jumpTimer.getElapsedTime().asSeconds());
 		}
 
-		b3.handleEvents(frameTime);
-		if(b3.isPlayerOnTop(p.getSprite()))
-			p.move(b3.getDistanceMoved());
-
 		//Handle keypresses:
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			p.move(LEFT);
@@ -101,9 +95,11 @@ int main()
 		}
 
 		//Handle the player's movement:
-		for(int i = 0; i < 2; i++)
+		//Check collisions for the static target blocks and the layout blocks:
+		for(unsigned int i = 0; i < 2; i++)
 			p.handleCollision(targets[i]->getShape(), frameTime);
-		p.handleCollision(b3.getShape(), frameTime);
+		for(unsigned int i = 0; i < layout->size(); i++)
+			p.handleCollision(layout->at(i)->getShape(), frameTime);
 		p.handleCollision(&window, frameTime);
 		p.handleMovement(frameTime);
 
@@ -124,12 +120,14 @@ int main()
 		window.draw(interface.getText(FPS, static_cast <unsigned>(1 / frameTime)));
 		window.draw(b1.getShape());
 		window.draw(b2.getShape());
-		window.draw(b3.getShape());
+		for(unsigned int i = 0; i < layout->size(); i++)
+			window.draw(layout->at(i)->getShape());
 		window.draw(p.getSprite());
 		window.display();
 
 		//Get the time of that frame:
 		frameTime = fps.restart().asSeconds();
 	}
+	cleanup(layouts);
 	return 0;
 }

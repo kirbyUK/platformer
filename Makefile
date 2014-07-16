@@ -8,14 +8,16 @@ BDIR=$(SRC)/block
 MDIR=$(SRC)/movement
 SDIR=$(SRC)/sound
 IDIR=$(SRC)/interface
+LDIR=$(SRC)/layout
 BIN=platformer
 
 all: $(BIN)
 
 $(BIN): main.o player.o block.o staticBlock.o dynamicBlock.o movementType.o \
-		upDown.o leftRight.o sfx.o interface.o
+		upDown.o leftRight.o sfx.o interface.o layout.o
 	$(CC) $(LIBS) 	main.o player.o block.o staticBlock.o dynamicBlock.o \
 					movementType.o upDown.o leftRight.o sfx.o interface.o \
+					layout.o \
 					-o $(BIN)
 
 # ./src/ -------------------------------------
@@ -59,6 +61,11 @@ sfx.o: $(SDIR)/sfx.cpp $(SDIR)/sfx.h
 
 interface.o: $(IDIR)/interface.cpp $(IDIR)/interface.h
 	$(CC) $(FLAGS) $(IDIR)/interface.cpp
+
+# ./src/layout -------------------------------
+
+layout.o: $(LDIR)/layout.cpp $(LDIR)/layout.h
+	$(CC) $(FLAGS) $(LDIR)/layout.cpp
 
 # --------------------------------------------
 

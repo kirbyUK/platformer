@@ -14,23 +14,15 @@
 * You should have received a copy of the GNU General Purpose License
 * along with 'platformer'. If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef BLOCK_H
-#define BLOCK_H
-#include <SFML/Graphics.hpp>
+#ifndef LAYOUT_H
+#define LAYOUT_H
+#include <vector>
+#include "../block/block.h"
 
-class Block
-{
-	protected:
-		sf::RectangleShape _shape;
-		static const sf::Color BLOCK_COLOUR; 
-	public:
-		virtual ~Block();
-		virtual void handleEvents(float) = 0;
+//All the layouts are predifined, this returns them all in a vector:
+std::vector <std::vector <Block*>* >* initLayouts();
 
-		//Checks if the player is standing directly on top of the block:
-		bool isPlayerOnTop(sf::Sprite&) const;
-
-		sf::RectangleShape getShape() const;
-};
+//Cleans up by deleting everything made in 'initLayouts()':
+void cleanup(std::vector <std::vector <Block*>* >*);
 
 #endif
