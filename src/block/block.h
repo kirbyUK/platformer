@@ -24,7 +24,7 @@ class Block
 		sf::RectangleShape _shape;
 		static const sf::Color BLOCK_COLOUR; 
 	public:
-		virtual ~Block();
+		virtual ~Block() { }
 		virtual void handleEvents(float) = 0;
 
 		//Checks if the player is standing directly on top of the block:
