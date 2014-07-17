@@ -15,6 +15,9 @@
 * along with 'platformer'. If not, see <http://www.gnu.org/licenses/>.
 */
 #include <vector>
+#include <algorithm>
+#include <cstdlib>
+#include <ctime>
 #include <SFML/Graphics.hpp>
 #include "player/player.h"
 #include "block/block.h"
@@ -35,6 +38,9 @@ int main()
 
 	if(! Interface::init())
 		return -1;
+
+	//Seed the random number generator:
+	std::srand(unsigned(std::time(0)));
 
 	sf::RenderWindow window(sf::VideoMode(600, 400), "Platformer");
 	sf::Event event;
@@ -105,11 +111,18 @@ int main()
 		//Check if the player has reached the target block:
 		if(target->isPlayerOnTop(p.getSprite()))
 		{
+			//Give the player a point:
 			p.addPoint();
+
+			//Change the target block to the other one:
 			if(target == targets[0])
 				target++;
 			else
 				target--;
+
+			//Select a new layout:
+			std::random_shuffle(layouts->begin(), layouts->end());
+			layout = layouts->front();
 		}
 
 		//Clear the screen and draw everything:

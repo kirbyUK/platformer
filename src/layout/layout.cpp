@@ -34,6 +34,14 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		v->push_back(b);
 		layouts->push_back(v);
 	}
+	{
+		StaticBlock* b1 = new StaticBlock(50, 250, 200, 150);
+		StaticBlock* b2 = new StaticBlock(50, 250, 350, 150);
+		std::vector <Block*>* v = new std::vector<Block*>;
+		v->push_back(b1);
+		v->push_back(b2);
+		layouts->push_back(v);
+	}
 	return layouts;
 }
 
