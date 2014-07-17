@@ -75,5 +75,4 @@ install:
 	install -m 0755 $(BIN) $(DESTDIR)/bin/
 
 clean:
-	rm *.o
-	rm $(BIN)
+	rm -f $(OBJS) $(BIN)
