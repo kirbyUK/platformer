@@ -18,8 +18,9 @@
 #define PLAYER_H
 #include <SFML/Graphics.hpp>
 #include <string>
-#include "../constants.h"
 #include "../sound/sfx.h"
+
+enum Direction { LEFT = -1, RIGHT = 1 };
 
 class Player
 {
