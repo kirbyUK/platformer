@@ -10,8 +10,8 @@ SDIR=$(SRC)/sound
 IDIR=$(SRC)/interface
 LDIR=$(SRC)/layout
 BIN=platformer
-OBJS=main.o player.o block.o staticBlock.o dynamicBlock.o movementType.o \
-	 upDown.o leftRight.o sfx.o interface.o layout.o
+OBJS=main.o player.o block.o staticBlock.o dynamicBlock.o deathBlock.o \
+	 movementType.o upDown.o leftRight.o sfx.o interface.o layout.o
 
 all: $(BIN)
 
@@ -38,6 +38,9 @@ staticBlock.o: $(BDIR)/staticBlock.cpp $(BDIR)/staticBlock.h
 
 dynamicBlock.o: $(BDIR)/dynamicBlock.cpp $(BDIR)/dynamicBlock.h
 	$(CC) $(FLAGS) $(BDIR)/dynamicBlock.cpp
+
+deathBlock.o: $(BDIR)/deathBlock.cpp $(BDIR)/deathBlock.h
+	$(CC) $(FLAGS) $(BDIR)/deathBlock.cpp
 
 # ./src/movement -----------------------------
 

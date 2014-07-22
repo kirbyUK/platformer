@@ -22,6 +22,7 @@
 #include "player/player.h"
 #include "block/block.h"
 #include "block/staticBlock.h"
+#include "block/deathBlock.h"
 #include "interface/interface.h"
 #include "layout/layout.h"
 
@@ -62,6 +63,9 @@ int main()
 	StaticBlock b2(100, 250, (600 - 100), (400 - 250));
 	StaticBlock* targets[2] = { &b1, &b2 };
 	StaticBlock* target = targets[1];
+
+	//The block at the bottom that kills the player on contact and ends the game:
+	DeathBlock deathBlock(400, 15, 100, 385);
 
 	//The master layouts vector, containing all possible combinations of blocks
 	//that go in the middle. A pointer is used to reference the currently selected
@@ -128,6 +132,17 @@ int main()
 			std::random_shuffle(layouts->begin(), (layouts->end() - 1));
 			layout = layouts->front();
 		}
+		//Otherwise, check if the player is on top of the death block:
+		else if(deathBlock.isPlayerOnTop(p.getSprite()))
+		{
+			//Kill the player:
+			//player.kill();
+
+			//do other stuff I don't know
+		}
+
+		//Handle animation for the death block:
+		deathBlock.handleEvents(0);
 
 		//Clear the screen and draw everything:
 		window.clear(PURPLE);
@@ -136,6 +151,7 @@ int main()
 		window.draw(interface.getText(FPS, static_cast <unsigned>(1 / frameTime)));
 		window.draw(b1.getShape());
 		window.draw(b2.getShape());
+		window.draw(deathBlock.getShape());
 		for(unsigned int i = 0; i < layout->size(); i++)
 			window.draw(layout->at(i)->getShape());
 		window.draw(p.getSprite());
