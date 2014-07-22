@@ -66,7 +66,7 @@ int main()
 	//The master layouts vector, containing all possible combinations of blocks
 	//that go in the middle. A pointer is used to reference the currently selected
 	//layout:
-	std::vector < std::vector<Block*>* >* layouts = initLayouts();
+	std::vector <std::vector<Block*>* >* layouts = initLayouts();
 	std::vector <Block*>* layout = layouts->front();
 
 	while(window.isOpen())
@@ -120,8 +120,12 @@ int main()
 			else
 				target--;
 
-			//Select a new layout:
-			std::random_shuffle(layouts->begin(), layouts->end());
+			//Move the current layout to the back:
+			layouts->push_back(layouts->front());
+			layouts->erase(layouts->begin());
+
+			//Shuffle all the rest of the layouts in order to pick a new one:
+			std::random_shuffle(layouts->begin(), (layouts->end() - 1));
 			layout = layouts->front();
 		}
 
