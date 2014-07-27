@@ -17,7 +17,7 @@
 #include "deathBlock.h"
 
 const sf::Color DeathBlock::DEATH_BLOCK_RED = sf::Color(237, 69, 69);
-const float DeathBlock::ANIMATION_TIME = 0.09;
+const float DeathBlock::ANIMATION_TIME = 0.12;
 
 DeathBlock::DeathBlock(float width, float height, float x, float y)
 {
