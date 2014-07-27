@@ -1,5 +1,5 @@
 CC=g++
-FLAGS=-Wall -c
+FLAGS=-Wall -c -g
 LIBS=-lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 DESTDIR=/usr/local
 SRC=src
@@ -11,12 +11,12 @@ IDIR=$(SRC)/interface
 LDIR=$(SRC)/layout
 BIN=platformer
 OBJS=main.o player.o block.o staticBlock.o dynamicBlock.o deathBlock.o \
-	 movementType.o upDown.o leftRight.o sfx.o interface.o layout.o
+	 movementType.o upDown.o leftRight.o sfx.o interface.o text.o layout.o
 
 all: $(BIN)
 
 $(BIN): $(OBJS)
-	$(CC) $(LIBS) $(OBJS) -o $(BIN)
+	$(CC) -g $(LIBS) $(OBJS) -o $(BIN)
 
 # ./src/ -------------------------------------
 
@@ -62,6 +62,9 @@ sfx.o: $(SDIR)/sfx.cpp $(SDIR)/sfx.h
 
 interface.o: $(IDIR)/interface.cpp $(IDIR)/interface.h
 	$(CC) $(FLAGS) $(IDIR)/interface.cpp
+
+text.o: $(IDIR)/text.cpp $(IDIR)/text.h
+	$(CC) $(FLAGS) $(IDIR)/text.cpp
 
 # ./src/layout -------------------------------
 
