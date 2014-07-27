@@ -23,8 +23,12 @@
 #include "block/block.h"
 #include "block/staticBlock.h"
 #include "block/deathBlock.h"
-#include "interface/interface.h"
+#include "interface/text.h"
 #include "layout/layout.h"
+
+//The height and width of the window:
+const unsigned int WINDOW_X = 600;
+const unsigned int WINDOW_Y = 400;
 
 const sf::Color PURPLE(182, 48, 227);
 
@@ -37,19 +41,23 @@ int main()
 	if(! SoundEffect::init())
 		return -1;
 
-	if(! Interface::init())
+	if(! Text::init())
 		return -1;
 
 	//Seed the random number generator:
 	std::srand(unsigned(std::time(0)));
 
-	sf::RenderWindow window(sf::VideoMode(600, 400), "Platformer");
+	sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), "Platformer");
 	sf::Event event;
-	sf::Clock fps;
+	sf::Clock frameTimer;
 	float frameTime = 0.016;
 
 	Player p;
-	Interface interface(&window);
+
+	//Create the text items:
+	Text fps("FPS: ", 16, TOP_LEFT, &window, 5, 5);
+	Text score("SCORE: ", 16, TOP_RIGHT, &window, 5, 5);
+	Text high("HIGH:  ", 16, TOP_RIGHT, &window, 5, 23);
 
 	//Used to time the difference between the player pressing and releasing space,
 	//allowing for 'short hops' if the player releases space bar quick enough:
@@ -59,8 +67,8 @@ int main()
 	//screen. These are the blocks the player must jump back and forth between
 	//to score points. At any time, the 'target' block is stored in the pointer
 	//with the same name:
-	StaticBlock b1(100, 250, 0, (400 - 250));
-	StaticBlock b2(100, 250, (600 - 100), (400 - 250));
+	StaticBlock b1(100, 250, 0, (WINDOW_Y - 250));
+	StaticBlock b2(100, 250, (WINDOW_X - 100), (WINDOW_Y - 250));
 	StaticBlock* targets[2] = { &b1, &b2 };
 	StaticBlock* target = targets[1];
 
@@ -68,8 +76,8 @@ int main()
 	DeathBlock deathBlock(400, 15, 100, 385);
 
 	//The master layouts vector, containing all possible combinations of blocks
-	//that go in the middle. A pointer is used to reference the currently selected
-	//layout:
+	//that go in the middle. A pointer is used to reference the currently 
+	//selected layout:
 	std::vector <std::vector<Block*>* >* layouts = initLayouts();
 	std::vector <Block*>* layout = layouts->front();
 
@@ -146,19 +154,19 @@ int main()
 
 		//Clear the screen and draw everything:
 		window.clear(PURPLE);
-		window.draw(interface.getText(SCORE, p.getScore()));
-		window.draw(interface.getText(HIGHSCORE, p.getHighScore()));
-		window.draw(interface.getText(FPS, static_cast <unsigned>(1 / frameTime)));
 		window.draw(b1.getShape());
 		window.draw(b2.getShape());
 		window.draw(deathBlock.getShape());
+		window.draw(fps.updateText(static_cast <unsigned>(1 / frameTime)));
+		window.draw(score.updateText(p.getScore()));
+		window.draw(high.updateText(p.getHighScore()));
 		for(unsigned int i = 0; i < layout->size(); i++)
 			window.draw(layout->at(i)->getShape());
 		window.draw(p.getSprite());
 		window.display();
 
 		//Get the time of that frame:
-		frameTime = fps.restart().asSeconds();
+		frameTime = frameTimer.restart().asSeconds();
 	}
 	cleanup(layouts);
 	return 0;
