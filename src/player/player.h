@@ -88,6 +88,9 @@ class Player
 		//Give the player a point:
 		void addPoint();
 
+		//Kill the player:
+		void kill();
+
 		//Write the highscore to the highscore file:
 		bool writeScoreToFile();
 

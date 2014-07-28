@@ -144,9 +144,36 @@ int main()
 		else if(deathBlock.isPlayerOnTop(p.getSprite()))
 		{
 			//Kill the player:
-			//player.kill();
+			p.kill();
 
-			//do other stuff I don't know
+			//Create new text items:
+			Text gameover("GAME OVER", 34, TOP_LEFT, &window, 150, 125);
+			Text scoreFinal("SCORE: ", 16, TOP_LEFT, &window, 150, 165);
+			Text highFinal("HIGH:  ", 16, TOP_LEFT, &window, 310, 165);
+
+			//Make a new loop for the game over screen:
+			while(window.isOpen())
+			{
+				while(window.pollEvent(event))
+				{
+					if(event.type == sf::Event::Closed)
+					{
+						//Write highscore to file if needed:
+						if(p.getScore() > p.getHighScore())
+						{
+							if(! p.writeScoreToFile())
+								return -1;
+						}
+						window.close();
+					}
+				}
+
+				window.clear(PURPLE);
+				window.draw(gameover.updateText());
+				window.draw(scoreFinal.updateText(p.getScore()));
+				window.draw(highFinal.updateText(p.getHighScore()));
+				window.display();
+			}
 		}
 
 		//Handle animation for the death block:

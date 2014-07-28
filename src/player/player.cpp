@@ -254,6 +254,11 @@ void Player::addPoint()
 	_sfx.play(POINT);
 }
 
+void Player::kill()
+{
+	_sfx.play(DEATH);
+}
+
 bool Player::writeScoreToFile()
 {
 	std::ofstream file(HIGHSCORE_FILE);
