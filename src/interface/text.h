@@ -48,6 +48,7 @@ class Text
 
 		//Updates the text with the given data value:
 		sf::Text& updateText(unsigned int);
+		sf::Text& updateText();
 };
 
 #endif

@@ -81,3 +81,9 @@ sf::Text& Text::updateText(unsigned int value)
 	_text.setString(ss.str());
 	return _text;
 }
+
+sf::Text& Text::updateText()
+{
+	_text.setString(_string);
+	return _text;
+}
