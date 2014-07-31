@@ -149,7 +149,8 @@ int main()
 			//Create new text items:
 			Text gameover("GAME OVER", 34, TOP_LEFT, &window, 150, 125);
 			Text scoreFinal("SCORE: ", 16, TOP_LEFT, &window, 150, 165);
-			Text highFinal("HIGH:  ", 16, TOP_LEFT, &window, 310, 165);
+			Text highFinal("HIGH: ", 16, TOP_LEFT, &window, 330, 165);
+			Text retry("RETRY", 16, TOP_LEFT, &window, 250, 220);
 
 			//Make a new loop for the game over screen:
 			while(window.isOpen())
@@ -172,6 +173,7 @@ int main()
 				window.draw(gameover.updateText());
 				window.draw(scoreFinal.updateText(p.getScore()));
 				window.draw(highFinal.updateText(p.getHighScore()));
+				window.draw(retry.updateText());
 				window.display();
 			}
 		}
