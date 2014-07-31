@@ -188,6 +188,7 @@ int main()
 					if(selected == menu[0])
 					{
 						p.reset();
+						target = targets[1];
 						break;
 					}
 					else
