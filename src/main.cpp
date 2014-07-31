@@ -24,6 +24,7 @@
 #include "block/staticBlock.h"
 #include "block/deathBlock.h"
 #include "interface/text.h"
+#include "interface/arrow.h"
 #include "layout/layout.h"
 
 //The height and width of the window:
@@ -42,6 +43,9 @@ int main()
 		return -1;
 
 	if(! Text::init())
+		return -1;
+
+	if(! Arrow::init())
 		return -1;
 
 	//Seed the random number generator:
@@ -74,6 +78,10 @@ int main()
 
 	//The block at the bottom that kills the player on contact and ends the game:
 	DeathBlock deathBlock(400, 15, 100, 385);
+
+	//Two arrows to teach the player at the beginning of the game:
+	Arrow helpArrow1(SOUTH, (WINDOW_X - 50), (WINDOW_Y - 280));
+	Arrow helpArrow2(SOUTH, 50, (WINDOW_Y - 280));
 
 	//The master layouts vector, containing all possible combinations of blocks
 	//that go in the middle. A pointer is used to reference the currently 
@@ -120,6 +128,9 @@ int main()
 		p.handleCollision(&window, frameTime);
 		p.handleMovement(frameTime);
 
+		//Handle animation for the death block:
+		deathBlock.handleEvents(0);
+
 		//Check if the player has reached the target block:
 		if(target->isPlayerOnTop(p.getSprite()))
 		{
@@ -146,40 +157,66 @@ int main()
 			//Kill the player:
 			p.kill();
 
+			//Write highscore to file if needed:
+			if(p.getScore() > p.getHighScore())
+				if(! p.writeScoreToFile())
+					return -1;
+
 			//Create new text items:
 			Text gameover("GAME OVER", 34, TOP_LEFT, &window, 150, 125);
 			Text scoreFinal("SCORE: ", 16, TOP_LEFT, &window, 150, 165);
 			Text highFinal("HIGH: ", 16, TOP_LEFT, &window, 330, 165);
 			Text retry("RETRY", 16, TOP_LEFT, &window, 250, 220);
+			Text quit("QUIT", 16, TOP_LEFT, &window, 260, 250);
+			Text* menu[2] = { &retry, &quit };
+			Text* selected = menu[0];
+
+			//Create arrows to point at the current selection:
+			Arrow menuArrow1(EAST, 225, 231);
+			Arrow menuArrow2(EAST, 225, 261);
 
 			//Make a new loop for the game over screen:
 			while(window.isOpen())
 			{
 				while(window.pollEvent(event))
-				{
 					if(event.type == sf::Event::Closed)
-					{
-						//Write highscore to file if needed:
-						if(p.getScore() > p.getHighScore())
-						{
-							if(! p.writeScoreToFile())
-								return -1;
-						}
 						window.close();
+
+				//If the user presses enter, restart or quit:
+				if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+				{
+					if(selected == menu[0])
+					{
+						p.reset();
+						break;
 					}
+					else
+						window.close();
 				}
 
+				//Change the selection if the player presses an arrow key:
+				if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+					if(selected == menu[1])
+						selected = menu[0];
+
+				if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+					if(selected == menu[0])
+						selected = menu[1];
+
+				//Draw everything:
 				window.clear(PURPLE);
 				window.draw(gameover.updateText());
 				window.draw(scoreFinal.updateText(p.getScore()));
 				window.draw(highFinal.updateText(p.getHighScore()));
 				window.draw(retry.updateText());
+				window.draw(quit.updateText());
+				if(selected == menu[0])
+					window.draw(menuArrow1.getSprite());
+				else
+					window.draw(menuArrow2.getSprite());
 				window.display();
 			}
 		}
-
-		//Handle animation for the death block:
-		deathBlock.handleEvents(0);
 
 		//Clear the screen and draw everything:
 		window.clear(PURPLE);
@@ -189,6 +226,10 @@ int main()
 		window.draw(fps.updateText(static_cast <unsigned>(1 / frameTime)));
 		window.draw(score.updateText(p.getScore()));
 		window.draw(high.updateText(p.getHighScore()));
+		if(p.getScore() == 0)
+			window.draw(helpArrow1.getSprite());
+		if(p.getScore() == 1)
+			window.draw(helpArrow2.getSprite());
 		for(unsigned int i = 0; i < layout->size(); i++)
 			window.draw(layout->at(i)->getShape());
 		window.draw(p.getSprite());

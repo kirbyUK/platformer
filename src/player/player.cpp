@@ -98,6 +98,26 @@ Player::Player()
 	_direction.y = 1;
 }
 
+void Player::reset()
+{
+	//Set the initial position:
+	_sprite.setPosition(37.5, 125);
+
+	//Check if the high score needs changing:
+	if(_score > _highscore)
+		_highscore = _score;
+	
+	//Initalise everything else:
+	_score = 0;
+	_isJumping = false;
+	_canJump = true;
+	_maxJumpHeight = MAX_JUMP_HEIGHT;
+	_jumpDistanceCovered = 0;
+	_facing = RIGHT;
+	_direction.x = 0;
+	_direction.y = 1;
+}
+
 void Player::jump()
 {
 	if(_canJump)

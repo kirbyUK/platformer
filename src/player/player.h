@@ -69,6 +69,9 @@ class Player
 		//Constructor:
 		Player();
 
+		//Resets the player back to how it was if it had just been made:
+		void reset();
+
 		//Signal the player to jump:
 		void jump();
 
