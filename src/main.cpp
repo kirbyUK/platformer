@@ -99,7 +99,10 @@ int main()
 				if(p.getScore() > p.getHighScore())
 				{
 					if(! p.writeScoreToFile())
+					{
+						cleanup(layouts);
 						return -1;
+					}
 				}
 				window.close();
 			}
@@ -159,8 +162,13 @@ int main()
 
 			//Write highscore to file if needed:
 			if(p.getScore() > p.getHighScore())
+			{
 				if(! p.writeScoreToFile())
+				{
+					cleanup(layouts);
 					return -1;
+				}
+			}
 
 			//Create new text items:
 			Text gameover("GAME OVER", 34, TOP_LEFT, &window, 150, 125);
