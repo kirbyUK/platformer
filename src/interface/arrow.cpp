@@ -58,3 +58,8 @@ Arrow::Arrow(Facing f, float x, float y)
 					  (_sprite.getGlobalBounds().height / 2));
 	_sprite.rotate(static_cast <int>(f));
 }
+
+sf::Sprite& Arrow::getSprite()
+{
+	return _sprite;
+}

@@ -42,7 +42,7 @@ class Arrow
 		//Constructor, takes the direction it's pointing to and the co-ords:
 		Arrow(Facing, float, float);
 
-		sf::Sprite getSprite() const;
+		sf::Sprite& getSprite();
 };
 
 #endif
