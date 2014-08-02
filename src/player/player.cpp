@@ -113,7 +113,14 @@ void Player::reset()
 	_canJump = true;
 	_maxJumpHeight = MAX_JUMP_HEIGHT;
 	_jumpDistanceCovered = 0;
-	_facing = RIGHT;
+	if(_facing != RIGHT)
+	{
+		sf::IntRect rect = _sprite.getTextureRect();
+		rect.left += rect.width;
+		rect.width = -rect.width;
+		_sprite.setTextureRect(rect);
+		_facing = RIGHT;
+	}
 	_direction.x = 0;
 	_direction.y = 1;
 }
