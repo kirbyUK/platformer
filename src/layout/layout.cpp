@@ -70,6 +70,13 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		v->push_back(b2);
 		layouts->push_back(v);
 	}
+	{
+		MovementType* m = new LeftRight(150, 120, 380);
+		DynamicBlock* b = new DynamicBlock(80, 25, 150, 150, m);
+		std::vector <Block*>* v = new std::vector<Block*>;
+		v->push_back(b);
+		layouts->push_back(v);
+	}
 	return layouts;
 }
 
