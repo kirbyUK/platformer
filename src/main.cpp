@@ -22,6 +22,7 @@
 #include "player/player.h"
 #include "block/block.h"
 #include "block/staticBlock.h"
+#include "block/dynamicBlock.h"
 #include "block/deathBlock.h"
 #include "interface/text.h"
 #include "interface/arrow.h"
@@ -120,6 +121,21 @@ int main()
 		{
 			p.jump();
 			jumpTimer.restart();
+		}
+
+		//Handle the block events:
+		for(unsigned int i = 0; i < layout->size(); i++)
+			layout->at(i)->handleEvents(frameTime);
+
+		//Check if the player is on a dynamicBlock, and move them if so:
+		for(unsigned int i = 0; i < layout->size(); i++)
+		{
+			if(layout->at(i)->isPlayerOnTop(p.getSprite()))
+			{
+				DynamicBlock* b = dynamic_cast <DynamicBlock*>(layout->at(i));
+				if(b != NULL)
+					p.move(b->getDistanceMoved());
+			}
 		}
 
 		//Handle the player's movement:
