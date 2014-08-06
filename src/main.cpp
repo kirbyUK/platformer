@@ -15,7 +15,6 @@
 * along with 'platformer'. If not, see <http://www.gnu.org/licenses/>.
 */
 #include <vector>
-#include <algorithm>
 #include <cstdlib>
 #include <ctime>
 #include <SFML/Graphics.hpp>
@@ -162,13 +161,7 @@ int main()
 			else
 				target--;
 
-			//Move the current layout to the back:
-			layouts->push_back(layouts->front());
-			layouts->erase(layouts->begin());
-
-			//Shuffle all the rest of the layouts in order to pick a new one:
-			std::random_shuffle(layouts->begin(), (layouts->end() - 1));
-			layout = layouts->front();
+			layout = shuffleLayouts(layouts);
 		}
 		//Otherwise, check if the player is on top of the death block:
 		else if(deathBlock.isPlayerOnTop(p.getSprite()))
@@ -213,6 +206,7 @@ int main()
 					{
 						p.reset();
 						target = targets[1];
+						layout = shuffleLayouts(layouts);
 						break;
 					}
 					else

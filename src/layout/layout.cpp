@@ -20,6 +20,7 @@
 #include "../movement/movementType.h"
 #include "../movement/upDown.h"
 #include "../movement/leftRight.h"
+#include <algorithm>
 
 //Creates all the layouts, sticks them all in a vector array and returns it:
 std::vector <std::vector<Block*>* >* initLayouts()
@@ -90,4 +91,16 @@ void cleanup(std::vector <std::vector<Block*>* >* v)
 		delete v->at(i);
 	}
 	delete v;
+}
+
+//Shuffles the layouts to generate a new one:
+std::vector <Block*>* shuffleLayouts(std::vector <std::vector <Block*>* >* v)
+{
+	//Move the current layout to the back:
+	v->push_back(v->front());
+	v->erase(v->begin());
+
+	//Shuffle all the rest of the layouts and pick a new one:
+	std::random_shuffle(v->begin(), (v->end() - 1));
+	return v->front();
 }

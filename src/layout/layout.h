@@ -25,4 +25,7 @@ std::vector <std::vector <Block*>* >* initLayouts();
 //Cleans up by deleting everything made in 'initLayouts()':
 void cleanup(std::vector <std::vector <Block*>* >*);
 
+//Shuffles the layouts to generate a new one:
+std::vector <Block*>* shuffleLayouts(std::vector <std::vector <Block*>* >*);
+
 #endif
