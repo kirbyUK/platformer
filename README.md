@@ -24,4 +24,4 @@ And use the binary that appears in the project directory.
 
 **Windows**
 
-I managed to get it to build using Code::Blocks and the instructions given in the [SFML tutorial](www.sfml-dev.org/tutorials/2.1/start-cb.php). I've never used Code::Blocks before but I had to make a new project, import all the files and then move the binary back to the git directory so it could see the assets.
+I managed to get it to build using Code::Blocks and the instructions given in the [SFML tutorial](http://www.sfml-dev.org/tutorials/2.1/start-cb.php). I've never used Code::Blocks before but I had to make a new project, import all the files and then move the binary back to the git directory so it could see the assets.
