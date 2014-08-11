@@ -109,6 +109,9 @@ int main()
 			if(event.type == sf::Event::KeyReleased)
 				if(event.key.code == sf::Keyboard::Space)
 					p.setMaxJumpHeight(jumpTimer.getElapsedTime().asSeconds());
+			//If the window is resized, snap it back to what it should be:
+			if(event.type == sf::Event::Resized)
+				window.setSize(sf::Vector2u(WINDOW_X, WINDOW_Y));
 		}
 
 		//Handle keypresses:
@@ -196,8 +199,13 @@ int main()
 			while(window.isOpen())
 			{
 				while(window.pollEvent(event))
+				{
 					if(event.type == sf::Event::Closed)
 						window.close();
+					//If the window is resized, snap it back to what it should be:
+					if(event.type == sf::Event::Resized)
+						window.setSize(sf::Vector2u(WINDOW_X, WINDOW_Y));
+				}
 
 				//If the user presses enter, restart or quit:
 				if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
