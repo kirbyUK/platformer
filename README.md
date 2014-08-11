@@ -10,7 +10,7 @@ The point of the game is to run back and forth between the two platforms either 
 Building
 --------
 
-The program requires [SFML](www.sfml-dev.org) ( >= 2.0). There are detailed instructions on how to install it in their tutorials section.
+The program requires [SFML](http://www.sfml-dev.org) ( >= 2.0). There are detailed instructions on how to install it in their tutorials section.
 
 **Linux**
 
