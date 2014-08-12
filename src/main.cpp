@@ -51,7 +51,7 @@ int main()
 	//Seed the random number generator:
 	std::srand(unsigned(std::time(0)));
 
-	sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), "Platformer");
+	sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), "Platformer", sf::Style::Close);
 	sf::Event event;
 	sf::Clock frameTimer;
 	float frameTime = 0.016;
