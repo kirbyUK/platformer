@@ -3,3 +3,5 @@ platformer
 *.swp
 *.xcf
 highscore
+*.exe
+*.dll
