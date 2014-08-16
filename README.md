@@ -41,3 +41,11 @@ LIBS=-LC:\SFML-2.1\lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 ```
 mingw32-make
 ```
+
+##TODO:
+
+- [ ] Add a timer
+
+- [ ] Add more layouts
+
+- [ ] Fix broken collision detection
