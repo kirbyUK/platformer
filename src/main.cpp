@@ -77,7 +77,7 @@ int main()
 	StaticBlock* target = targets[1];
 
 	//The block at the bottom that kills the player on contact and ends the game:
-	DeathBlock deathBlock(400, 15, 100, 385);
+	DeathBlock deathBlock(600, 15, 0, 385);
 
 	//Two arrows to teach the player at the beginning of the game:
 	Arrow helpArrow1(SOUTH, (WINDOW_X - 50), (WINDOW_Y - 280));
@@ -247,9 +247,9 @@ int main()
 
 		//Clear the screen and draw everything:
 		window.clear(PURPLE);
+		window.draw(deathBlock.getShape());
 		window.draw(b1.getShape());
 		window.draw(b2.getShape());
-		window.draw(deathBlock.getShape());
 		window.draw(fps.updateText(static_cast <unsigned>(1 / frameTime)));
 		window.draw(score.updateText(p.getScore()));
 		window.draw(high.updateText(p.getHighScore()));
