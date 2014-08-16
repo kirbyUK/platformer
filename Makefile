@@ -16,7 +16,7 @@ OBJS=main.o player.o block.o staticBlock.o dynamicBlock.o deathBlock.o \
 all: $(BIN)
 
 $(BIN): $(OBJS)
-	$(CC) -g $(LIBS) $(OBJS) -o $(BIN)
+	$(CC) -g $(OBJS) -o $(BIN) $(LIBS)
 
 # ./src/ -------------------------------------
 
