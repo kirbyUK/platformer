@@ -46,6 +46,10 @@ mingw32-make
 
 - [ ] Add a timer
 
+- [ ] Add pause functionality
+
+- [ ] Implement lock file
+
 - [ ] Add more layouts
 
-- [ ] Fix broken collision detection
+- [ ] Fix [bugs](https://github.com/kirbyman62/platformer/issues)
