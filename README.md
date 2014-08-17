@@ -46,7 +46,7 @@ mingw32-make
 
 - [ ] Add a timer
 
-- [ ] Add pause functionality
+- [x] Add pause functionality
 
 - [ ] Implement lock file
 
