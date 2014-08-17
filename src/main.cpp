@@ -60,6 +60,8 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), "Platformer", sf::Style::Close);
 	sf::Event event;
 	sf::Clock frameTimer;
+	sf::Clock delay;
+	float delayTotal = 0.0;
 	float frameTime = 0.016;
 
 	Player p;
@@ -126,6 +128,7 @@ int main()
 			//If the window loses focus, pause the game:
 			if(event.type == sf::Event::LostFocus)
 			{
+				delay.restart();
 				if(! pause(&window, event))
 				{
 					//Write highscore to file if needed:
@@ -138,6 +141,7 @@ int main()
 						}
 					}
 				}
+				delayTotal += delay.getElapsedTime().asSeconds();
 			}
 		}
 
@@ -153,6 +157,7 @@ int main()
 		}
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		{
+			delay.restart();
 			if(! pause(&window, event))
 			{
 				//Write highscore to file if needed:
@@ -165,6 +170,7 @@ int main()
 					}
 				}
 			}
+			delayTotal += delay.getElapsedTime().asSeconds();
 		}
 
 		//Handle the block events:
@@ -223,12 +229,14 @@ int main()
 					return -1;
 				}
 			}
+			delay.restart();
 			if(gameOver(&window, event, p.getScore(), p.getHighScore()))
 			{
 				p.reset();
 				target = targets[1];
 				layout = shuffleLayouts(layouts);
 			}
+			delayTotal += delay.getElapsedTime().asSeconds();
 		}
 
 		//Clear the screen and draw everything:
@@ -249,7 +257,8 @@ int main()
 		window.display();
 
 		//Get the time of that frame:
-		frameTime = frameTimer.restart().asSeconds();
+		frameTime = frameTimer.restart().asSeconds() - delayTotal;
+		delayTotal = 0.0;
 	}
 	cleanup(layouts);
 	return 0;
