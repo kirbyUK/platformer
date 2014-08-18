@@ -11,7 +11,7 @@ IDIR=$(SRC)/interface
 LDIR=$(SRC)/layout
 BIN=platformer
 OBJS=main.o player.o block.o staticBlock.o dynamicBlock.o deathBlock.o \
-	 movementType.o upDown.o leftRight.o sfx.o text.o arrow.o layout.o
+	 movementType.o upDown.o leftRight.o sfx.o screens.o text.o arrow.o layout.o
 
 all: $(BIN)
 
@@ -59,6 +59,9 @@ sfx.o: $(SDIR)/sfx.cpp $(SDIR)/sfx.h
 	$(CC) $(FLAGS) $(SDIR)/sfx.cpp
 
 # ./src/interface ----------------------------
+
+screens.o: $(IDIR)/screens.cpp $(IDIR)/screens.h
+	$(CC) $(FLAGS) $(IDIR)/screens.cpp
 
 text.o: $(IDIR)/text.cpp $(IDIR)/text.h
 	$(CC) $(FLAGS) $(IDIR)/text.cpp
