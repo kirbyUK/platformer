@@ -24,6 +24,9 @@ class MovementType
 		//The distance moved this frame:
 		sf::Vector2f _distanceMoved;
 
+		//The total pixels travelled in one second of constant movement:
+		float _velocity;
+
 	public:
 		virtual ~MovementType() { }
 		virtual void handleEvents(sf::RectangleShape&, float) = 0;

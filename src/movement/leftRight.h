@@ -25,9 +25,6 @@ class LeftRight : public MovementType
 		//player's '_direction' vector, but only in 1 dimension:
 		short int _direction;
 
-		//The total pixels travelled in one second of constant movement:
-		float _velocity;
-
 		//The boundaries, which the block's origin while stay within:
 		float _boundaries[2];
 
