@@ -20,6 +20,7 @@
 #include "../movement/movementType.h"
 #include "../movement/upDown.h"
 #include "../movement/leftRight.h"
+#include "../movement/square.h"
 #include <algorithm>
 
 //Creates all the layouts, sticks them all in a vector array and returns it:
@@ -74,6 +75,13 @@ std::vector <std::vector<Block*>* >* initLayouts()
 	{
 		MovementType* m = new LeftRight(150, 120, 380);
 		DynamicBlock* b = new DynamicBlock(80, 25, 150, 150, m);
+		std::vector <Block*>* v = new std::vector<Block*>;
+		v->push_back(b);
+		layouts->push_back(v);
+	}
+	{
+		MovementType* m = new Square(150, 145, 175, 200, 150);
+		DynamicBlock* b = new DynamicBlock(80, 25, 250, 325, m);
 		std::vector <Block*>* v = new std::vector<Block*>;
 		v->push_back(b);
 		layouts->push_back(v);
