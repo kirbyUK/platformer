@@ -68,6 +68,11 @@ bool Player::init()
 	return true;
 }
 
+const sf::Uint8* Player::getPixelsPointer()
+{
+	return _sprites[0].getPixelsPtr();
+}
+
 Player::Player()
 {	
 	//Load the texture from the image:

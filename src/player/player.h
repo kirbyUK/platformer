@@ -66,6 +66,9 @@ class Player
 		//Load the images:
 		static bool init();
 
+		//Return the array of pixels, for the icon:
+		static const sf::Uint8* getPixelsPointer();
+
 		//Constructor:
 		Player();
 
