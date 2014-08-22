@@ -5,9 +5,9 @@
 bool pause(sf::RenderWindow* w, sf::Event& event, bool haveFocus)
 {
 	//Create new text items:
-	Text paused("PAUSED", 34, TOP_LEFT, w, 192, 125);
-	Text cont("CONTINUE", 16, TOP_LEFT, w, 220, 200);
-	Text quit("QUIT", 16, TOP_LEFT, w, 260, 230);
+	Text paused("PAUSED", 34, TOP_LEFT, w, 198, 125);
+	Text cont("CONTINUE", 16, TOP_LEFT, w, 236, 200);
+	Text quit("QUIT", 16, TOP_LEFT, w, 268, 230);
 	Text* menu[2] = { &cont, &quit };
 	Text* selected = menu[0];
 
