@@ -59,6 +59,10 @@ Text::Text(std::string string, unsigned int charSize, Corner corner,
 	float windowX = w->getSize().x;
 	float windowY = w->getSize().y;
 
+	//Keep a track of how big the text is:
+	_size = _text.getGlobalBounds().width;
+	_corner = corner;
+
 	switch(corner)
 	{
 		case TOP_LEFT:     _text.setPosition(x, y); break;
@@ -79,6 +83,17 @@ sf::Text& Text::updateText(unsigned int value)
 		ss << _string << value;
 
 	_text.setString(ss.str());
+
+	//Update the position if the size changes, but only if it's on the right:
+	if((_corner == TOP_RIGHT) || (_corner == BOTTOM_RIGHT))
+	{
+		if(_text.getGlobalBounds().width != _size)
+		{
+			_text.move(-(_text.getGlobalBounds().width - _size), 0);
+			_size = _text.getGlobalBounds().width;
+		}
+	}
+
 	return _text;
 }
 

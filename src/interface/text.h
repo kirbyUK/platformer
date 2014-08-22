@@ -38,6 +38,10 @@ class Text
 		sf::Text _text;
 		std::string _string;
 
+		//The size of the text item:
+		float _size;
+		Corner _corner;
+
 	public:
 		//Load the font:
 		static bool init();
