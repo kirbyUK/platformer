@@ -121,7 +121,7 @@ int main()
 			if(event.type == sf::Event::LostFocus)
 			{
 				delay.restart();
-				if(! pause(&window, event))
+				if(! pause(&window, event, false))
 				{
 					//Write highscore to file if needed:
 					if(p.getScore() > p.getHighScore())
@@ -150,7 +150,7 @@ int main()
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		{
 			delay.restart();
-			if(! pause(&window, event))
+			if(! pause(&window, event, true))
 			{
 				//Write highscore to file if needed:
 				if(p.getScore() > p.getHighScore())

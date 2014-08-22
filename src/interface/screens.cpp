@@ -2,7 +2,7 @@
 #include "text.h"
 #include "arrow.h"
 
-bool pause(sf::RenderWindow* w, sf::Event& event)
+bool pause(sf::RenderWindow* w, sf::Event& event, bool haveFocus)
 {
 	//Create new text items:
 	Text paused("PAUSED", 34, TOP_LEFT, w, 192, 125);
@@ -24,6 +24,14 @@ bool pause(sf::RenderWindow* w, sf::Event& event)
 			if(event.type == sf::Event::Closed)
 				w->close();
 
+			//If the window gains focus, we can use the keyboard:
+			if(event.type == sf::Event::GainedFocus)
+				haveFocus = true;
+
+			//If the window loses focus, we cannot use the keyboard:
+			if(event.type == sf::Event::LostFocus)
+				haveFocus = false;
+
 			//If the window is resized, snap it back to what it should be:
 			if(event.type == sf::Event::Resized)
 				w->setSize(sf::Vector2u(WINDOW_X, WINDOW_Y));
@@ -37,14 +45,17 @@ bool pause(sf::RenderWindow* w, sf::Event& event)
 			else
 				w->close();
 		}
-		//Change the selection if the player presses an arrow key:
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-			if(selected == menu[1])
-				selected = menu[0];
+		if(haveFocus)
+		{
+			//Change the selection if the player presses an arrow key:
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+				if(selected == menu[1])
+					selected = menu[0];
 
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-			if(selected == menu[0])
-				selected = menu[1];
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+				if(selected == menu[0])
+					selected = menu[1];
+		}
 
 		//Draw everything:
 		w->clear(BACKGROUND);

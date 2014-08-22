@@ -26,7 +26,7 @@ const sf::Color BACKGROUND = sf::Color(182, 48, 227);
 
 //Different functions for different 'screens'. Returns true if the player does
 //not choose to quit the game:
-bool pause(sf::RenderWindow*, sf::Event&);
+bool pause(sf::RenderWindow*, sf::Event&, bool);
 bool gameOver(sf::RenderWindow*, sf::Event&, int, int);
 
 #endif
