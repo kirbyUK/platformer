@@ -86,6 +86,64 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		v->push_back(b);
 		layouts->push_back(v);
 	}
+	{
+		MovementType* m1 = new UpDown(150, 325, 100);
+		MovementType* m2 = new UpDown(150, 325, 100);
+		StaticBlock* b1 = new StaticBlock(75, 250, 262.5, 100);
+		DynamicBlock* b2 = new DynamicBlock(80, 25, 180.5, 100, m1);
+		DynamicBlock* b3 = new DynamicBlock(80, 25, 339.5, 325, m2);
+		std::vector <Block*>* v = new std::vector<Block*>;
+		v->push_back(b1);
+		v->push_back(b2);
+		v->push_back(b3);
+		layouts->push_back(v);
+	}
+	//The following have been contributed by Che-Hien Man (@Le-Che), thanks!
+	{
+		StaticBlock* b1 = new StaticBlock(50, 280, 275, 0);
+		StaticBlock* b2 = new StaticBlock(60, 25, 120, 210);
+		StaticBlock* b3 = new StaticBlock(60, 25, 165, 275);
+		StaticBlock* b4 = new StaticBlock(60, 25, 210, 340);
+		StaticBlock* b5 = new StaticBlock(60, 25, 330, 340);
+		StaticBlock* b6 = new StaticBlock(60, 25, 375, 275);
+		StaticBlock* b7 = new StaticBlock(60, 25, 420, 210);
+		std::vector <Block*>* v = new std::vector<Block*>;
+		v->push_back(b1);
+		v->push_back(b2);
+		v->push_back(b3);
+		v->push_back(b4);
+		v->push_back(b5);
+		v->push_back(b6);
+		v->push_back(b7);
+		layouts->push_back(v);
+	}
+	{
+		MovementType* m1 = new LeftRight(175, 100, 420);
+		StaticBlock* b1 = new StaticBlock(30, 170, 285, 0);
+		DynamicBlock* b2 = new DynamicBlock(80, 25, 120, 200, m1);
+		std::vector <Block*>* v = new std::vector<Block*>;
+		v->push_back(b1);
+		v->push_back(b2);
+		layouts->push_back(v);
+	}
+/*	{ //Level 5.png - Ask about this!
+		StaticBlock* b1 = new StaticBlock(30, 150, 150, 0);
+		StaticBlock* b2 = new StaticBlock(30, 150, 450, 0);
+		StaticBlock* b3 = new StaticBlock(30, 250, 285, 100);
+//		StaticBlock* b4 = new StaticBlock(60, 25, 210, 340);
+//		StaticBlock* b5 = new StaticBlock(60, 25, 330, 340);
+//		StaticBlock* b6 = new StaticBlock(60, 25, 375, 275);
+		StaticBlock* b7 = new StaticBlock(320, 25, 140, 335);
+		std::vector <Block*>* v = new std::vector<Block*>;
+		v->push_back(b1);
+		v->push_back(b2);
+		v->push_back(b3);
+//		v->push_back(b4);
+//		v->push_back(b5);
+//		v->push_back(b6);
+		v->push_back(b7);
+		layouts->push_back(v);
+	}*/
 	return layouts;
 }
 
