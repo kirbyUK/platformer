@@ -33,6 +33,18 @@ DynamicBlock::~DynamicBlock()
 	delete _movement;
 }
 
+bool DynamicBlock::isPlayerInRange(sf::Sprite& p)
+{
+	//Create a box around the block with space for the player:
+	sf::FloatRect r(_shape.getPosition().x - p.getGlobalBounds().width,
+					_shape.getPosition().y - p.getGlobalBounds().height,
+					_shape.getSize().x + p.getGlobalBounds().width,
+					_shape.getSize().y + p.getGlobalBounds().height);
+
+	//Check if the player is inside this box:
+	return r.intersects(p.getGlobalBounds());
+}
+
 void DynamicBlock::handleEvents(float frameTime)
 {
 	_movement->handleEvents(_shape, frameTime);

@@ -172,10 +172,10 @@ int main()
 		//Check if the player is on a dynamicBlock, and move them if so:
 		for(unsigned int i = 0; i < layout->size(); i++)
 		{
-			if(layout->at(i)->isPlayerOnTop(p.getSprite()))
+			DynamicBlock* b = dynamic_cast <DynamicBlock*>(layout->at(i));
+			if(b != NULL)
 			{
-				DynamicBlock* b = dynamic_cast <DynamicBlock*>(layout->at(i));
-				if(b != NULL)
+				if(b->isPlayerInRange(p.getSprite()))
 					p.move(b->getDistanceMoved());
 			}
 		}

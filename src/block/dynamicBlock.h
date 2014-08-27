@@ -30,6 +30,10 @@ class DynamicBlock : public Block
 		DynamicBlock(float, float, float, float, MovementType*);
 		~DynamicBlock();
 
+		//Checks if the player is anywhere in range of the block, so the block
+		//can push the player along if required:
+		bool isPlayerInRange(sf::Sprite&);
+
 		void handleEvents(float);
 
 		sf::Vector2f getDistanceMoved();
