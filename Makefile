@@ -1,6 +1,6 @@
 CC=g++
 FLAGS=-Wall -c -g
-LIBS=-lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+LIBS=-lsfml-audio-d -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
 DESTDIR=/usr/local
 SRC=src
 PDIR=$(SRC)/player
