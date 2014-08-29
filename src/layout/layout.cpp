@@ -30,7 +30,7 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		new std::vector <std::vector<Block*>* >;
 
 	//This is going to be a long function...
-	{
+	/*{
 		StaticBlock* b = new StaticBlock(300, 100, 150, 150);
 		std::vector <Block*>* v = new std::vector<Block*>;
 		v->push_back(b);
@@ -61,7 +61,7 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		v->push_back(b2);
 		v->push_back(b3);
 		layouts->push_back(v);
-	}
+	}*/
 	{
 		MovementType* m1 = new UpDown(100, 200, 100);
 		MovementType* m2 = new UpDown(100, 200, 100);
@@ -72,7 +72,7 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		v->push_back(b2);
 		layouts->push_back(v);
 	}
-	{
+	/*{
 		MovementType* m = new LeftRight(150, 120, 380);
 		DynamicBlock* b = new DynamicBlock(80, 25, 150, 150, m);
 		std::vector <Block*>* v = new std::vector<Block*>;
@@ -116,7 +116,7 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		v->push_back(b6);
 		v->push_back(b7);
 		layouts->push_back(v);
-	}
+	}*/
 	{
 		MovementType* m1 = new LeftRight(175, 100, 420);
 		StaticBlock* b1 = new StaticBlock(30, 170, 285, 0);

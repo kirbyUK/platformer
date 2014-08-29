@@ -36,7 +36,7 @@ class DynamicBlock : public Block
 
 		void handleEvents(float);
 
-		sf::Vector2f getDistanceMoved();
+		sf::Vector2f getDistanceMoved() const;
 };
 
 #endif

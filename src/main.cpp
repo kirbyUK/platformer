@@ -137,6 +137,10 @@ int main()
 			}
 		}
 
+		//Handle the block events:
+		for(unsigned int i = 0; i < layout->size(); i++)
+			layout->at(i)->handleEvents(frameTime);
+
 		//Handle keypresses:
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			p.move(LEFT);
@@ -165,11 +169,7 @@ int main()
 			delayTotal += delay.getElapsedTime().asSeconds();
 		}
 
-		//Handle the block events:
-		for(unsigned int i = 0; i < layout->size(); i++)
-			layout->at(i)->handleEvents(frameTime);
-
-		//Check if the player is on a dynamicBlock, and move them if so:
+		//Check if the player is in range of a DynamicBlock, and move them:
 		for(unsigned int i = 0; i < layout->size(); i++)
 		{
 			DynamicBlock* b = dynamic_cast <DynamicBlock*>(layout->at(i));
