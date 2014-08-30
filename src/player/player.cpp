@@ -178,9 +178,28 @@ void Player::move(Direction d)
 }
 
 //Gives a distance to offset the movement by, given by a DynamicBlock:
-void Player::move(sf::Vector2f d)
+void Player::move(DynamicBlock* b)
 {
-	_distance.block += d;
+	//If the player is just standing on top of the block, then we can move
+	//it as normal:
+	if(b->isPlayerOnTop(_sprite))
+		_distance.block += b->getDistanceMoved();
+	else
+	{
+		//Otherwise, work out which axis we need to move in. This works the same
+		//as collision detection - check the intersection and see which side is
+		//longest:
+		sf::FloatRect intersection, detectionBox = b->getDetectionBox(_sprite);
+		if(_sprite.getGlobalBounds().intersects(detectionBox, intersection))
+		{
+			if(intersection.width < intersection.height)
+				_distance.block.x += b->getDistanceMoved().x;
+			else if(intersection.width > intersection.height)
+				_distance.block.y += b->getDistanceMoved().y;
+			else if(intersection.width == intersection.height)
+				_distance.block += b->getDistanceMoved();
+		}
+	}
 }
 
 //Checks if the proposed movement will cause a collision, and intervenes if so:

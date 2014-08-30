@@ -19,6 +19,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "../sound/sfx.h"
+#include "../block/dynamicBlock.h"
 
 enum Direction { LEFT = -1, RIGHT = 1 };
 
@@ -84,7 +85,7 @@ class Player
 
 		//Signal the player to move in the given direction:
 		void move(Direction);
-		void move(sf::Vector2f);
+		void move(DynamicBlock*);
 
 		//Process events at the end of the frame:
 		void handleCollision(sf::RectangleShape, float);

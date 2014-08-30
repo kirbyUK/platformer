@@ -28,6 +28,8 @@
 #include "interface/arrow.h"
 #include "layout/layout.h"
 
+sf::RectangleShape hitbox;
+
 int main()
 {
 	//Attempt to load all the nessecary files:
@@ -141,6 +143,14 @@ int main()
 		for(unsigned int i = 0; i < layout->size(); i++)
 			layout->at(i)->handleEvents(frameTime);
 
+		//DEBUG
+		sf::RectangleShape box;
+		DynamicBlock* ptr = dynamic_cast <DynamicBlock*>(layout->at(0));
+		sf::FloatRect r = ptr->getDetectionBox(p.getSprite());
+		box.setSize(sf::Vector2f(r.width, r.height));
+		box.setPosition(sf::Vector2f(r.left, r.top));
+		box.setFillColor(sf::Color::Red);
+
 		//Handle keypresses:
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			p.move(LEFT);
@@ -174,10 +184,7 @@ int main()
 		{
 			DynamicBlock* b = dynamic_cast <DynamicBlock*>(layout->at(i));
 			if(b != NULL)
-			{
-				if(b->isPlayerInRange(p.getSprite()))
-					p.move(b->getDistanceMoved());
-			}
+				p.move(b);
 		}
 
 		//Handle the player's movement:
@@ -233,6 +240,8 @@ int main()
 
 		//Clear the screen and draw everything:
 		window.clear(BACKGROUND);
+		//DEBUG
+		window.draw(box);
 		window.draw(deathBlock.getShape());
 		window.draw(b1.getShape());
 		window.draw(b2.getShape());

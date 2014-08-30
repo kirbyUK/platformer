@@ -116,7 +116,7 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		v->push_back(b6);
 		v->push_back(b7);
 		layouts->push_back(v);
-	}*/
+	}
 	{
 		MovementType* m1 = new LeftRight(175, 100, 420);
 		StaticBlock* b1 = new StaticBlock(30, 170, 285, 0);
@@ -125,7 +125,7 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		v->push_back(b1);
 		v->push_back(b2);
 		layouts->push_back(v);
-	}
+	}*/
 /*	{ //Level 5.png - Ask about this!
 		StaticBlock* b1 = new StaticBlock(30, 150, 150, 0);
 		StaticBlock* b2 = new StaticBlock(30, 150, 450, 0);
