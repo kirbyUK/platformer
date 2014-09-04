@@ -303,8 +303,8 @@ void Player::handleCollision(sf::RectangleShape s, float frameTime)
 			//At this point, there will be no movement, so just zero everything:
 			if(r.intersects(s.getGlobalBounds()))
 			{
-				_direction.player.x = 0;
-				_direction.player.y = 0;
+				_direction.block.x = 0;
+				_direction.block.y = 0;
 			}
 		}
 	}
