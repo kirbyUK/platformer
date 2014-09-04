@@ -437,15 +437,3 @@ unsigned int Player::getHighScore() const
 {
 	return _highscore;
 }
-
-//DEBUG
-sf::RectangleShape convertRectToShape(sf::FloatRect r)
-{
-	sf::RectangleShape box;
-	box.setSize(sf::Vector2f(r.width, r.height));
-	box.setPosition(sf::Vector2f(r.left, r.top));
-	box.setOutlineColor(sf::Color::Green);
-	box.setFillColor(sf::Color::Transparent);
-	box.setOutlineThickness(1);
-	return box;
-}
