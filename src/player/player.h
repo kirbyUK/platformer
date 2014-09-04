@@ -19,6 +19,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "../sound/sfx.h"
+#include "../block/dynamicBlock.h"
 
 enum Direction { LEFT = -1, RIGHT = 1 };
 
@@ -38,8 +39,7 @@ class Player
 
 		//The maximum and minium height in pixels the character can go up 
 		//before they start to fall back to the ground:
-		static const float MAX_JUMP_HEIGHT;
-		static const float MIN_JUMP_HEIGHT;
+		static const float MAX_JUMP_HEIGHT, MIN_JUMP_HEIGHT;
 		float _maxJumpHeight;
 		float _jumpDistanceCovered;
 		bool _isJumping;
@@ -47,12 +47,14 @@ class Player
 
 		Direction _facing;
 
-		//The direction vector, which can hold 1 or -1 in both the X and Y
-		//directions to represent the direction being travelled in. The
-		//magnitude is determined by the VELOCITY constants:
-		sf::Vector2i _direction;
-		static const float X_VELOCITY;
-		static const float Y_VELOCITY;
+		//Two direction vectors, which control the direction the player is
+		//moving in (-1 for right/up, 1 for left/down, 0 for none). There are 
+		//two things that can influence player movement, the player and a
+		//DynamicBlock. The total distance travelled is totalled up, and
+		//processed at the end of the frame if there are no collisions:
+		static const float X_VELOCITY, Y_VELOCITY;
+		struct DirectionV { sf::Vector2i player, block; } _direction;
+		struct DistanceV  { sf::Vector2f block, total; } _distance;
 
 		//Score related variables:
 		static const char* HIGHSCORE_FILE;
@@ -83,13 +85,12 @@ class Player
 
 		//Signal the player to move in the given direction:
 		void move(Direction);
-		void move(sf::Vector2f);
+		void move(DynamicBlock*);
 
 		//Process events at the end of the frame:
-		bool handleCollision(sf::RectangleShape, float);
+		void handleCollision(sf::RectangleShape, float);
 		void handleCollision(sf::Window*, float);
 		void handleMovement(float);
-		void handleAnimation(float);
 
 		//Give the player a point:
 		void addPoint();

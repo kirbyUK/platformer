@@ -99,8 +99,14 @@ Player::Player()
 	_maxJumpHeight = MAX_JUMP_HEIGHT;
 	_jumpDistanceCovered = 0;
 	_facing = RIGHT;
-	_direction.x = 0;
-	_direction.y = 1;
+	_distance.block.x = 0;
+	_distance.block.y = 0;
+	_distance.total.x = 0;
+	_distance.total.y = 0;
+	_direction.block.x = 1;
+	_direction.block.y = 1;
+	_direction.player.x = 0;
+	_direction.player.y = 1;
 }
 
 void Player::reset()
@@ -112,7 +118,7 @@ void Player::reset()
 	if(_score > _highscore)
 		_highscore = _score;
 	
-	//Initalise everything else:
+	//Reset everything else:
 	_score = 0;
 	_isJumping = false;
 	_canJump = true;
@@ -126,8 +132,14 @@ void Player::reset()
 		_sprite.setTextureRect(rect);
 		_facing = RIGHT;
 	}
-	_direction.x = 0;
-	_direction.y = 1;
+	_distance.block.x = 0;
+	_distance.block.y = 0;
+	_distance.total.x = 0;
+	_distance.total.y = 0;
+	_direction.block.x = 1;
+	_direction.block.y = 1;
+	_direction.player.x = 0;
+	_direction.player.y = 1;
 }
 
 void Player::jump()
@@ -160,83 +172,181 @@ void Player::move(Direction d)
 	//Adjust the position vector:
 	switch(d)
 	{
-		case LEFT:  if(_direction.x > -1) _direction.x--; break;
-		case RIGHT: if(_direction.x < 1)  _direction.x++; break;
+		case LEFT:  if(_direction.player.x > -1) _direction.player.x--; break;
+		case RIGHT: if(_direction.player.x < 1)  _direction.player.x++; break;
 	}
 }
 
-//Forces the player to move in the given direction. This isn't very good, and
-//has been made exclusively so DynamicBlocks can move the player if needed. It
-//should not be used for general movement:
-void Player::move(sf::Vector2f d)
+//Gives a distance to offset the movement by, given by a DynamicBlock:
+void Player::move(DynamicBlock* b)
 {
-	_sprite.move(d);
+	//If the player is just standing on top of the block, then we can move
+	//it as normal:
+	if(b->isPlayerOnTop(_sprite))
+		_distance.block += b->getDistanceMoved();
+	else
+	{
+		//Otherwise, work out which axis we need to move in. This works the same
+		//as collision detection - check the intersection and see which side is
+		//longest:
+		sf::FloatRect detectionBox = b->getDetectionBox(_sprite), intersection;
+		if(_sprite.getGlobalBounds().intersects(detectionBox, intersection))
+		{
+			if(intersection.width < intersection.height)
+				_distance.block.x += b->getDistanceMoved().x;
+			else if(intersection.width > intersection.height)
+				_distance.block.y += b->getDistanceMoved().y;
+			else if(intersection.width == intersection.height)
+				_distance.block += b->getDistanceMoved();
+		}
+	}
 }
 
 //Checks if the proposed movement will cause a collision, and intervenes if so:
-bool Player::handleCollision(sf::RectangleShape s, float frameTime)
+void Player::handleCollision(sf::RectangleShape s, float frameTime)
 {
-	//Create a new Rect representing the player after the proposed movement:
-	sf::FloatRect r
-	(
-		(_sprite.getGlobalBounds().left + (_direction.x * (frameTime * X_VELOCITY))),
-		(_sprite.getGlobalBounds().top + (_direction.y * (frameTime * Y_VELOCITY))),
-		_sprite.getGlobalBounds().width,
-		_sprite.getGlobalBounds().height
-	);
-
-	//Check if this new Rect collides with the given sprite:
-	sf::FloatRect intersection;
-	if(r.intersects(s.getGlobalBounds(), intersection))
+	//We start with just movement caused by the player, as this is likely to be
+	//bigger due to the player generally having a larger velocity:
 	{
-		//If there is a collision, we have to check which direction it's in.
-		//This is done by taking the rectangle created by the intersection and
-		//looking at the sides. If it it taller than it is wide, it's in the x
-		//direction. If it's the opposite, it's the y. If they're the same,
-		//it's both:
-		if(intersection.width < intersection.height)
-			_direction.x = 0;
-		else if(intersection.width > intersection.height)
-			_direction.y = 0;
-		else if(intersection.width == intersection.height)
+		float x = 	(_sprite.getGlobalBounds().left + 
+					(_direction.player.x * (frameTime * X_VELOCITY)));
+		float y = 	(_sprite.getGlobalBounds().top + 
+					(_direction.player.y * (frameTime * Y_VELOCITY)));
+
+		//Create a new Rect representing the player after the proposed movement:
+		sf::FloatRect r(x, y,
+			_sprite.getGlobalBounds().width,
+			_sprite.getGlobalBounds().height
+		);
+
+		//Check if this new Rect collides with the given sprite:
+		sf::FloatRect intersection;
+		if(r.intersects(s.getGlobalBounds(), intersection))
 		{
-			_direction.x = 0;
-			_direction.y = 0;
+			//If there is a collision, we have to check which direction it's in.
+			//This is done by taking the rectangle created by the intersection 
+			//and looking at the sides. If it it taller than it is wide, it's in
+			//the x direction. If it's the opposite, it's the y. If they're the 
+			//same, it's both:
+			if(intersection.width < intersection.height)
+				_direction.player.x = 0;
+			else if(intersection.width > intersection.height)
+				_direction.player.y = 0;
+			else if(intersection.width == intersection.height)
+			{
+				_direction.player.x = 0;
+				_direction.player.y = 0;
+			}
+
+			//Now we have to check again, to see we aren't missing any collisions
+			//in the other direction:
+			x = 	(_sprite.getGlobalBounds().left + 
+					(_direction.player.x * (frameTime * X_VELOCITY)));
+			y = 	(_sprite.getGlobalBounds().top + 
+					(_direction.player.y * (frameTime * Y_VELOCITY)));
+			r.left = x;
+			r.top = y;
+
+			//At this point, there will be no movement, so just zero everything:
+			if(r.intersects(s.getGlobalBounds()))
+			{
+				_direction.player.x = 0;
+				_direction.player.y = 0;
+			}
 		}
-		return true;
 	}
-	else
-		return false;
+	//We now repeat the process, but with the block's movement added in as well:
+	{
+		float x = 	(_sprite.getGlobalBounds().left + 
+					(_direction.player.x * (frameTime * X_VELOCITY)) +
+					(_distance.block.x));
+		float y = 	(_sprite.getGlobalBounds().top + 
+					(_direction.player.y * (frameTime * Y_VELOCITY)) +
+					(_distance.block.y));
+
+		//Create a new Rect representing the player after the proposed movement:
+		sf::FloatRect r(x, y,
+			_sprite.getGlobalBounds().width,
+			_sprite.getGlobalBounds().height
+		);
+
+		//Check if this new Rect collides with the given sprite:
+		sf::FloatRect intersection;
+		if(r.intersects(s.getGlobalBounds(), intersection))
+		{
+			//If there is a collision, we have to check which direction it's in.
+			//This is done by taking the rectangle created by the intersection 
+			//and looking at the sides. If it it taller than it is wide, it's in
+			//the x direction. If it's the opposite, it's the y. If they're the 
+			//same, it's both:
+			if(intersection.width < intersection.height)
+				_direction.block.x = 0;
+			else if(intersection.width > intersection.height)
+				_direction.block.y = 0;
+			else if(intersection.width == intersection.height)
+			{
+				_direction.block.x = 0;
+				_direction.block.y = 0;
+			}
+
+			//Now we have to check again, to see we aren't missing any collisions
+			//in the other direction:
+			x = 	(_sprite.getGlobalBounds().left + 
+					(_direction.player.x * (frameTime * X_VELOCITY)) +
+					(_distance.block.x));
+			y = 	(_sprite.getGlobalBounds().top + 
+					(_direction.player.y * (frameTime * Y_VELOCITY)) +
+					(_distance.block.y));
+			r.left = x;
+			r.top = y;
+
+			//At this point, there will be no movement, so just zero everything:
+			if(r.intersects(s.getGlobalBounds()))
+			{
+				_direction.player.x = 0;
+				_direction.player.y = 0;
+			}
+		}
+	}
 }
 
 //Checks if the proposed movement will cause the character to go offscreen:
 void Player::handleCollision(sf::Window* window, float frameTime)
 {
+	float x = 	(_sprite.getGlobalBounds().left + 
+				(_direction.player.x * (frameTime * X_VELOCITY)) +
+				_distance.block.x);
+	float y =	(_sprite.getGlobalBounds().top +
+				(_direction.player.y * (frameTime * Y_VELOCITY)) +
+				_distance.block.y);
+
 	//Create a new Rect representing the player after the proposed movement:
-	sf::FloatRect r
-	(
-		(_sprite.getGlobalBounds().left + (_direction.x * (frameTime * X_VELOCITY))),
-		(_sprite.getGlobalBounds().top + (_direction.y * (frameTime * Y_VELOCITY))),
+	sf::FloatRect r(x, y,
 		_sprite.getGlobalBounds().width,
 		_sprite.getGlobalBounds().height
 	);
 
 	//Check if any of the points are outside the screen:
 	if((r.left < 0) || ((r.left + r.width) > window->getSize().x))
-		_direction.x = 0;
+		_direction.player.x = 0;
 	if((r.top < 0) || ((r.top + r.height) > window->getSize().y))
-		_direction.y = 0;
+		_direction.player.y = 0;
 }
 
 //Moves the player based on the values in the direction vector. This should be
 //called last, after everything involving collisions and all that has been done:
 void Player::handleMovement(float frameTime)
 {
-	_sprite.move
-	(
-		(_direction.x * (X_VELOCITY * frameTime)), //x
-		(_direction.y * (Y_VELOCITY * frameTime))  //y
-	);
+	//Work out the final distance to move and move the player that distance:
+	_distance.total.x = (
+		(_direction.player.x * (frameTime * X_VELOCITY)) + 
+		(_direction.block.x * _distance.block.x));
+
+	_distance.total.y = (
+		(_direction.player.y * (frameTime * Y_VELOCITY)) + 
+		(_direction.block.y * _distance.block.y));
+
+	_sprite.move(_distance.total.x, _distance.total.y);
 
 	//If the player is jumping, add the distance jumped to the total distance
 	//jumped so we know when to end the jump and start the player's descent:
@@ -252,15 +362,15 @@ void Player::handleMovement(float frameTime)
 	}
 
 	//Check if we collided with a platform this frame and allow jumping if so:
-	if(_direction.y == 0)
+	if(_direction.player.y == 0)
 		_canJump = true;
 	else
 		_canJump = false;
 
 	//Flip the character if required:
-	if(_direction.x != 0)
+	if(_direction.player.x != 0)
 	{
-		if(static_cast <int>(_facing) != _direction.x)
+		if(static_cast <int>(_facing) != _direction.player.x)
 		{
 			//Do the flip:
 			sf::IntRect rect = _sprite.getTextureRect();
@@ -268,16 +378,22 @@ void Player::handleMovement(float frameTime)
 			rect.width = -rect.width;
 			_sprite.setTextureRect(rect);
 
-			_facing = static_cast <Direction>(_direction.x);
+			_facing = static_cast <Direction>(_direction.player.x);
 		}
 	}
 
-	//Reset the vector:
-	_direction.x = 0;
+	//Reset the vectors:
+	_distance.block.x = 0;
+	_distance.block.y = 0;
+	_distance.total.x = 0;
+	_distance.total.y = 0;
+	_direction.block.x = 1;
+	_direction.block.y = 1;
+	_direction.player.x = 0;
 	if(_isJumping)
-		_direction.y = -1;
+		_direction.player.y = -1;
 	else
-		_direction.y = 1;
+		_direction.player.y = 1;
 }
 
 void Player::addPoint()
@@ -320,4 +436,16 @@ unsigned int Player::getScore() const
 unsigned int Player::getHighScore() const
 {
 	return _highscore;
+}
+
+//DEBUG
+sf::RectangleShape convertRectToShape(sf::FloatRect r)
+{
+	sf::RectangleShape box;
+	box.setSize(sf::Vector2f(r.width, r.height));
+	box.setPosition(sf::Vector2f(r.left, r.top));
+	box.setOutlineColor(sf::Color::Green);
+	box.setFillColor(sf::Color::Transparent);
+	box.setOutlineThickness(1);
+	return box;
 }

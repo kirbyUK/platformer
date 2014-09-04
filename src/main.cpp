@@ -137,16 +137,12 @@ int main()
 			}
 		}
 
+		//Handle the block events:
+		for(unsigned int i = 0; i < layout->size(); i++)
+			layout->at(i)->handleEvents(frameTime);
+
 		//Handle keypresses:
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-			p.move(LEFT);
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			p.move(RIGHT);
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		{
-			p.jump();
-			jumpTimer.restart();
-		}
+		//Pausing:
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		{
 			delay.restart();
@@ -164,20 +160,24 @@ int main()
 			}
 			delayTotal += delay.getElapsedTime().asSeconds();
 		}
+		//Jumping:
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
+			p.jump();
+			jumpTimer.restart();
+		}
+		//Movement:
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			p.move(LEFT);
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			p.move(RIGHT);
 
-		//Handle the block events:
-		for(unsigned int i = 0; i < layout->size(); i++)
-			layout->at(i)->handleEvents(frameTime);
-
-		//Check if the player is on a dynamicBlock, and move them if so:
+		//Check if the player is in range of a DynamicBlock, and move them:
 		for(unsigned int i = 0; i < layout->size(); i++)
 		{
 			DynamicBlock* b = dynamic_cast <DynamicBlock*>(layout->at(i));
 			if(b != NULL)
-			{
-				if(b->isPlayerInRange(p.getSprite()))
-					p.move(b->getDistanceMoved());
-			}
+				p.move(b);
 		}
 
 		//Handle the player's movement:
