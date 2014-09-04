@@ -107,8 +107,4 @@ class Player
 		unsigned int getHighScore() const;
 };
 
-//DEBUG:
-sf::RectangleShape convertRectToShape(sf::FloatRect);
-extern sf::FloatRect proposed;
-
 #endif

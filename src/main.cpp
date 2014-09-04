@@ -28,9 +28,6 @@
 #include "interface/arrow.h"
 #include "layout/layout.h"
 
-sf::FloatRect proposed;
-sf::RectangleShape hitbox;
-
 int main()
 {
 	//Attempt to load all the nessecary files:
@@ -249,7 +246,6 @@ int main()
 		for(unsigned int i = 0; i < layout->size(); i++)
 			window.draw(layout->at(i)->getShape());
 		window.draw(p.getSprite());
-		window.draw(convertRectToShape(proposed));
 		window.display();
 
 		//Get the time of that frame:
