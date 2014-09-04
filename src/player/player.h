@@ -91,7 +91,6 @@ class Player
 		void handleCollision(sf::RectangleShape, float);
 		void handleCollision(sf::Window*, float);
 		void handleMovement(float);
-		void handleAnimation(float);
 
 		//Give the player a point:
 		void addPoint();
@@ -107,5 +106,9 @@ class Player
 		unsigned int getScore() const;
 		unsigned int getHighScore() const;
 };
+
+//DEBUG:
+sf::RectangleShape convertRectToShape(sf::FloatRect);
+extern sf::FloatRect proposed;
 
 #endif

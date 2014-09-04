@@ -189,7 +189,7 @@ void Player::move(DynamicBlock* b)
 		//Otherwise, work out which axis we need to move in. This works the same
 		//as collision detection - check the intersection and see which side is
 		//longest:
-		sf::FloatRect intersection, detectionBox = b->getDetectionBox(_sprite);
+		sf::FloatRect detectionBox = b->getDetectionBox(_sprite), intersection;
 		if(_sprite.getGlobalBounds().intersects(detectionBox, intersection))
 		{
 			if(intersection.width < intersection.height)
@@ -237,6 +237,22 @@ void Player::handleCollision(sf::RectangleShape s, float frameTime)
 				_direction.player.x = 0;
 				_direction.player.y = 0;
 			}
+
+			//Now we have to check again, to see we aren't missing any collisions
+			//in the other direction:
+			x = 	(_sprite.getGlobalBounds().left + 
+					(_direction.player.x * (frameTime * X_VELOCITY)));
+			y = 	(_sprite.getGlobalBounds().top + 
+					(_direction.player.y * (frameTime * Y_VELOCITY)));
+			r.left = x;
+			r.top = y;
+
+			//At this point, there will be no movement, so just zero everything:
+			if(r.intersects(s.getGlobalBounds()))
+			{
+				_direction.player.x = 0;
+				_direction.player.y = 0;
+			}
 		}
 	}
 	//We now repeat the process, but with the block's movement added in as well:
@@ -272,6 +288,24 @@ void Player::handleCollision(sf::RectangleShape s, float frameTime)
 				_direction.block.x = 0;
 				_direction.block.y = 0;
 			}
+
+			//Now we have to check again, to see we aren't missing any collisions
+			//in the other direction:
+			x = 	(_sprite.getGlobalBounds().left + 
+					(_direction.player.x * (frameTime * X_VELOCITY)) +
+					(_distance.block.x));
+			y = 	(_sprite.getGlobalBounds().top + 
+					(_direction.player.y * (frameTime * Y_VELOCITY)) +
+					(_distance.block.y));
+			r.left = x;
+			r.top = y;
+
+			//At this point, there will be no movement, so just zero everything:
+			if(r.intersects(s.getGlobalBounds()))
+			{
+				_direction.player.x = 0;
+				_direction.player.y = 0;
+			}
 		}
 	}
 }
@@ -279,11 +313,12 @@ void Player::handleCollision(sf::RectangleShape s, float frameTime)
 //Checks if the proposed movement will cause the character to go offscreen:
 void Player::handleCollision(sf::Window* window, float frameTime)
 {
-/*	float x =
-		(_sprite.getGlobalBounds().left + _distance.player.x + _distance.block.x);
-
-	float y =
-		(_sprite.getGlobalBounds().top + _distance.player.y + _distance.block.y);
+	float x = 	(_sprite.getGlobalBounds().left + 
+				(_direction.player.x * (frameTime * X_VELOCITY)) +
+				_distance.block.x);
+	float y =	(_sprite.getGlobalBounds().top +
+				(_direction.player.y * (frameTime * Y_VELOCITY)) +
+				_distance.block.y);
 
 	//Create a new Rect representing the player after the proposed movement:
 	sf::FloatRect r(x, y,
@@ -293,9 +328,9 @@ void Player::handleCollision(sf::Window* window, float frameTime)
 
 	//Check if any of the points are outside the screen:
 	if((r.left < 0) || ((r.left + r.width) > window->getSize().x))
-		_distance.total.x = 0;
+		_direction.player.x = 0;
 	if((r.top < 0) || ((r.top + r.height) > window->getSize().y))
-		_distance.total.y = 0;*/
+		_direction.player.y = 0;
 }
 
 //Moves the player based on the values in the direction vector. This should be
@@ -401,4 +436,16 @@ unsigned int Player::getScore() const
 unsigned int Player::getHighScore() const
 {
 	return _highscore;
+}
+
+//DEBUG
+sf::RectangleShape convertRectToShape(sf::FloatRect r)
+{
+	sf::RectangleShape box;
+	box.setSize(sf::Vector2f(r.width, r.height));
+	box.setPosition(sf::Vector2f(r.left, r.top));
+	box.setOutlineColor(sf::Color::Green);
+	box.setFillColor(sf::Color::Transparent);
+	box.setOutlineThickness(1);
+	return box;
 }

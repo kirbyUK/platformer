@@ -28,6 +28,7 @@
 #include "interface/arrow.h"
 #include "layout/layout.h"
 
+sf::FloatRect proposed;
 sf::RectangleShape hitbox;
 
 int main()
@@ -143,24 +144,8 @@ int main()
 		for(unsigned int i = 0; i < layout->size(); i++)
 			layout->at(i)->handleEvents(frameTime);
 
-		//DEBUG
-		sf::RectangleShape box;
-		DynamicBlock* ptr = dynamic_cast <DynamicBlock*>(layout->at(0));
-		sf::FloatRect r = ptr->getDetectionBox(p.getSprite());
-		box.setSize(sf::Vector2f(r.width, r.height));
-		box.setPosition(sf::Vector2f(r.left, r.top));
-		box.setFillColor(sf::Color::Red);
-
 		//Handle keypresses:
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-			p.move(LEFT);
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			p.move(RIGHT);
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		{
-			p.jump();
-			jumpTimer.restart();
-		}
+		//Pausing:
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		{
 			delay.restart();
@@ -178,6 +163,17 @@ int main()
 			}
 			delayTotal += delay.getElapsedTime().asSeconds();
 		}
+		//Jumping:
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
+			p.jump();
+			jumpTimer.restart();
+		}
+		//Movement:
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			p.move(LEFT);
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			p.move(RIGHT);
 
 		//Check if the player is in range of a DynamicBlock, and move them:
 		for(unsigned int i = 0; i < layout->size(); i++)
@@ -240,8 +236,6 @@ int main()
 
 		//Clear the screen and draw everything:
 		window.clear(BACKGROUND);
-		//DEBUG
-		window.draw(box);
 		window.draw(deathBlock.getShape());
 		window.draw(b1.getShape());
 		window.draw(b2.getShape());
@@ -255,6 +249,7 @@ int main()
 		for(unsigned int i = 0; i < layout->size(); i++)
 			window.draw(layout->at(i)->getShape());
 		window.draw(p.getSprite());
+		window.draw(convertRectToShape(proposed));
 		window.display();
 
 		//Get the time of that frame:
