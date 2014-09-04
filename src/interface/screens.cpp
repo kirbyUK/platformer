@@ -12,8 +12,8 @@ bool pause(sf::RenderWindow* w, sf::Event& event, bool haveFocus)
 	Text* selected = menu[0];
 
 	//Create arrows to point at the current selection:
-	Arrow menuArrow1(EAST, 195, 211);
-	Arrow menuArrow2(EAST, 195, 241);
+	Arrow menuArrow1(EAST, 195, 207);
+	Arrow menuArrow2(EAST, 195, 237);
 
 	//Make a new loop for the paused screen:
 	while(w->isOpen())
@@ -83,8 +83,8 @@ bool gameOver(sf::RenderWindow* w, sf::Event& event, int score, int highscore)
 	Text* selected = menu[0];
 
 	//Create arrows to point at the current selection:
-	Arrow menuArrow1(EAST, 225, 231);
-	Arrow menuArrow2(EAST, 225, 261);
+	Arrow menuArrow1(EAST, 225, 227);
+	Arrow menuArrow2(EAST, 225, 257);
 
 	//Make a new loop for the game over screen:
 	while(w->isOpen())
