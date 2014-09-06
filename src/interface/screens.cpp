@@ -37,16 +37,16 @@ bool pause(sf::RenderWindow* w, sf::Event& event, bool haveFocus)
 				w->setSize(sf::Vector2u(WINDOW_X, WINDOW_Y));
 		}
 
-		//If the user presses enter, continue or quit:
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
-		{
-			if(selected == menu[0])
-				return true;
-			else
-				w->close();
-		}
 		if(haveFocus)
 		{
+			//If the user presses enter, continue or quit:
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+			{
+				if(selected == menu[0])
+					return true;
+				else
+					w->close();
+			}
 			//Change the selection if the player presses an arrow key:
 			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 				if(selected == menu[1])
