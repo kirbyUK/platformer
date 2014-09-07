@@ -81,7 +81,7 @@ class Player
 		void jump();
 
 		//Set the maximum jump height to a fraction of the actual maximum:
-		void setMaxJumpHeight(float);
+		void setMaxJumpHeight(float, float);
 
 		//Signal the player to move in the given direction:
 		void move(Direction);

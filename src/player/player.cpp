@@ -154,16 +154,22 @@ void Player::jump()
 
 //Sets the maximum jump height to a fraction of the actual maximum, to allow
 //for short hopping:
-void Player::setMaxJumpHeight(float f)
+void Player::setMaxJumpHeight(float seconds, float frameTime)
 {
 	if(_isJumping)
 	{
-		f *= 420;
-		_maxJumpHeight = MAX_JUMP_HEIGHT * f;
+		std::cout << "seconds1 = " << seconds << std::endl;
+		seconds /= frameTime;
+		std::cout << "seconds2 = " << seconds << std::endl;
+		seconds *= 420;
+		std::cout << "seconds3 = " << seconds << std::endl;
+		_maxJumpHeight = MAX_JUMP_HEIGHT * seconds;
+		std::cout << "max jump1 = " << _maxJumpHeight << std::endl;
 		if(_maxJumpHeight < MIN_JUMP_HEIGHT)
 			_maxJumpHeight = MIN_JUMP_HEIGHT;
 		else if(_maxJumpHeight > MAX_JUMP_HEIGHT)
 			_maxJumpHeight = MAX_JUMP_HEIGHT;
+		std::cout << "max jump2 = " << _maxJumpHeight << std::endl;
 	}
 }
 

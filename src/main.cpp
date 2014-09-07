@@ -111,7 +111,7 @@ int main()
 			//If the spacebar is released:
 			if(event.type == sf::Event::KeyReleased)
 				if(event.key.code == sf::Keyboard::Space)
-					p.setMaxJumpHeight(jumpTimer.getElapsedTime().asSeconds());
+					p.setMaxJumpHeight(jumpTimer.getElapsedTime().asSeconds(), frameTime);
 
 			//If the window is resized, snap it back to what it should be:
 			if(event.type == sf::Event::Resized)
