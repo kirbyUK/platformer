@@ -184,13 +184,9 @@ void Player::move(DynamicBlock* b)
 	//If the player is just standing on top of the block, then we can move
 	//it as normal:
 	if(b->isPlayerOnTop(_sprite))
-	{
-		std::cout << "this happened\n";
 		_distance.block += b->getDistanceMoved();
-	}
 	else
 	{
-		std::cout << "it didn't happen :(\n";
 		//Otherwise, work out which axis we need to move in. This works the same
 		//as collision detection - check the intersection and see which side is
 		//longest:

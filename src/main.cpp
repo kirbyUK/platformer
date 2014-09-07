@@ -248,10 +248,10 @@ int main()
 			window.draw(helpArrow2.getSprite());
 		for(unsigned int i = 0; i < layout->size(); i++)
 			window.draw(layout->at(i)->getShape());
-		window.draw(p.getSprite());
 		//DEBUG
-		window.draw(playerTop);
 		window.draw(detection);
+		window.draw(p.getSprite());
+		window.draw(playerTop);
 		window.display();
 
 		//Get the time of that frame:

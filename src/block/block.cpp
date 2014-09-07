@@ -37,15 +37,12 @@ bool Block::isPlayerOnTop(sf::Sprite& player) const
 
 	playerTop.setSize(sf::Vector2f(p.width, p.height));
 	playerTop.setPosition(p.left, p.top);
-	playerTop.setOutlineColor(sf::Color::Green);
-	playerTop.setOutlineThickness(1);
+	playerTop.setFillColor(sf::Color::Green);
 	if(_shape.getGlobalBounds() == theone.getGlobalBounds())
 	{
 		detection.setSize(sf::Vector2f(r.width, r.height));
 		detection.setPosition(r.left, r.top);
-		detection.setOutlineColor(sf::Color::Red);
-		detection.setFillColor(sf::Color::Transparent);
-		detection.setOutlineThickness(1);
+		detection.setFillColor(sf::Color::Red);
 	}
 
 	if(p.intersects(r))
