@@ -28,8 +28,6 @@
 #include "interface/arrow.h"
 #include "layout/layout.h"
 
-sf::RectangleShape theone;
-
 int main()
 {
 	//Attempt to load all the nessecary files:
@@ -144,7 +142,6 @@ int main()
 			layout->at(i)->handleEvents(frameTime);
 
 		//Handle keypresses:
-	theone = layout->at(0)->getShape();
 		//Pausing:
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		{
@@ -248,10 +245,7 @@ int main()
 			window.draw(helpArrow2.getSprite());
 		for(unsigned int i = 0; i < layout->size(); i++)
 			window.draw(layout->at(i)->getShape());
-		//DEBUG
-		window.draw(detection);
 		window.draw(p.getSprite());
-		window.draw(playerTop);
 		window.display();
 
 		//Get the time of that frame:

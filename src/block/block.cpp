@@ -32,18 +32,8 @@ bool Block::isPlayerOnTop(sf::Sprite& player) const
 	sf::FloatRect r(x, y, boxWidth, playerHeight);
 
 	//Make a rect that is 1 pixel tall to represent the top of the player:
-	sf::FloatRect p(player.getPosition(), 
+	sf::FloatRect p(player.getPosition(),
 		sf::Vector2f(player.getGlobalBounds().width, 1));
-
-	playerTop.setSize(sf::Vector2f(p.width, p.height));
-	playerTop.setPosition(p.left, p.top);
-	playerTop.setFillColor(sf::Color::Green);
-	if(_shape.getGlobalBounds() == theone.getGlobalBounds())
-	{
-		detection.setSize(sf::Vector2f(r.width, r.height));
-		detection.setPosition(r.left, r.top);
-		detection.setFillColor(sf::Color::Red);
-	}
 
 	if(p.intersects(r))
 		return true;

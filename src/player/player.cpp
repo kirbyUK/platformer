@@ -184,7 +184,12 @@ void Player::move(DynamicBlock* b)
 	//If the player is just standing on top of the block, then we can move
 	//it as normal:
 	if(b->isPlayerOnTop(_sprite))
+	{
 		_distance.block += b->getDistanceMoved();
+		sf::FloatRect intersection;
+		if(_sprite.getGlobalBounds().intersects(b->getShape().getGlobalBounds(), intersection))
+			_distance.block.y -= intersection.height;
+	}
 	else
 	{
 		//Otherwise, work out which axis we need to move in. This works the same
@@ -249,7 +254,7 @@ void Player::handleCollision(sf::RectangleShape s, float frameTime)
 			r.top = y;
 
 			//At this point, there will be no movement, so just zero everything:
-			if(r.intersects(s.getGlobalBounds(), intersection))
+			if(r.intersects(s.getGlobalBounds()))
 			{
 				_direction.player.x = 0;
 				_direction.player.y = 0;
