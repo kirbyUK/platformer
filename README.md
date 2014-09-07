@@ -20,6 +20,15 @@ make
 
 And use the binary that appears in the project directory.
 
+### Mac
+
+Along with the instructions in the Linux section, edit the Makefile similar to Windows, like so:
+
+```Makefile
+FLAGS=-Wall -c -g -I/usr/local/include
+LIBS=-L/usr/local/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+```
+
 ###Windows
 
 ####Using MinGW
