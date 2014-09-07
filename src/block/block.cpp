@@ -15,26 +15,27 @@
 * along with 'platformer'. If not, see <http://www.gnu.org/licenses/>.
 */
 #include "block.h"
+#include <iostream>
+
+extern sf::RectangleShape theone;
 
 const sf::Color Block::BLOCK_COLOUR = sf::Color(242, 241, 235);
 
 //Checks if the player is standing on top of the block:
-bool Block::isPlayerOnTop(sf::Sprite& p) const
+bool Block::isPlayerOnTop(sf::Sprite& player) const
 {
 	//Create a box the height of the player plus one and the width of the block:
-	float playerHeight = p.getGlobalBounds().height + 1.0;
+	float playerHeight = player.getGlobalBounds().height;
 	float boxWidth = _shape.getSize().x;
 	float x = _shape.getPosition().x;
 	float y = _shape.getPosition().y - playerHeight;
 	sf::FloatRect r(x, y, boxWidth, playerHeight);
 
-	//Get the co-ordinates of the top left and top right corners of the player:
-	sf::Vector2f topleft = p.getPosition();
-	sf::Vector2f topright = p.getPosition();
-	topright.x += p.getGlobalBounds().width;
+	//Make a rect that is 1 pixel tall to represent the top of the player:
+	sf::FloatRect p(player.getPosition(),
+		sf::Vector2f(player.getGlobalBounds().width, 1));
 
-	//Check if the top of the player is within this box:
-	if((r.contains(topleft)) || (r.contains(topright)))
+	if(p.intersects(r))
 		return true;
 
 	return false;

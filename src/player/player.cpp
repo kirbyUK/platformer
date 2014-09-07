@@ -184,7 +184,12 @@ void Player::move(DynamicBlock* b)
 	//If the player is just standing on top of the block, then we can move
 	//it as normal:
 	if(b->isPlayerOnTop(_sprite))
+	{
 		_distance.block += b->getDistanceMoved();
+		sf::FloatRect intersection;
+		if(_sprite.getGlobalBounds().intersects(b->getShape().getGlobalBounds(), intersection))
+			_distance.block.y -= intersection.height;
+	}
 	else
 	{
 		//Otherwise, work out which axis we need to move in. This works the same
