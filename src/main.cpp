@@ -239,9 +239,9 @@ int main()
 		window.draw(fps.updateText(static_cast <unsigned>(1 / frameTime)));
 		window.draw(score.updateText(p.getScore()));
 		window.draw(high.updateText(p.getHighScore()));
-		if(p.getScore() == 0)
+		if(target == targets[1])
 			window.draw(helpArrow1.getSprite());
-		if(p.getScore() == 1)
+		else
 			window.draw(helpArrow2.getSprite());
 		for(unsigned int i = 0; i < layout->size(); i++)
 			window.draw(layout->at(i)->getShape());
