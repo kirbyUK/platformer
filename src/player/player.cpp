@@ -184,9 +184,13 @@ void Player::move(DynamicBlock* b)
 	//If the player is just standing on top of the block, then we can move
 	//it as normal:
 	if(b->isPlayerOnTop(_sprite))
+	{
+		std::cout << "this happened\n";
 		_distance.block += b->getDistanceMoved();
+	}
 	else
 	{
+		std::cout << "it didn't happen :(\n";
 		//Otherwise, work out which axis we need to move in. This works the same
 		//as collision detection - check the intersection and see which side is
 		//longest:
@@ -249,7 +253,7 @@ void Player::handleCollision(sf::RectangleShape s, float frameTime)
 			r.top = y;
 
 			//At this point, there will be no movement, so just zero everything:
-			if(r.intersects(s.getGlobalBounds()))
+			if(r.intersects(s.getGlobalBounds(), intersection))
 			{
 				_direction.player.x = 0;
 				_direction.player.y = 0;

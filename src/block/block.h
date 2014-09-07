@@ -33,4 +33,7 @@ class Block
 		sf::RectangleShape getShape() const;
 };
 
+extern sf::RectangleShape detection;
+extern sf::RectangleShape playerTop;
+
 #endif
