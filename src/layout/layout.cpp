@@ -98,6 +98,15 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		v->push_back(b3);
 		layouts->push_back(v);
 	}
+	{
+		MovementType* m1 = new LeftRight(175, 125, 395);
+		DynamicBlock* b1 = new DynamicBlock(80, 25, 260, 200, m1);
+		StaticBlock* b2 = new StaticBlock(50, 250, 275, 150);
+		std::vector <Block*>* v = new std::vector<Block*>;
+		v->push_back(b1);
+		v->push_back(b2);
+		layouts->push_back(v);
+	}
 	//The following have been contributed by Che-Hien Man (@Le-Che), thanks!
 	{
 		StaticBlock* b1 = new StaticBlock(50, 280, 275, 0);
