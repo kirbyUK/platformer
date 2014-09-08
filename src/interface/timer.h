@@ -34,11 +34,14 @@ class Timer
 		//The text to display the timer:
 		Text _text;
 
+		//The delay from things like pausing to take into account:
+		float _delay;
+
 	public:
 		//Constructor, takes the x and y position of the timer:
 		Timer(float x, float y);
 
-		float getTimeRemaining() const;
+		float getTimeRemaining(float);
 		void reset(float);
 		sf::Text& getTimer();
 };

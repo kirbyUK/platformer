@@ -22,17 +22,20 @@ const float Timer::MINIMUM_TIME = 4;
 
 Timer::Timer(float x, float y) : _text(20, x, y)
 {
+	_delay = 0;
 	_time = STARTING_TIME;
 }
 
-float Timer::getTimeRemaining() const
+float Timer::getTimeRemaining(float delay)
 {
-	return (_time - _timer.getElapsedTime().asSeconds());
+	_delay += delay;
+	return ((_time - _timer.getElapsedTime().asSeconds()) + _delay);
 }
 
 void Timer::reset(float mod)
 {
 	_timer.restart();
+	_delay = 0;
 
 	//Set the amount of time given, based on the modifier.
 	//The formula (where y is time remaining, and x is the player's score) is
@@ -45,7 +48,7 @@ void Timer::reset(float mod)
 
 sf::Text& Timer::getTimer()
 {
-	float t = getTimeRemaining();
+	float t = getTimeRemaining(0);
 	unsigned int seconds = floor(t);
 	unsigned int milliseconds = ((t - floor(t)) * 1000);
 	return _text.updateText(seconds, milliseconds);

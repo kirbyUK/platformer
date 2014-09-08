@@ -214,7 +214,7 @@ int main()
 		//Otherwise, check if the player is on top of the death block, or runs
 		//out of time:
 		else if((deathBlock.isPlayerOnTop(p.getSprite())) 
-			|| (timer.getTimeRemaining() <= 0))
+			|| ((timer.getTimeRemaining(delayTotal)) <= 0))
 		{
 			//Kill the player:
 			p.kill();
