@@ -33,23 +33,18 @@ LIBS=-L/usr/local/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
 ####Using MinGW
 
-If you have MinGW installed and in your path, you can use the supplied Makefile (with a few modifications).
+If you have MinGW installed and in your path, you can use the supplied Makefile.
 
 1) Download the [MinGW build](http://sfml-dev.org/download/sfml/2.1/SFML-2.1-windows-gcc-4.7-mingw-32bits.zip) 
-of SFML, and save it somewhere convenient. I put mine in C:\
+of SFML, and extract it somewhere convinient. I placed mine in C:\
 
-2) Edit the Makefile like so:
-
-```Makefile
-FLAGS=-Wall -c -g -IC:\SFML-2.1\include
-LIBS=-LC:\SFML-2.1\lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
-```
-
-3) Using cmd.exe, cd in to the directory and run the command:
+2) Using cmd.exe, cd in to the directory and run the command:
 
 ```
-mingw32-make
+mingw32-make SFML_PATH=C:\SFML-2.1
 ```
+
+Replacing 'C:\SFML-2.1' with where ever you extract SFML to.
 
 ##TODO:
 

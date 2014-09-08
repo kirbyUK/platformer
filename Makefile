@@ -1,7 +1,8 @@
 ifdef SystemRoot
     CCFLAGS += -D WIN32
-    FLAGS=-Wall -Werror -c -g -IC:\SFML-2.1\include
-    LIBS=-LC:\SFML-2.1\lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+	SFML_PATH=C:\SFML-2.1
+    FLAGS=-Wall -Werror -c -g -I$(SFML_PATH)\include
+    LIBS=-L$(SFML_PATH)\lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
     DESTDIR="\""C:\Program Files (x86)"\""
 else
     UNAME_S := $(shell uname -s)
@@ -13,8 +14,9 @@ else
     endif
     ifeq ($(UNAME_S),Darwin)
         CCFLAGS += -D OSX
-        FLAGS=-Wall -Werror -c -g -I/usr/local/include
-        LIBS=-L/usr/local/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+		SFML_PATH=/usr/local
+        FLAGS=-Wall -Werror -c -g -I$(SFML_PATH)/include
+        LIBS=-L$(SFML_PATH)/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
         DESTDIR=/usr/local
     endif
 endif
