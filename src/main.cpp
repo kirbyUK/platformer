@@ -63,7 +63,7 @@ int main()
 	Text fps("FPS: ", 16, TOP_LEFT, &window, 5, 5);
 	Text score("SCORE: ", 16, TOP_RIGHT, &window, 5, 5);
 	Text high("HIGH:  ", 16, TOP_RIGHT, &window, 5, 23);
-	Timer timer(250, 5);
+	Timer timer(240, 5);
 
 	//Used to time the difference between the player pressing and releasing space,
 	//allowing for 'short hops' if the player releases space bar quick enough:
