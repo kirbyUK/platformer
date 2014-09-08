@@ -115,7 +115,7 @@ endif
 
 deinstall: uninstall
 uninstall:
-	$(RM) $(call FixPath,$(DESTDIR)/bin/$(BIN)/*)
+	$(RM) $(call FixPath,$(DESTDIR)/bin/$(BIN))
 
 install:
 	install -m 0755 $(BIN) $(call FixPath,$(DESTDIR)/bin/)
