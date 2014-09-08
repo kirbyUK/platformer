@@ -121,4 +121,4 @@ install:
 	install -m 0755 $(BIN) $(call FixPath,$(DESTDIR)/bin/)
 
 clean:
-	$(RM) $(call FixPath,$(OBJS)/*) $(call FixPath,$(BIN)/*)
+	$(RM) $(call FixPath,$(OBJS)) $(call FixPath,$(BIN))
