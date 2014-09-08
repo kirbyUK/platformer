@@ -48,7 +48,7 @@ Replacing 'C:\SFML-2.1' with where ever you extract SFML to.
 
 ##TODO:
 
-- [ ] Add a timer
+- [x] Add a timer
 
 - [x] Add pause functionality
 

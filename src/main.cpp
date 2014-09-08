@@ -26,6 +26,7 @@
 #include "interface/screens.h"
 #include "interface/text.h"
 #include "interface/arrow.h"
+#include "interface/timer.h"
 #include "layout/layout.h"
 
 int main()
@@ -62,6 +63,7 @@ int main()
 	Text fps("FPS: ", 16, TOP_LEFT, &window, 5, 5);
 	Text score("SCORE: ", 16, TOP_RIGHT, &window, 5, 5);
 	Text high("HIGH:  ", 16, TOP_RIGHT, &window, 5, 23);
+	Timer timer(250, 5);
 
 	//Used to time the difference between the player pressing and releasing space,
 	//allowing for 'short hops' if the player releases space bar quick enough:
@@ -198,6 +200,9 @@ int main()
 			//Give the player a point:
 			p.addPoint();
 
+			//Reset the timer, decreasing the amount of time allowed:
+			timer.reset(p.getScore());
+
 			//Change the target block to the other one:
 			if(target == targets[0])
 				target++;
@@ -206,8 +211,10 @@ int main()
 
 			layout = shuffleLayouts(layouts);
 		}
-		//Otherwise, check if the player is on top of the death block:
-		else if(deathBlock.isPlayerOnTop(p.getSprite()))
+		//Otherwise, check if the player is on top of the death block, or runs
+		//out of time:
+		else if((deathBlock.isPlayerOnTop(p.getSprite())) 
+			|| (timer.getTimeRemaining() <= 0))
 		{
 			//Kill the player:
 			p.kill();
@@ -225,6 +232,7 @@ int main()
 			if(gameOver(&window, event, p.getScore(), p.getHighScore()))
 			{
 				p.reset();
+				timer.reset(0);
 				target = targets[1];
 				layout = shuffleLayouts(layouts);
 			}
@@ -237,6 +245,7 @@ int main()
 		window.draw(b1.getShape());
 		window.draw(b2.getShape());
 		window.draw(fps.updateText(static_cast <unsigned>(1 / frameTime)));
+		window.draw(timer.getTimer());
 		window.draw(score.updateText(p.getScore()));
 		window.draw(high.updateText(p.getHighScore()));
 		if(target == targets[1])

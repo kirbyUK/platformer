@@ -49,9 +49,11 @@ class Text
 		//Constructor, takes the text's string, character size, a corner of the
 		//window to offset from, a pointer to the window, and the offsets:
 		Text(std::string, unsigned int, Corner, sf::Window*, float, float);
+		Text(unsigned int charSize, float x, float y);
 
 		//Updates the text with the given data value:
 		sf::Text& updateText(unsigned int);
+		sf::Text& updateText(unsigned int, unsigned int);
 		sf::Text& updateText();
 };
 

@@ -72,6 +72,15 @@ Text::Text(std::string string, unsigned int charSize, Corner corner,
 	}
 }
 
+//Used for the Timer class, which is less complex:
+Text::Text(unsigned int charSize, float x, float y)
+{
+	_text.setFont(_font);
+	_text.setCharacterSize(charSize);
+	_text.setColor(TEXT_COLOUR);
+	_text.setPosition(x, y);
+}
+
 sf::Text& Text::updateText(unsigned int value)
 {
 	std::stringstream ss;
@@ -94,6 +103,21 @@ sf::Text& Text::updateText(unsigned int value)
 		}
 	}
 
+	return _text;
+}
+
+//Used to return the text for a Timer object:
+sf::Text& Text::updateText(unsigned int seconds, unsigned int milliseconds)
+{
+	std::stringstream ss;
+
+	//Append a zero if it's a single-digit value:
+	if(seconds < 10)
+		ss << "0" << seconds << ":" << milliseconds;
+	else
+		ss << _string << seconds << ":" << milliseconds;
+
+	_text.setString(ss.str());
 	return _text;
 }
 

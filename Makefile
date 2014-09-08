@@ -32,7 +32,7 @@ LDIR=$(SRC)/layout
 BIN=platformer
 OBJS=main.o player.o block.o staticBlock.o dynamicBlock.o deathBlock.o \
 	 movementType.o upDown.o leftRight.o square.o sfx.o screens.o text.o \
-	 arrow.o layout.o
+	 arrow.o timer.o layout.o
 
 all: $(BIN)
 
@@ -92,6 +92,9 @@ text.o: $(IDIR)/text.cpp $(IDIR)/text.h
 
 arrow.o: $(IDIR)/arrow.cpp $(IDIR)/arrow.h
 	$(CC) $(FLAGS) $(IDIR)/arrow.cpp
+
+timer.o: $(IDIR)/timer.cpp $(IDIR)/timer.h
+	$(CC) $(FLAGS) $(IDIR)/timer.cpp
 
 # ./src/layout -------------------------------
 
