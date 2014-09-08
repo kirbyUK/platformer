@@ -1,7 +1,25 @@
+ifdef SystemRoot
+    CCFLAGS += -D WIN32
+    FLAGS=-Wall -Werror -c -g -IC:\SFML-2.1\include
+    LIBS=-LC:\SFML-2.1\lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+    DESTDIR="\""C:\Program Files (x86)"\""
+else
+    UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+        CCFLAGS += -D LINUX
+        FLAGS=-Wall -Werror -c -g
+        LIBS=-lsfml-audio-d -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
+        DESTDIR=/usr/local
+    endif
+    ifeq ($(UNAME_S),Darwin)
+        CCFLAGS += -D OSX
+        FLAGS=-Wall -Werror -c -g -I/usr/local/include
+        LIBS=-L/usr/local/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+        DESTDIR=/usr/local
+    endif
+endif
+
 CC=g++
-FLAGS=-Wall -c -g
-LIBS=-lsfml-audio-d -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
-DESTDIR=/usr/local
 SRC=src
 PDIR=$(SRC)/player
 BDIR=$(SRC)/block
@@ -80,12 +98,27 @@ layout.o: $(LDIR)/layout.cpp $(LDIR)/layout.h
 
 # --------------------------------------------
 
+ifdef SystemRoot
+    RM = del /Q
+    FixPath = $(subst /,\,$1)
+else
+    UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+        RM = rm -f
+        FixPath = $1
+    endif
+    ifeq ($(UNAME_S),Darwin)
+        RM = rm -f
+        FixPath = $1
+    endif
+endif
+
 deinstall: uninstall
 uninstall:
-	rm $(DESTDIR)/bin/$(BIN)
+	$(RM) $(call FixPath,$(DESTDIR)/bin/$(BIN))
 
 install:
-	install -m 0755 $(BIN) $(DESTDIR)/bin/
+	install -m 0755 $(BIN) $(call FixPath,$(DESTDIR)/bin/)
 
 clean:
-	rm -f $(OBJS) $(BIN)
+	$(RM) $(call FixPath,$(OBJS)) $(call FixPath,$(BIN))
