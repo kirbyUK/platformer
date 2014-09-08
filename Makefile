@@ -101,6 +101,7 @@ layout.o: $(LDIR)/layout.cpp $(LDIR)/layout.h
 ifdef SystemRoot
     RM = del /Q
     FixPath = $(subst /,\,$1)
+	BIN := $(BIN).exe
 else
     UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
