@@ -21,7 +21,7 @@
 //there'll be an enum here to give each image a useful name
 
 #ifndef ASSETS
-	#define ASSETS "./assets"
+	#define ASSETS "assets"
 #endif
 
 //The filepaths to the images, with backticks for Windows:
@@ -44,7 +44,11 @@ const sf::Color Player::COLOUR_MASK(0, 255, 0);
 sf::Image Player::_sprites[SPRITES];
 
 //The file path of the file containing the player's highscore:
-const char* Player::HIGHSCORE_FILE = "highscore";
+#ifndef HIGHSCORE
+	#define HIGHSCORE "highscore"
+#endif
+
+const char* Player::HIGHSCORE_FILE = HIGHSCORE;
 
 //How many pixels the character will move after a second of constant motion in
 //that direction:

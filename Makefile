@@ -18,14 +18,20 @@ ifdef SystemRoot
     LIBS=-L$(SFML_PATH)\lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
     DESTDIR="\""C:\Program Files (x86)"\""
 	ASSETS_DIR="$(DESTDIR)\\$(BIN)\\assets"
+	HIGHSCORE_DIR=%appdata%\\$(BIN)
+	HIGHSCORE="$(HIGHSCORE_DIR)\\highscore"
 else
     UNAME_S := $(shell uname -s)
+	USER := $(shell logname)
+	HOMEDIR := $(shell grep $(USER) /etc/passwd | cut -d ":" -f6)
     ifeq ($(UNAME_S),Linux)
         CCFLAGS += -D LINUX
         FLAGS=-Wall -Werror -c -g
         LIBS=-lsfml-audio-d -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
-        DESTDIR=/usr/local
+        DESTDIR=/usr
 		ASSETS_DIR="$(DESTDIR)/share/$(BIN)/assets"
+		HIGHSCORE_DIR=$(HOMEDIR)/.$(BIN)
+		HIGHSCORE="$(HIGHSCORE_DIR)/highscore"
     endif
     ifeq ($(UNAME_S),Darwin)
         CCFLAGS += -D OSX
@@ -34,6 +40,8 @@ else
         LIBS=-L$(SFML_PATH)/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
         DESTDIR=/usr/local
 		ASSETS_DIR="$(DESTDIR)/share/$(BIN)/assets"
+		HIGHSCORE_DIR=$(HOMEDIR)/.$(BIN)
+		HIGHSCORE="$(HIGHSCORE_DIR)/highscore"
     endif
 endif
 
@@ -50,7 +58,8 @@ main.o: $(SRC)/main.cpp
 # ./src/player/ ------------------------------
 
 player.o: $(PDIR)/player.cpp $(PDIR)/player.h
-	$(CC) $(FLAGS) -DASSETS='$(ASSETS_DIR)' $(PDIR)/player.cpp 
+	$(CC) $(FLAGS) -DASSETS='$(ASSETS_DIR)' -DHIGHSCORE='$(HIGHSCORE)' \
+		$(PDIR)/player.cpp 
 
 # ./src/block/ -------------------------------
 
@@ -128,12 +137,16 @@ deinstall: uninstall
 uninstall:
 	$(RM) $(call FixPath,$(DESTDIR)/bin/$(BIN))
 	$(RM) -r $(DESTDIR)/share/$(BIN)
+	$(RM) -r $(HIGHSCORE_DIR)
 
 install:
 	if [ ! -d $(DESTDIR)/bin ]; then mkdir -p $(DESTDIR)/bin; fi
 	$(CP) $(BIN) $(DESTDIR)/bin/
 	if [ ! -d $(ASSETS_DIR) ]; then mkdir -p $(ASSETS_DIR); fi
 	$(CP) -r assets/* $(ASSETS_DIR)
+	if [ ! -d $(HIGHSCORE_DIR) ]; then mkdir -p $(HIGHSCORE_DIR); fi
+	echo 0 > $(HIGHSCORE)
+	chown $(USER) $(HIGHSCORE)
 
 clean:
 	$(RM) $(call FixPath,$(OBJS)) $(call FixPath,$(BIN))
