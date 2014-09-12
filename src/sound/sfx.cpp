@@ -33,8 +33,8 @@
 	const std::string SoundEffect::SFX_PATHS[TOTAL_SFX] =
 	{
 		(((std::string)ASSETS) + ((std::string)("/sfx/jump.wav"))),
-		(((std::string)ASSETS) + ((std::string)("/sfx/jump.wav"))),
-		(((std::string)ASSETS) + ((std::string)("/sfx/jump.wav"))),
+		(((std::string)ASSETS) + ((std::string)("/sfx/death.wav"))),
+		(((std::string)ASSETS) + ((std::string)("/sfx/point.wav"))),
 	};
 #endif
 
