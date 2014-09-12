@@ -16,10 +16,12 @@ ifdef SystemRoot
 	SFML_PATH=C:\SFML-2.1
     FLAGS=-Wall -Werror -c -g -I$(SFML_PATH)\include
     LIBS=-L$(SFML_PATH)\lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
-    DESTDIR="\""C:\Program Files (x86)"\""
-	ASSETS_DIR="$(DESTDIR)\\$(BIN)\\assets"
-	HIGHSCORE_DIR=%appdata%\\$(BIN)
-	HIGHSCORE="$(HIGHSCORE_DIR)\\highscore"
+#   DESTDIR="\""C:\Program Files (x86)"\""
+#	ASSETS_DIR="$(DESTDIR)\\$(BIN)\\assets"
+#	HIGHSCORE_DIR=%appdata%\\$(BIN)
+#	HIGHSCORE="$(HIGHSCORE_DIR)\\highscore"
+	ASSETS_DIR="assets"
+	HIGHSCORE="highscore"
 else
     UNAME_S := $(shell uname -s)
 	USER := $(shell logname)

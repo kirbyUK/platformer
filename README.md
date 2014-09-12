@@ -46,6 +46,16 @@ mingw32-make SFML_PATH=C:\SFML-2.1
 
 Replacing 'C:\SFML-2.1' with where ever you extract SFML to.
 
+3) Run the game
+
+```
+platformer.exe
+```
+
+The 'install' and 'uninstall' targets don't work and I can't see them doing so
+any time in the near future, so you'll have to run the binary from the git
+directory for now.
+
 ##TODO:
 
 - [x] Add a timer
