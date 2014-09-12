@@ -16,7 +16,8 @@
 */
 #include "square.h"
 
-Square::Square(float velocity, float x, float y, float width, float height)
+Square::Square(float velocity, float x, float y,
+	float width, float height, sf::Vector2i d)
 {
 	_distanceMoved.x = 0;
 	_distanceMoved.y = 0;
@@ -27,8 +28,7 @@ Square::Square(float velocity, float x, float y, float width, float height)
 	_boundaries[1][0] = y;
 	_boundaries[1][1] = y + height;
 
-	_direction.x = -1;
-	_direction.y = 0;
+	_direction = d;
 }
 
 void Square::handleEvents(sf::RectangleShape& shape, float frameTime)

@@ -80,7 +80,8 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		layouts->push_back(v);
 	}
 	{
-		MovementType* m = new Square(150, 145, 175, 200, 150);
+		MovementType* m = new Square(
+			150, 145, 175, 200, 150, sf::Vector2i(-1, 0));
 		DynamicBlock* b = new DynamicBlock(80, 25, 250, 325, m);
 		std::vector <Block*>* v = new std::vector<Block*>;
 		v->push_back(b);
@@ -107,6 +108,32 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		v->push_back(b2);
 		layouts->push_back(v);
 	}
+	{
+		MovementType* m1 = new Square(
+			160, 125, 150, 82.5, 120, sf::Vector2i(0, -1));
+		MovementType* m2 = new Square(
+			160, 312.5, 30, 82.5, 120, sf::Vector2i(0, 1));
+		DynamicBlock* b1 = new DynamicBlock(80, 25, 125, 150, m1);
+		DynamicBlock* b2 = new DynamicBlock(80, 25, 395, 150, m2);
+		std::vector <Block*>* v = new std::vector<Block*>;
+		v->push_back(b1);
+		v->push_back(b2);
+		layouts->push_back(v);
+	}
+	{
+		StaticBlock* b1 = new StaticBlock(30, 30, 141.6, 150);
+		StaticBlock* b2 = new StaticBlock(30, 30, 213.6, 190);
+		StaticBlock* b3 = new StaticBlock(30, 30, 285.2, 150);
+		StaticBlock* b4 = new StaticBlock(30, 30, 356.8, 110);
+		StaticBlock* b5 = new StaticBlock(30, 30, 428.4, 150);
+		std::vector <Block*>* v = new std::vector<Block*>;
+		v->push_back(b1);
+		v->push_back(b2);
+		v->push_back(b3);
+		v->push_back(b4);
+		v->push_back(b5);
+		layouts->push_back(v);
+	}
 	//The following have been contributed by Che-Hien Man (@Le-Che), thanks!
 	{
 		StaticBlock* b1 = new StaticBlock(50, 280, 275, 0);
@@ -127,7 +154,7 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		layouts->push_back(v);
 	}
 	{
-		MovementType* m1 = new LeftRight(175, 100, 420);
+		MovementType* m1 = new LeftRight(175, 125, 395);
 		StaticBlock* b1 = new StaticBlock(30, 170, 285, 0);
 		DynamicBlock* b2 = new DynamicBlock(80, 25, 120, 200, m1);
 		std::vector <Block*>* v = new std::vector<Block*>;

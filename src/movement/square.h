@@ -28,7 +28,7 @@ class Square : public MovementType
 		float _boundaries[2][2];
 
 	public:
-		Square(float, float, float, float, float);
+		Square(float, float, float, float, float, sf::Vector2i);
 		void handleEvents(sf::RectangleShape&, float);
 };
 
