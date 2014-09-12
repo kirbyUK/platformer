@@ -12,13 +12,13 @@ The program requires [SFML](http://www.sfml-dev.org) ( >= 2.0). There are detail
 
 ###Linux
 
-Although the Makefile has an install target it doesn't work because it doesn't copy the assets over. For the time being, just run
+Provided you have SFML installed in a standard place, it should be as easy as running:
 
 ```
 make
+sudo make install
+platformer
 ```
-
-And use the binary that appears in the project directory.
 
 ### Mac
 

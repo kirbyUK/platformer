@@ -18,11 +18,17 @@
 #include <sstream>
 #include <iostream>
 
+#ifndef ASSETS
+	#define ASSETS "./assets"
+#endif
+
 //The filepath to the font, with backslashes for Windows:
 #ifdef _WIN32
-	const std::string Text::FONT_PATH = "assets\\fonts\\pcsenior.ttf";
+	const std::string Text::FONT_PATH = 
+		(((std::string)ASSETS) + ((std::string)"\\fonts\\pcsenior.ttf"));
 #else
-	const std::string Text::FONT_PATH = "assets/fonts/pcsenior.ttf";
+	const std::string Text::FONT_PATH =
+		(((std::string)ASSETS) + ((std::string)"/fonts/pcsenior.ttf"));
 #endif
 
 //The text colour:

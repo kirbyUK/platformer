@@ -17,20 +17,24 @@
 #include "sfx.h"
 #include <iostream>
 
+#ifndef ASSETS
+	#define ASSETS "./assets"
+#endif
+
 //The filepaths of the sound effects, with backslashes for Windows:
 #ifdef _WIN32
 	const std::string SoundEffect::SFX_PATHS[TOTAL_SFX] =
 	{
-		"assets\\sfx\\jump.wav",
-		"assets\\sfx\\death.wav",
-		"assets\\sfx\\point.wav",
+		(((std::string)ASSETS) + ((std::string)("\\sfx\\jump.wav"))),
+		(((std::string)ASSETS) + ((std::string)("\\sfx\\death.wav"))),
+		(((std::string)ASSETS) + ((std::string)("\\sfx\\point.wav"))),
 	};
 #else
 	const std::string SoundEffect::SFX_PATHS[TOTAL_SFX] =
 	{
-		"assets/sfx/jump.wav",
-		"assets/sfx/death.wav",
-		"assets/sfx/point.wav",
+		(((std::string)ASSETS) + ((std::string)("/sfx/jump.wav"))),
+		(((std::string)ASSETS) + ((std::string)("/sfx/jump.wav"))),
+		(((std::string)ASSETS) + ((std::string)("/sfx/jump.wav"))),
 	};
 #endif
 

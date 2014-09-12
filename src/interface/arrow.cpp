@@ -19,9 +19,11 @@
 
 //The filepaths to the images, with backticks for Windows:
 #ifdef _WIN32
-	const std::string Arrow::SPRITE_PATH = "assets\\sprites\\arrow.png";
+	const std::string Arrow::SPRITE_PATH = 
+		(((std::string)ASSETS) + ((std::string)"\\sprites\\arrow.png"));
 #else
-	const std::string Arrow::SPRITE_PATH = "assets/sprites/arrow.png";
+	const std::string Arrow::SPRITE_PATH =
+		(((std::string)ASSETS) + ((std::string)"/sprites/arrow.png"));
 #endif
 
 //The colour to remove in the images and replace with transparency:

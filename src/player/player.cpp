@@ -20,16 +20,20 @@
 
 //there'll be an enum here to give each image a useful name
 
+#ifndef ASSETS
+	#define ASSETS "./assets"
+#endif
+
 //The filepaths to the images, with backticks for Windows:
 #ifdef _WIN32
 	const std::string Player::SPRITE_PATHS[SPRITES] = 
 	{
-		"assets\\sprites\\placeholder.png",
+		(((std::string)ASSETS) + ((std::string)"\\sprites\\placeholder.png"))
 	};
 #else
 	const std::string Player::SPRITE_PATHS[SPRITES] = 
 	{
-		"assets/sprites/placeholder.png",
+		(((std::string)ASSETS) + ((std::string)"/sprites/placeholder.png"))
 	};
 #endif
 

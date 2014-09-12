@@ -1,26 +1,3 @@
-ifdef SystemRoot
-    CCFLAGS += -D WIN32
-	SFML_PATH=C:\SFML-2.1
-    FLAGS=-Wall -Werror -c -g -I$(SFML_PATH)\include
-    LIBS=-L$(SFML_PATH)\lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
-    DESTDIR="\""C:\Program Files (x86)"\""
-else
-    UNAME_S := $(shell uname -s)
-    ifeq ($(UNAME_S),Linux)
-        CCFLAGS += -D LINUX
-        FLAGS=-Wall -Werror -c -g
-        LIBS=-lsfml-audio-d -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
-        DESTDIR=/usr/local
-    endif
-    ifeq ($(UNAME_S),Darwin)
-        CCFLAGS += -D OSX
-		SFML_PATH=/usr/local
-        FLAGS=-Wall -Werror -c -g -I$(SFML_PATH)/include
-        LIBS=-L$(SFML_PATH)/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
-        DESTDIR=/usr/local
-    endif
-endif
-
 CC=g++
 SRC=src
 PDIR=$(SRC)/player
@@ -33,6 +10,32 @@ BIN=platformer
 OBJS=main.o player.o block.o staticBlock.o dynamicBlock.o deathBlock.o \
 	 movementType.o upDown.o leftRight.o square.o sfx.o screens.o text.o \
 	 arrow.o timer.o layout.o
+
+ifdef SystemRoot
+    CCFLAGS += -D WIN32
+	SFML_PATH=C:\SFML-2.1
+    FLAGS=-Wall -Werror -c -g -I$(SFML_PATH)\include
+    LIBS=-L$(SFML_PATH)\lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+    DESTDIR="\""C:\Program Files (x86)"\""
+	ASSETS_DIR="$(DESTDIR)\\$(BIN)\\assets"
+else
+    UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+        CCFLAGS += -D LINUX
+        FLAGS=-Wall -Werror -c -g
+        LIBS=-lsfml-audio-d -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
+        DESTDIR=/usr/local
+		ASSETS_DIR="$(DESTDIR)/share/$(BIN)/assets"
+    endif
+    ifeq ($(UNAME_S),Darwin)
+        CCFLAGS += -D OSX
+		SFML_PATH=/usr/local
+        FLAGS=-Wall -Werror -c -g -I$(SFML_PATH)/include
+        LIBS=-L$(SFML_PATH)/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+        DESTDIR=/usr/local
+		ASSETS_DIR="$(DESTDIR)/share/$(BIN)/assets"
+    endif
+endif
 
 all: $(BIN)
 
@@ -47,7 +50,7 @@ main.o: $(SRC)/main.cpp
 # ./src/player/ ------------------------------
 
 player.o: $(PDIR)/player.cpp $(PDIR)/player.h
-	$(CC) $(FLAGS) $(PDIR)/player.cpp 
+	$(CC) $(FLAGS) -DASSETS='$(ASSETS_DIR)' $(PDIR)/player.cpp 
 
 # ./src/block/ -------------------------------
 
@@ -80,7 +83,7 @@ square.o: $(MDIR)/square.cpp $(MDIR)/square.h
 # ./src/sound --------------------------------
 
 sfx.o: $(SDIR)/sfx.cpp $(SDIR)/sfx.h
-	$(CC) $(FLAGS) $(SDIR)/sfx.cpp
+	$(CC) $(FLAGS) -DASSETS='$(ASSETS_DIR)' $(SDIR)/sfx.cpp
 
 # ./src/interface ----------------------------
 
@@ -88,10 +91,10 @@ screens.o: $(IDIR)/screens.cpp $(IDIR)/screens.h
 	$(CC) $(FLAGS) $(IDIR)/screens.cpp
 
 text.o: $(IDIR)/text.cpp $(IDIR)/text.h
-	$(CC) $(FLAGS) $(IDIR)/text.cpp
+	$(CC) $(FLAGS) -DASSETS='$(ASSETS_DIR)' $(IDIR)/text.cpp
 
 arrow.o: $(IDIR)/arrow.cpp $(IDIR)/arrow.h
-	$(CC) $(FLAGS) $(IDIR)/arrow.cpp
+	$(CC) $(FLAGS) -DASSETS='$(ASSETS_DIR)' $(IDIR)/arrow.cpp
 
 timer.o: $(IDIR)/timer.cpp $(IDIR)/timer.h
 	$(CC) $(FLAGS) $(IDIR)/timer.cpp
@@ -111,10 +114,12 @@ else
     UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
         RM = rm -f
+		CP = cp
         FixPath = $1
     endif
     ifeq ($(UNAME_S),Darwin)
         RM = rm -f
+		CP = cp
         FixPath = $1
     endif
 endif
@@ -122,9 +127,13 @@ endif
 deinstall: uninstall
 uninstall:
 	$(RM) $(call FixPath,$(DESTDIR)/bin/$(BIN))
+	$(RM) -r $(DESTDIR)/share/$(BIN)
 
 install:
-	install -m 0755 $(BIN) $(call FixPath,$(DESTDIR)/bin/)
+	if [ ! -d $(DESTDIR)/bin ]; then mkdir -p $(DESTDIR)/bin; fi
+	$(CP) $(BIN) $(DESTDIR)/bin/
+	if [ ! -d $(ASSETS_DIR) ]; then mkdir -p $(ASSETS_DIR); fi
+	$(CP) -r assets/* $(ASSETS_DIR)
 
 clean:
 	$(RM) $(call FixPath,$(OBJS)) $(call FixPath,$(BIN))
