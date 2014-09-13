@@ -28,6 +28,7 @@
 #include "interface/arrow.h"
 #include "interface/timer.h"
 #include "layout/layout.h"
+#include "sound/music.h"
 
 int main()
 {
@@ -36,6 +37,9 @@ int main()
 		return -1;
 
 	if(! SoundEffect::init())
+		return -1;
+
+	if(! Music::init())
 		return -1;
 
 	if(! Text::init())
@@ -58,6 +62,7 @@ int main()
 	float frameTime = 0.016;
 
 	Player p;
+	Music music;
 
 	//Create the text items:
 	Text fps("FPS: ", 16, TOP_LEFT, &window, 5, 5);
@@ -123,6 +128,7 @@ int main()
 			if(event.type == sf::Event::LostFocus)
 			{
 				delay.restart();
+				music.pause();
 				if(! pause(&window, event, false))
 				{
 					//Write highscore to file if needed:
@@ -135,6 +141,7 @@ int main()
 						}
 					}
 				}
+				music.resume();
 				delayTotal += delay.getElapsedTime().asSeconds();
 			}
 		}
@@ -148,6 +155,7 @@ int main()
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		{
 			delay.restart();
+			music.pause();
 			if(! pause(&window, event, true))
 			{
 				//Write highscore to file if needed:
@@ -160,6 +168,7 @@ int main()
 					}
 				}
 			}
+			music.resume();
 			delayTotal += delay.getElapsedTime().asSeconds();
 		}
 		//Jumping:

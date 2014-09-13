@@ -79,6 +79,8 @@ bool gameOver(sf::RenderWindow* w, sf::Event& event, int score, int highscore)
 	Text highFinal("HIGH: ", 16, TOP_LEFT, w, 330, 165);
 	Text retry("RETRY", 16, TOP_LEFT, w, 250, 220);
 	Text quit("QUIT", 16, TOP_LEFT, w, 260, 250);
+	Text madeBy("BY ALEX KERR", 14, BOTTOM_LEFT, w, 5, 26);
+	Text musicBy("MUSIC BY CHE-YUNG MAN", 14, BOTTOM_LEFT, w, 5, 5);
 	Text* menu[2] = { &retry, &quit };
 	Text* selected = menu[0];
 
@@ -125,6 +127,8 @@ bool gameOver(sf::RenderWindow* w, sf::Event& event, int score, int highscore)
 		w->draw(highFinal.updateText(highscore));
 		w->draw(retry.updateText());
 		w->draw(quit.updateText());
+		w->draw(madeBy.updateText());
+		w->draw(musicBy.updateText());
 		if(selected == menu[0])
 			w->draw(menuArrow1.getSprite());
 		else

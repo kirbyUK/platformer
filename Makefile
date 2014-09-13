@@ -8,8 +8,8 @@ IDIR=$(SRC)/interface
 LDIR=$(SRC)/layout
 BIN=platformer
 OBJS=main.o player.o block.o staticBlock.o dynamicBlock.o deathBlock.o \
-	 movementType.o upDown.o leftRight.o square.o sfx.o screens.o text.o \
-	 arrow.o timer.o layout.o
+	 movementType.o upDown.o leftRight.o square.o sfx.o music.o screens.o \
+	 text.o arrow.o timer.o layout.o
 
 ifdef SystemRoot
     CCFLAGS += -D WIN32
@@ -95,6 +95,9 @@ square.o: $(MDIR)/square.cpp $(MDIR)/square.h
 
 sfx.o: $(SDIR)/sfx.cpp $(SDIR)/sfx.h
 	$(CC) $(FLAGS) -DASSETS='$(ASSETS_DIR)' $(SDIR)/sfx.cpp
+
+music.o: $(SDIR)/music.cpp $(SDIR)/music.h
+	$(CC) $(FLAGS) -DASSETS='$(ASSETS_DIR)' $(SDIR)/music.cpp
 
 # ./src/interface ----------------------------
 
