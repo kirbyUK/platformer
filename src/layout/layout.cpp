@@ -63,10 +63,10 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		layouts->push_back(v);
 	}
 	{
-		MovementType* m1 = new UpDown(100, 200, 100);
-		MovementType* m2 = new UpDown(100, 200, 100);
-		DynamicBlock* b1 = new DynamicBlock(80, 25, 180, 100, m1);
-		DynamicBlock* b2 = new DynamicBlock(80, 25, 340, 200, m2);
+		MovementType* m1 = new UpDown(150, 230, 70);
+		MovementType* m2 = new UpDown(150, 230, 70);
+		DynamicBlock* b1 = new DynamicBlock(80, 25, 180, 70, m1);
+		DynamicBlock* b2 = new DynamicBlock(80, 25, 340, 230, m2);
 		std::vector <Block*>* v = new std::vector<Block*>;
 		v->push_back(b1);
 		v->push_back(b2);
