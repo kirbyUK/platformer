@@ -217,11 +217,9 @@ void Player::handleCollision(sf::RectangleShape s)
 {
 	//Create a new Rect representing the player after the proposed movement:
 	float x = 	(_sprite.getGlobalBounds().left + 
-				 _distance.player.x +
-				 _distance.block.x);
+				 _distance.player.x + _distance.block.x);
 	float y = 	(_sprite.getGlobalBounds().top + 
-				 _distance.player.y +
-				 _distance.block.y);
+				 _distance.player.y + _distance.block.y);
 
 	sf::FloatRect r(x, y,
 		_sprite.getGlobalBounds().width,
@@ -232,9 +230,34 @@ void Player::handleCollision(sf::RectangleShape s)
 	sf::FloatRect intersection;
 	if(r.intersects(s.getGlobalBounds(), intersection))
 	{
-		//If so, decrease the distance the player will move this frame:
-		_distance.offset.x += intersection.width;
-		_distance.offset.y += intersection.height;
+		//If there is a collision, we need to create another rect
+		//representing the player after movement with one of the directions
+		//cancelled out, as in many cases this will sort out the other
+		//direction on it's own. Which direction to handle first is important,
+		//and this is determined by taking the intersection rect. If it's
+		//taller than it is wide, we do the x direction first, and vice-versa.
+		if(intersection.height > intersection.width)
+			_distance.offset.x += intersection.width;
+		else
+			_distance.offset.y += intersection.height;
+
+		//Now we do the same again:
+		x = 	(_sprite.getGlobalBounds().left + 
+				 _distance.player.x + _distance.block.x) -
+				 _distance.offset.x;
+		y = 	(_sprite.getGlobalBounds().top + 
+				 _distance.player.y + _distance.block.y) -
+				 _distance.offset.y;
+
+		r.left = x;
+		r.top =  y;
+		if(r.intersects(s.getGlobalBounds(), intersection))
+		{
+			if(_distance.offset.x != 0)
+				_distance.offset.y += intersection.height;
+			else
+				_distance.offset.x += intersection.width;
+		}
 	}
 }
 
