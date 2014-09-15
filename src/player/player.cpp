@@ -301,7 +301,7 @@ void Player::handleMovement()
 	//jumped so we know when to end the jump and start the player's descent:
 	if(_isJumping)
 	{
-		_jumpDistanceCovered += _distance.player.y;
+		_jumpDistanceCovered += -_distance.player.y;
 		if(_jumpDistanceCovered >= _maxJumpHeight)
 		{
 			_isJumping = false;
