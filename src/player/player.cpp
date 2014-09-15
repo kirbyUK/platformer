@@ -243,11 +243,13 @@ void Player::handleCollision(sf::RectangleShape s)
 
 		//Now we do the same again:
 		x = 	(_sprite.getGlobalBounds().left + 
-				 _distance.player.x + _distance.block.x) -
-				 _distance.offset.x;
-		y = 	(_sprite.getGlobalBounds().top + 
-				 _distance.player.y + _distance.block.y) -
-				 _distance.offset.y;
+				 _distance.player.x + _distance.block.x);
+		x -= _getDirection(_distance.player.x + _distance.block.x) * 
+				_distance.offset.x;
+		y = 	(_sprite.getGlobalBounds().left + 
+				 _distance.player.y + _distance.block.y);
+		y -= _getDirection(_distance.player.y + _distance.block.y) * 
+				_distance.offset.y;
 
 		r.left = x;
 		r.top =  y;
@@ -288,11 +290,10 @@ void Player::handleCollision(sf::Window* window)
 //called last, after everything involving collisions and all that has been done:
 void Player::handleMovement()
 {
-	_distance.total.x = (_distance.player.x + _distance.block.x) -
-						_distance.offset.x;
-
-	_distance.total.y = (_distance.player.y + _distance.block.y) -
-						_distance.offset.y;
+	_distance.total.x = (_distance.player.x + _distance.block.x);
+	_distance.total.x -= _getDirection(_distance.total.x) * _distance.offset.x;
+	_distance.total.y = (_distance.player.y + _distance.block.y);
+	_distance.total.y -= _getDirection(_distance.total.y) * _distance.offset.y;
 
 	//Move the player:
 	_sprite.move(_distance.total.x, _distance.total.y);
