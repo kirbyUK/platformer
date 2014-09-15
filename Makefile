@@ -30,7 +30,7 @@ else
         CCFLAGS += -D LINUX
         FLAGS=-Wall -Werror -c -g
         LIBS=-lsfml-audio-d -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
-        DESTDIR=/usr
+        DESTDIR=/usr/local
 		ASSETS_DIR="$(DESTDIR)/share/$(BIN)/assets"
 		HIGHSCORE_DIR=$(HOMEDIR)/.$(BIN)
 		HIGHSCORE="$(HIGHSCORE_DIR)/highscore"
