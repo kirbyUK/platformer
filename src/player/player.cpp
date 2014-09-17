@@ -217,9 +217,9 @@ void Player::handleCollision(sf::RectangleShape s)
 {
 	//Create a new Rect representing the player after the proposed movement:
 	float x = 	(_sprite.getGlobalBounds().left + 
-				 _distance.player.x + _distance.block.x);
+				(_distance.player.x + _distance.block.x));
 	float y = 	(_sprite.getGlobalBounds().top + 
-				 _distance.player.y + _distance.block.y);
+				(_distance.player.y + _distance.block.y));
 
 	sf::FloatRect r(x, y,
 		_sprite.getGlobalBounds().width,
@@ -241,15 +241,15 @@ void Player::handleCollision(sf::RectangleShape s)
 		else
 			_distance.offset.y += intersection.height;
 
-		//Now we do the same again:
-		x = 	(_sprite.getGlobalBounds().left + 
-				 _distance.player.x + _distance.block.x);
-		x -= _getDirection(_distance.player.x + _distance.block.x) * 
-				_distance.offset.x;
-		y = 	(_sprite.getGlobalBounds().left + 
-				 _distance.player.y + _distance.block.y);
-		y -= _getDirection(_distance.player.y + _distance.block.y) * 
-				_distance.offset.y;
+		/*//Now we do the same again:
+		x = 	((_sprite.getGlobalBounds().left + 
+				(_distance.player.x + _distance.block.x)) -
+				(_getDirection(_distance.player.x + _distance.block.x) *
+				 _distance.offset.x));
+		y = 	((_sprite.getGlobalBounds().left + 
+				(_distance.player.y + _distance.block.y)) -
+				(_getDirection(_distance.player.y + _distance.block.y) *
+				 _distance.offset.y));
 
 		r.left = x;
 		r.top =  y;
@@ -260,6 +260,11 @@ void Player::handleCollision(sf::RectangleShape s)
 			else
 				_distance.offset.x += intersection.width;
 		}
+		std::cout 	<< "Offset: ("
+					<< _distance.offset.x
+					<< ", "
+					<< _distance.offset.y
+					<< ")\n";*/
 	}
 }
 
