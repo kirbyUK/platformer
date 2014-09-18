@@ -21,7 +21,7 @@
 #include "../sound/sfx.h"
 #include "../block/dynamicBlock.h"
 
-enum Direction { LEFT = -1, RIGHT = 1 };
+enum Direction { LEFT = -1, NONE = 0, RIGHT = 1 };
 
 class Player
 {
@@ -64,6 +64,9 @@ class Player
 
 		//A function for converting a floating point number to a Direction:
 		static Direction _getDirection(float);
+
+		//A function to round decimal numbers to a different precision:
+		static float _round(float);
 
 	public:
 		//Load the images:

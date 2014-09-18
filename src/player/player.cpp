@@ -17,6 +17,7 @@
 #include "player.h"
 #include <iostream>
 #include <fstream>
+#include <cmath>
 
 //there'll be an enum here to give each image a useful name
 
@@ -88,7 +89,7 @@ Player::Player()
 	_sprite.setTexture(_texture);
 
 	//Set the initial position:
-	_sprite.setPosition(37.5, 5);
+	_sprite.setPosition(37.5, 125);
 
 	//Get the previous highscore:
 	std::ifstream file(HIGHSCORE_FILE);
@@ -179,6 +180,7 @@ void Player::move(Direction d, float frameTime)
 	{
 		case LEFT:  _distance.player.x = LEFT *  (X_VELOCITY * frameTime); break;
 		case RIGHT: _distance.player.x = RIGHT * (X_VELOCITY * frameTime); break;
+		case NONE: break;
 	}
 }
 
@@ -216,10 +218,14 @@ void Player::move(DynamicBlock* b)
 void Player::handleCollision(sf::RectangleShape s)
 {
 	//Create a new Rect representing the player after the proposed movement:
-	float x = 	(_sprite.getGlobalBounds().left + 
-				(_distance.player.x + _distance.block.x));
-	float y = 	(_sprite.getGlobalBounds().top + 
-				(_distance.player.y + _distance.block.y));
+	float x = (
+				(_sprite.getGlobalBounds().left) + 
+				(_distance.player.x + _distance.block.x)
+	);
+	float y = (
+				(_sprite.getGlobalBounds().top) + 
+				(_distance.player.y + _distance.block.y)
+	);
 
 	sf::FloatRect r(x, y,
 		_sprite.getGlobalBounds().width,
@@ -241,15 +247,19 @@ void Player::handleCollision(sf::RectangleShape s)
 		else
 			_distance.offset.y += intersection.height;
 
-		/*//Now we do the same again:
-		x = 	((_sprite.getGlobalBounds().left + 
-				(_distance.player.x + _distance.block.x)) -
-				(_getDirection(_distance.player.x + _distance.block.x) *
-				 _distance.offset.x));
-		y = 	((_sprite.getGlobalBounds().left + 
-				(_distance.player.y + _distance.block.y)) -
-				(_getDirection(_distance.player.y + _distance.block.y) *
-				 _distance.offset.y));
+		//Now we do the same again:
+		x = (
+				(_sprite.getGlobalBounds().left) + 
+				(_distance.player.x + _distance.block.x) -
+				(_getDirection(_distance.player.x + _distance.block.x) * 
+				_distance.offset.x)
+		);
+		y = (
+				(_sprite.getGlobalBounds().top) + 
+				(_distance.player.y + _distance.block.y) -
+				(_getDirection(_distance.player.y + _distance.block.y) * 
+				_distance.offset.y)
+		);
 
 		r.left = x;
 		r.top =  y;
@@ -260,11 +270,23 @@ void Player::handleCollision(sf::RectangleShape s)
 			else
 				_distance.offset.x += intersection.width;
 		}
-		std::cout 	<< "Offset: ("
+		std::cout 	<< std::fixed
+					<< "Player: \t("
+					<< _distance.player.x
+					<< ", "
+					<< _distance.player.y
+					<< ")\n";
+		std::cout	<< "Block: \t\t("
+					<< _distance.block.x
+					<< ", "
+					<< _distance.block.y
+					<< ")\n";
+		std::cout	<< "Offset: \t("
 					<< _distance.offset.x
 					<< ", "
 					<< _distance.offset.y
-					<< ")\n";*/
+					<< ")\n"
+					<< "------\n";
 	}
 }
 
@@ -295,13 +317,19 @@ void Player::handleCollision(sf::Window* window)
 //called last, after everything involving collisions and all that has been done:
 void Player::handleMovement()
 {
-	_distance.total.x = (_distance.player.x + _distance.block.x);
-	_distance.total.x -= _getDirection(_distance.total.x) * _distance.offset.x;
-	_distance.total.y = (_distance.player.y + _distance.block.y);
-	_distance.total.y -= _getDirection(_distance.total.y) * _distance.offset.y;
+	_distance.total.x = ((_distance.player.x + _distance.block.x) - 
+						(_getDirection(_distance.player.x + _distance.block.x) * _distance.offset.x));
+	_distance.total.y = ((_distance.player.y + _distance.block.y) - 
+						(_getDirection(_distance.player.y + _distance.block.y) * _distance.offset.y));
+
+	std::cout	<< "TOTAL: \t\t("
+				<< _round(_distance.total.x)
+				<< ", "
+				<< _round(_distance.total.y)
+				<< ")\n\n";
 
 	//Move the player:
-	_sprite.move(_distance.total.x, _distance.total.y);
+	_sprite.move(_round(_distance.total.x), _round(_distance.total.y));
 
 	//If the player is jumping, add the distance jumped to the total distance
 	//jumped so we know when to end the jump and start the player's descent:
@@ -397,8 +425,11 @@ void Player::_resetVectors()
 
 Direction Player::_getDirection(float f)
 {
-	if(f > 0)
-		return RIGHT;
-	else
-		return LEFT;
+	if(f > 0) return RIGHT; else if(f < 0) return LEFT; else return NONE;
+}
+
+float Player::_round(float f)
+{
+	//<stackoverflow.com/questions/11208971/round-a-float-to-a-given-precision>
+	return (float)(std::floor(f * (1.0 / 0.001) + 0.5) / (1.0 / 0.001));
 }

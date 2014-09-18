@@ -54,6 +54,7 @@ int main()
 	//Make the window and set the icon:
 	sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), "Platformer", sf::Style::Close);
 	window.setIcon(25, 25, Player::getPixelsPointer());
+	window.setFramerateLimit(60);
 
 	sf::Event event;
 	sf::Clock frameTimer;
