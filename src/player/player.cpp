@@ -89,7 +89,7 @@ Player::Player()
 	_sprite.setTexture(_texture);
 
 	//Set the initial position:
-	_sprite.setPosition(37.5, 125);
+	_sprite.setPosition(37.5, 105);
 
 	//Get the previous highscore:
 	std::ifstream file(HIGHSCORE_FILE);
@@ -190,12 +190,7 @@ void Player::move(DynamicBlock* b)
 	//If the player is just standing on top of the block, then we can move
 	//it as normal:
 	if(b->isPlayerOnTop(_sprite))
-	{
 		_distance.block += b->getDistanceMoved();
-		sf::FloatRect intersection;
-		if(_sprite.getGlobalBounds().intersects(b->getShape().getGlobalBounds(), intersection))
-			_distance.block.y -= intersection.height;
-	}
 	else
 	{
 		//Otherwise, work out which axis we need to move in. This works the same
@@ -215,7 +210,7 @@ void Player::move(DynamicBlock* b)
 }
 
 //Checks if the proposed movement will cause a collision, and intervenes if so:
-void Player::handleCollision(sf::RectangleShape s)
+void Player::handleCollision(sf::RectangleShape s, sf::RenderWindow* window)
 {
 	//Create a new Rect representing the player after the proposed movement:
 	float x = (
@@ -231,6 +226,13 @@ void Player::handleCollision(sf::RectangleShape s)
 		_sprite.getGlobalBounds().width,
 		_sprite.getGlobalBounds().height
 	);
+
+	sf::RectangleShape hitbox1;
+	hitbox1.setSize(sf::Vector2f(_sprite.getGlobalBounds().width, _sprite.getGlobalBounds().height));
+	hitbox1.setPosition(x, y);
+	hitbox1.setOutlineThickness(1);
+	hitbox1.setOutlineColor(sf::Color::Yellow);
+	hitbox1.setFillColor(sf::Color::Transparent);
 
 	//Check if this new Rect collides with the given sprite:
 	sf::FloatRect intersection;
@@ -249,13 +251,13 @@ void Player::handleCollision(sf::RectangleShape s)
 
 		//Now we do the same again:
 		x = (
-				(_sprite.getGlobalBounds().left) + 
+				(_sprite.getGlobalBounds().left) +
 				(_distance.player.x + _distance.block.x) -
 				(_getDirection(_distance.player.x + _distance.block.x) * 
 				_distance.offset.x)
 		);
 		y = (
-				(_sprite.getGlobalBounds().top) + 
+				(_sprite.getGlobalBounds().top) +
 				(_distance.player.y + _distance.block.y) -
 				(_getDirection(_distance.player.y + _distance.block.y) * 
 				_distance.offset.y)
@@ -263,6 +265,19 @@ void Player::handleCollision(sf::RectangleShape s)
 
 		r.left = x;
 		r.top =  y;
+
+		sf::RectangleShape hitbox2;
+		hitbox2.setSize(sf::Vector2f(_sprite.getGlobalBounds().width, _sprite.getGlobalBounds().height));
+		hitbox2.setPosition(x, y);
+		hitbox2.setOutlineThickness(1);
+		hitbox2.setOutlineColor(sf::Color::Green);
+		hitbox2.setFillColor(sf::Color::Transparent);
+/*		window->clear(sf::Color::Red);
+		window->draw(s);
+		window->draw(_sprite);
+		window->draw(hitbox1);
+		window->draw(hitbox2);
+		window->display();*/
 		if(r.intersects(s.getGlobalBounds(), intersection))
 		{
 			if(_distance.offset.x != 0)
@@ -317,9 +332,9 @@ void Player::handleCollision(sf::Window* window)
 //called last, after everything involving collisions and all that has been done:
 void Player::handleMovement()
 {
-	_distance.total.x = ((_distance.player.x + _distance.block.x) - 
+	_distance.total.x = ((_distance.player.x + _distance.block.x) -
 						(_getDirection(_distance.player.x + _distance.block.x) * _distance.offset.x));
-	_distance.total.y = ((_distance.player.y + _distance.block.y) - 
+	_distance.total.y = ((_distance.player.y + _distance.block.y) -
 						(_getDirection(_distance.player.y + _distance.block.y) * _distance.offset.y));
 
 	std::cout	<< "TOTAL: \t\t("
