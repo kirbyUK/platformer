@@ -20,10 +20,16 @@
 const float Timer::STARTING_TIME = 10;
 const float Timer::MINIMUM_TIME = 4;
 
-Timer::Timer(float x, float y) : _text(20, x, y)
+Timer::Timer(float x, float y, unsigned int size, 
+	sf::Color background) : _text(size, x, y)
 {
 	_delay = 0;
 	_time = STARTING_TIME;
+
+	_background.setSize(sf::Vector2f(static_cast <float>((size * 6) + 10), 
+		static_cast <float>(size + 10)));
+	_background.setPosition((x - 5), (y - 5));
+	_background.setFillColor(background);
 }
 
 float Timer::getTimeRemaining(float delay)
@@ -52,4 +58,9 @@ sf::Text& Timer::getTimer()
 	unsigned int seconds = floor(t);
 	unsigned int milliseconds = ((t - floor(t)) * 1000);
 	return _text.updateText(seconds, milliseconds);
+}
+
+sf::RectangleShape& Timer::getBackground()
+{
+	return _background;
 }

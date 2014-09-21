@@ -34,16 +34,21 @@ class Timer
 		//The text to display the timer:
 		Text _text;
 
+		//The background so the text is always visible:
+		sf::RectangleShape _background;
+
 		//The delay from things like pausing to take into account:
 		float _delay;
 
 	public:
-		//Constructor, takes the x and y position of the timer:
-		Timer(float x, float y);
+		//Constructor, takes the x and y position of the timer, the character
+		//size and the colour of the background:
+		Timer(float, float, unsigned int, sf::Color);
 
 		float getTimeRemaining(float);
 		void reset(float);
 		sf::Text& getTimer();
+		sf::RectangleShape& getBackground();
 };
 
 #endif

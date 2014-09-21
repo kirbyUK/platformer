@@ -68,7 +68,7 @@ int main()
 	Text fps("FPS: ", 16, TOP_LEFT, &window, 5, 5);
 	Text score("SCORE: ", 16, TOP_RIGHT, &window, 5, 5);
 	Text high("HIGH:  ", 16, TOP_RIGHT, &window, 5, 23);
-	Timer timer(240, 5);
+	Timer timer(240, 5, 20, BACKGROUND);
 
 	//Used to time the difference between the player pressing and releasing space,
 	//allowing for 'short hops' if the player releases space bar quick enough:
@@ -255,7 +255,6 @@ int main()
 		window.draw(b1.getShape());
 		window.draw(b2.getShape());
 		window.draw(fps.updateText(static_cast <unsigned>(1 / frameTime)));
-		window.draw(timer.getTimer());
 		window.draw(score.updateText(p.getScore()));
 		window.draw(high.updateText(p.getHighScore()));
 		if(target == targets[1])
@@ -264,6 +263,8 @@ int main()
 			window.draw(helpArrow2.getSprite());
 		for(unsigned int i = 0; i < layout->size(); i++)
 			window.draw(layout->at(i)->getShape());
+		window.draw(timer.getBackground());
+		window.draw(timer.getTimer());
 		window.draw(p.getSprite());
 		window.display();
 
