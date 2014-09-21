@@ -23,7 +23,7 @@
 
 extern float timed;
 
-enum Direction { LEFT = -1, NONE = 0, RIGHT = 1 };
+enum Direction { LEFT = -1, RIGHT = 1 };
 
 class Player
 {

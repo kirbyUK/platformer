@@ -89,7 +89,7 @@ Player::Player()
 	_sprite.setTexture(_texture);
 
 	//Set the initial position:
-	_sprite.setPosition(37.5, 105);
+	_sprite.setPosition(37.5, 125);
 
 	//Get the previous highscore:
 	std::ifstream file(HIGHSCORE_FILE);
@@ -180,7 +180,6 @@ void Player::move(Direction d, float frameTime)
 	{
 		case LEFT:  _distance.player.x = LEFT *  (X_VELOCITY * frameTime); break;
 		case RIGHT: _distance.player.x = RIGHT * (X_VELOCITY * frameTime); break;
-		case NONE: break;
 	}
 }
 
@@ -266,25 +265,42 @@ void Player::handleCollision(sf::RectangleShape s, sf::RenderWindow* window)
 		r.left = x;
 		r.top =  y;
 
-		sf::RectangleShape hitbox2;
+		if(r.intersects(s.getGlobalBounds(), intersection))
+		{
+			if((_round(intersection.height) != 0) && (_round(intersection.width) != 0))
+			{
+				if(_distance.offset.x != 0)
+					_distance.offset.y += intersection.height;
+				else
+					_distance.offset.x += intersection.width;
+			}
+		}
+
+		//DEBUG
+		x = (
+				(_sprite.getGlobalBounds().left) +
+				(_distance.player.x + _distance.block.x) -
+				(_getDirection(_distance.player.x + _distance.block.x) * 
+				_distance.offset.x)
+		);
+		y = (
+				(_sprite.getGlobalBounds().top) +
+				(_distance.player.y + _distance.block.y) -
+				(_getDirection(_distance.player.y + _distance.block.y) * 
+				_distance.offset.y)
+		);
+/*		sf::RectangleShape hitbox2;
 		hitbox2.setSize(sf::Vector2f(_sprite.getGlobalBounds().width, _sprite.getGlobalBounds().height));
 		hitbox2.setPosition(x, y);
 		hitbox2.setOutlineThickness(1);
 		hitbox2.setOutlineColor(sf::Color::Green);
 		hitbox2.setFillColor(sf::Color::Transparent);
-/*		window->clear(sf::Color::Red);
+		window->clear(sf::Color::Red);
 		window->draw(s);
 		window->draw(_sprite);
 		window->draw(hitbox1);
 		window->draw(hitbox2);
 		window->display();*/
-		if(r.intersects(s.getGlobalBounds(), intersection))
-		{
-			if(_distance.offset.x != 0)
-				_distance.offset.y += intersection.height;
-			else
-				_distance.offset.x += intersection.width;
-		}
 		std::cout 	<< std::fixed
 					<< "Player: \t("
 					<< _distance.player.x
@@ -440,7 +456,7 @@ void Player::_resetVectors()
 
 Direction Player::_getDirection(float f)
 {
-	if(f > 0) return RIGHT; else if(f < 0) return LEFT; else return NONE;
+	if(f > 0) return RIGHT; else return LEFT;
 }
 
 float Player::_round(float f)
