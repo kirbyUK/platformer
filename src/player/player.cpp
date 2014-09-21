@@ -226,13 +226,6 @@ void Player::handleCollision(sf::RectangleShape s, sf::RenderWindow* window)
 		_sprite.getGlobalBounds().height
 	);
 
-	sf::RectangleShape hitbox1;
-	hitbox1.setSize(sf::Vector2f(_sprite.getGlobalBounds().width, _sprite.getGlobalBounds().height));
-	hitbox1.setPosition(x, y);
-	hitbox1.setOutlineThickness(1);
-	hitbox1.setOutlineColor(sf::Color::Yellow);
-	hitbox1.setFillColor(sf::Color::Transparent);
-
 	//Check if this new Rect collides with the given sprite:
 	sf::FloatRect intersection;
 	if(r.intersects(s.getGlobalBounds(), intersection))
@@ -275,49 +268,6 @@ void Player::handleCollision(sf::RectangleShape s, sf::RenderWindow* window)
 					_distance.offset.x += intersection.width;
 			}
 		}
-
-		//DEBUG
-		x = (
-			(_sprite.getGlobalBounds().left) +
-			(_distance.player.x + _distance.block.x) -
-			(_getDirection(_distance.player.x + _distance.block.x) * 
-			_distance.offset.x)
-		);
-		y = (
-			(_sprite.getGlobalBounds().top) +
-			(_distance.player.y + _distance.block.y) -
-			(_getDirection(_distance.player.y + _distance.block.y) * 
-			_distance.offset.y)
-		);
-/*		sf::RectangleShape hitbox2;
-		hitbox2.setSize(sf::Vector2f(_sprite.getGlobalBounds().width, _sprite.getGlobalBounds().height));
-		hitbox2.setPosition(x, y);
-		hitbox2.setOutlineThickness(1);
-		hitbox2.setOutlineColor(sf::Color::Green);
-		hitbox2.setFillColor(sf::Color::Transparent);
-		window->clear(sf::Color::Red);
-		window->draw(s);
-		window->draw(_sprite);
-		window->draw(hitbox1);
-		window->draw(hitbox2);
-		window->display();*/
-		std::cout 	<< std::fixed
-					<< "Player: \t("
-					<< _distance.player.x
-					<< ", "
-					<< _distance.player.y
-					<< ")\n";
-		std::cout	<< "Block: \t\t("
-					<< _distance.block.x
-					<< ", "
-					<< _distance.block.y
-					<< ")\n";
-		std::cout	<< "Offset: \t("
-					<< _distance.offset.x
-					<< ", "
-					<< _distance.offset.y
-					<< ")\n"
-					<< "------\n";
 	}
 }
 
@@ -364,12 +314,6 @@ void Player::handleMovement()
 		(_getDirection(_distance.player.y + _distance.block.y) * 
 		_distance.offset.y)
 	);
-
-	std::cout	<< "TOTAL: \t\t("
-				<< _round(_distance.total.x)
-				<< ", "
-				<< _round(_distance.total.y)
-				<< ")\n\n";
 
 	//Move the player:
 	_sprite.move(_round(_distance.total.x), _round(_distance.total.y));
