@@ -209,7 +209,7 @@ void Player::move(DynamicBlock* b)
 }
 
 //Checks if the proposed movement will cause a collision, and intervenes if so:
-void Player::handleCollision(sf::RectangleShape s, sf::RenderWindow* window)
+void Player::handleCollision(sf::RectangleShape s)
 {
 	//Create a new Rect representing the player after the proposed movement:
 	float x = (

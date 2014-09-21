@@ -21,8 +21,6 @@
 #include "../sound/sfx.h"
 #include "../block/dynamicBlock.h"
 
-extern float timed;
-
 enum Direction { LEFT = -1, RIGHT = 1 };
 
 class Player
@@ -95,7 +93,7 @@ class Player
 		void move(DynamicBlock*);	//Handles movement from a DynamicBlock.
 
 		//Process events at the end of the frame:
-		void handleCollision(sf::RectangleShape, sf::RenderWindow*);
+		void handleCollision(sf::RectangleShape);
 		void handleCollision(sf::Window*);
 		void handleMovement();
 
