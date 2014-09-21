@@ -213,12 +213,12 @@ void Player::handleCollision(sf::RectangleShape s, sf::RenderWindow* window)
 {
 	//Create a new Rect representing the player after the proposed movement:
 	float x = (
-				(_sprite.getGlobalBounds().left) + 
-				(_distance.player.x + _distance.block.x)
+		(_sprite.getGlobalBounds().left) + 
+		(_distance.player.x + _distance.block.x)
 	);
 	float y = (
-				(_sprite.getGlobalBounds().top) + 
-				(_distance.player.y + _distance.block.y)
+		(_sprite.getGlobalBounds().top) + 
+		(_distance.player.y + _distance.block.y)
 	);
 
 	sf::FloatRect r(x, y,
@@ -250,16 +250,16 @@ void Player::handleCollision(sf::RectangleShape s, sf::RenderWindow* window)
 
 		//Now we do the same again:
 		x = (
-				(_sprite.getGlobalBounds().left) +
-				(_distance.player.x + _distance.block.x) -
-				(_getDirection(_distance.player.x + _distance.block.x) * 
-				_distance.offset.x)
+			(_sprite.getGlobalBounds().left) +
+			(_distance.player.x + _distance.block.x) -
+			(_getDirection(_distance.player.x + _distance.block.x) * 
+			_distance.offset.x)
 		);
 		y = (
-				(_sprite.getGlobalBounds().top) +
-				(_distance.player.y + _distance.block.y) -
-				(_getDirection(_distance.player.y + _distance.block.y) * 
-				_distance.offset.y)
+			(_sprite.getGlobalBounds().top) +
+			(_distance.player.y + _distance.block.y) -
+			(_getDirection(_distance.player.y + _distance.block.y) * 
+			_distance.offset.y)
 		);
 
 		r.left = x;
@@ -278,16 +278,16 @@ void Player::handleCollision(sf::RectangleShape s, sf::RenderWindow* window)
 
 		//DEBUG
 		x = (
-				(_sprite.getGlobalBounds().left) +
-				(_distance.player.x + _distance.block.x) -
-				(_getDirection(_distance.player.x + _distance.block.x) * 
-				_distance.offset.x)
+			(_sprite.getGlobalBounds().left) +
+			(_distance.player.x + _distance.block.x) -
+			(_getDirection(_distance.player.x + _distance.block.x) * 
+			_distance.offset.x)
 		);
 		y = (
-				(_sprite.getGlobalBounds().top) +
-				(_distance.player.y + _distance.block.y) -
-				(_getDirection(_distance.player.y + _distance.block.y) * 
-				_distance.offset.y)
+			(_sprite.getGlobalBounds().top) +
+			(_distance.player.y + _distance.block.y) -
+			(_getDirection(_distance.player.y + _distance.block.y) * 
+			_distance.offset.y)
 		);
 /*		sf::RectangleShape hitbox2;
 		hitbox2.setSize(sf::Vector2f(_sprite.getGlobalBounds().width, _sprite.getGlobalBounds().height));
@@ -325,12 +325,18 @@ void Player::handleCollision(sf::RectangleShape s, sf::RenderWindow* window)
 void Player::handleCollision(sf::Window* window)
 {
 	//Create a new Rect representing the player after the proposed movement:
-	float x = 	(_sprite.getGlobalBounds().left + 
-				 _distance.player.x +
-				 _distance.block.x);
-	float y = 	(_sprite.getGlobalBounds().top + 
-				 _distance.player.y +
-				 _distance.block.y);
+	float x = (
+		(_sprite.getGlobalBounds().left) +
+		(_distance.player.x + _distance.block.x) -
+		(_getDirection(_distance.player.x + _distance.block.x) * 
+		_distance.offset.x)
+	);
+	float y = (
+		(_sprite.getGlobalBounds().top) +
+		(_distance.player.y + _distance.block.y) -
+		(_getDirection(_distance.player.y + _distance.block.y) * 
+		_distance.offset.y)
+	);
 
 	sf::FloatRect r(x, y,
 		_sprite.getGlobalBounds().width,
@@ -341,17 +347,23 @@ void Player::handleCollision(sf::Window* window)
 	if((r.left < 0) || ((r.left + r.width) > window->getSize().x))
 		_resetVectors();
 	if((r.top < 0) || ((r.top + r.height) > window->getSize().y))
-		_resetVectors();
+		_distance.offset.y += -r.top;
 }
 
 //Moves the player based on the values in the direction vector. This should be
 //called last, after everything involving collisions and all that has been done:
 void Player::handleMovement()
 {
-	_distance.total.x = ((_distance.player.x + _distance.block.x) -
-						(_getDirection(_distance.player.x + _distance.block.x) * _distance.offset.x));
-	_distance.total.y = ((_distance.player.y + _distance.block.y) -
-						(_getDirection(_distance.player.y + _distance.block.y) * _distance.offset.y));
+	_distance.total.x = (
+		(_distance.player.x + _distance.block.x) -
+		(_getDirection(_distance.player.x + _distance.block.x) * 
+		_distance.offset.x)
+	);
+	_distance.total.y = (
+		(_distance.player.y + _distance.block.y) -
+		(_getDirection(_distance.player.y + _distance.block.y) * 
+		_distance.offset.y)
+	);
 
 	std::cout	<< "TOTAL: \t\t("
 				<< _round(_distance.total.x)
