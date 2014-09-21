@@ -21,6 +21,8 @@
 #include "../sound/sfx.h"
 #include "../block/dynamicBlock.h"
 
+extern float timed;
+
 enum Direction { LEFT = -1, RIGHT = 1 };
 
 class Player
@@ -47,14 +49,12 @@ class Player
 
 		Direction _facing;
 
-		//Two direction vectors, which control the direction the player is
-		//moving in (-1 for right/up, 1 for left/down, 0 for none). There are 
-		//two things that can influence player movement, the player and a
-		//DynamicBlock. The total distance travelled is totalled up, and
-		//processed at the end of the frame if there are no collisions:
+		//These vectors contain the total distance moved by the player, split
+		//across the input from the player, input from a DynamicBlock, and an
+		//offset that is subtracted if there is a collision:
 		static const float X_VELOCITY, Y_VELOCITY;
-		struct DirectionV { sf::Vector2i player, block; } _direction;
-		struct DistanceV  { sf::Vector2f block, total; } _distance;
+		struct Distance { sf::Vector2f player, block, offset, total; } _distance;
+		void _resetVectors();
 
 		//Score related variables:
 		static const char* HIGHSCORE_FILE;
@@ -63,6 +63,12 @@ class Player
 
 		//Sound effects:
 		SoundEffect _sfx;
+
+		//A function for converting a floating point number to a Direction:
+		static Direction _getDirection(float);
+
+		//A function to round decimal numbers to a different precision:
+		static float _round(float);
 
 	public:
 		//Load the images:
@@ -84,13 +90,14 @@ class Player
 		void setMaxJumpHeight(float, float);
 
 		//Signal the player to move in the given direction:
-		void move(Direction);
-		void move(DynamicBlock*);
+		void move(float); 			//Handles y-direction movement.
+		void move(Direction, float);//Handles x-direction movement.
+		void move(DynamicBlock*);	//Handles movement from a DynamicBlock.
 
 		//Process events at the end of the frame:
-		void handleCollision(sf::RectangleShape, float);
-		void handleCollision(sf::Window*, float);
-		void handleMovement(float);
+		void handleCollision(sf::RectangleShape, sf::RenderWindow*);
+		void handleCollision(sf::Window*);
+		void handleMovement();
 
 		//Give the player a point:
 		void addPoint();

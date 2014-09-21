@@ -31,6 +31,7 @@ std::vector <std::vector<Block*>* >* initLayouts()
 
 	//This is going to be a long function...
 	{
+
 		StaticBlock* b = new StaticBlock(300, 100, 150, 150);
 		std::vector <Block*>* v = new std::vector<Block*>;
 		v->push_back(b);

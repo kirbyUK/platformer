@@ -30,6 +30,8 @@
 #include "layout/layout.h"
 #include "sound/music.h"
 
+float timed;
+
 int main()
 {
 	//Attempt to load all the nessecary files:
@@ -179,9 +181,10 @@ int main()
 		}
 		//Movement:
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-			p.move(LEFT);
+			p.move(LEFT, frameTime);
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			p.move(RIGHT);
+			p.move(RIGHT, frameTime);
+		p.move(frameTime);
 
 		//Check if the player is in range of a DynamicBlock, and move them:
 		for(unsigned int i = 0; i < layout->size(); i++)
@@ -194,11 +197,11 @@ int main()
 		//Handle the player's movement:
 		//Check collisions for the static target blocks and the layout blocks:
 		for(unsigned int i = 0; i < 2; i++)
-			p.handleCollision(targets[i]->getShape(), frameTime);
+			p.handleCollision(targets[i]->getShape(), &window);
 		for(unsigned int i = 0; i < layout->size(); i++)
-			p.handleCollision(layout->at(i)->getShape(), frameTime);
-		p.handleCollision(&window, frameTime);
-		p.handleMovement(frameTime);
+			p.handleCollision(layout->at(i)->getShape(), &window);
+		p.handleCollision(&window);
+		p.handleMovement();
 
 		//Handle animation for the death block:
 		deathBlock.handleEvents(0);
@@ -247,6 +250,7 @@ int main()
 			}
 			delayTotal += delay.getElapsedTime().asSeconds();
 		}
+		timed = timer.getTimeRemaining(delayTotal);
 
 		//Clear the screen and draw everything:
 		window.clear(BACKGROUND);
