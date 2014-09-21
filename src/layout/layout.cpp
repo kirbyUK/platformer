@@ -17,6 +17,7 @@
 #include "layout.h"
 #include "../block/staticBlock.h"
 #include "../block/dynamicBlock.h"
+#include "../block/deathBlock.h"
 #include "../movement/movementType.h"
 #include "../movement/upDown.h"
 #include "../movement/leftRight.h"
@@ -31,7 +32,6 @@ std::vector <std::vector<Block*>* >* initLayouts()
 
 	//This is going to be a long function...
 	{
-
 		StaticBlock* b = new StaticBlock(300, 100, 150, 150);
 		std::vector <Block*>* v = new std::vector<Block*>;
 		v->push_back(b);
@@ -135,6 +135,16 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		v->push_back(b5);
 		layouts->push_back(v);
 	}
+	{
+		StaticBlock* b1 = new StaticBlock(77, 25, 137, 150);
+		DeathBlock* b2 = new DeathBlock(77, 25, 251, 150);
+		StaticBlock* b3 = new StaticBlock(77, 25, 365, 150);
+		std::vector <Block*>* v = new std::vector<Block*>;
+		v->push_back(b1);
+		v->push_back(b2);
+		v->push_back(b3);
+		layouts->push_back(v);
+	}
 	//The following have been contributed by Che-Hien Man (@Le-Che), thanks!
 	{
 		StaticBlock* b1 = new StaticBlock(50, 280, 275, 0);
@@ -163,24 +173,6 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		v->push_back(b2);
 		layouts->push_back(v);
 	}
-/*	{ //Level 5.png - Ask about this!
-		StaticBlock* b1 = new StaticBlock(30, 150, 150, 0);
-		StaticBlock* b2 = new StaticBlock(30, 150, 450, 0);
-		StaticBlock* b3 = new StaticBlock(30, 250, 285, 100);
-//		StaticBlock* b4 = new StaticBlock(60, 25, 210, 340);
-//		StaticBlock* b5 = new StaticBlock(60, 25, 330, 340);
-//		StaticBlock* b6 = new StaticBlock(60, 25, 375, 275);
-		StaticBlock* b7 = new StaticBlock(320, 25, 140, 335);
-		std::vector <Block*>* v = new std::vector<Block*>;
-		v->push_back(b1);
-		v->push_back(b2);
-		v->push_back(b3);
-//		v->push_back(b4);
-//		v->push_back(b5);
-//		v->push_back(b6);
-		v->push_back(b7);
-		layouts->push_back(v);
-	}*/
 	return layouts;
 }
 

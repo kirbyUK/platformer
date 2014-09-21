@@ -68,6 +68,7 @@ int main()
 
 	Player p;
 	Music music;
+	bool death = false;
 
 	//Create the text items:
 	Text fps("FPS: ", 16, TOP_LEFT, &window, 5, 5);
@@ -226,13 +227,27 @@ int main()
 
 			layout = shuffleLayouts(layouts);
 		}
+
+		//Check if the player is on any death blocks contained in the layout:
+		for(unsigned int i = 0; i < layout->size(); i++)
+		{
+			DeathBlock* d = dynamic_cast <DeathBlock*>(layout->at(i));
+			if(d != NULL)
+			{
+				if(d->isPlayerOnTop(p.getSprite()))
+					death = true;
+			}
+		}
+
 		//Otherwise, check if the player is on top of the death block, or runs
 		//out of time:
-		else if((deathBlock.isPlayerOnTop(p.getSprite())) 
-			|| ((timer.getTimeRemaining(delayTotal)) <= 0))
+		if((deathBlock.isPlayerOnTop(p.getSprite()))
+			|| ((timer.getTimeRemaining(delayTotal)) <= 0) || (death))
 		{
 			//Kill the player:
 			p.kill();
+
+			death = false;
 
 			//Write highscore to file if needed:
 			if(p.getScore() > p.getHighScore())
