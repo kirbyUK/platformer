@@ -18,17 +18,18 @@
 #include <cstdlib>
 #include <ctime>
 #include <SFML/Graphics.hpp>
-#include "player/player.h"
 #include "block/block.h"
-#include "block/staticBlock.h"
-#include "block/dynamicBlock.h"
 #include "block/deathBlock.h"
+#include "block/dynamicBlock.h"
+#include "block/staticBlock.h"
+#include "interface/arrow.h"
 #include "interface/screens.h"
 #include "interface/text.h"
-#include "interface/arrow.h"
 #include "interface/timer.h"
 #include "layout/layout.h"
+#include "player/player.h"
 #include "sound/music.h"
+#include "system/lockfile.h"
 
 int main()
 {
@@ -46,6 +47,10 @@ int main()
 		return -1;
 
 	if(! Arrow::init())
+		return -1;
+
+	//Create the lockfile:
+	if(! createLockfile())
 		return -1;
 
 	//Seed the random number generator:
@@ -272,6 +277,7 @@ int main()
 		frameTime = frameTimer.restart().asSeconds() - delayTotal;
 		delayTotal = 0.0;
 	}
+	removeLockfile();
 	cleanup(layouts);
 	return 0;
 }

@@ -62,7 +62,7 @@ directory for now.
 
 - [x] Add pause functionality
 
-- [ ] Implement lock file
+- [x] Implement lock file
 
 - [ ] Add more layouts
 

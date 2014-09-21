@@ -6,10 +6,11 @@ MDIR=$(SRC)/movement
 SDIR=$(SRC)/sound
 IDIR=$(SRC)/interface
 LDIR=$(SRC)/layout
+QDIR=$(SRC)/system
 BIN=platformer
 OBJS=main.o player.o block.o staticBlock.o dynamicBlock.o deathBlock.o \
 	 movementType.o upDown.o leftRight.o square.o sfx.o music.o screens.o \
-	 text.o arrow.o timer.o layout.o
+	 text.o arrow.o timer.o layout.o lockfile.o
 
 ifdef SystemRoot
     CCFLAGS += -D WIN32
@@ -22,6 +23,7 @@ ifdef SystemRoot
 #	HIGHSCORE="$(HIGHSCORE_DIR)\\highscore"
 	ASSETS_DIR="assets"
 	HIGHSCORE="highscore"
+	LOCKFILE="lockfile"
 else
     UNAME_S := $(shell uname -s)
 	USER := $(shell logname)
@@ -34,6 +36,7 @@ else
 		ASSETS_DIR="$(DESTDIR)/share/$(BIN)/assets"
 		HIGHSCORE_DIR=$(HOMEDIR)/.$(BIN)
 		HIGHSCORE="$(HIGHSCORE_DIR)/highscore"
+		LOCKFILE="$(HIGHSCORE_DIR)/lockfile"
     endif
     ifeq ($(UNAME_S),Darwin)
         CCFLAGS += -D OSX
@@ -44,6 +47,7 @@ else
 		ASSETS_DIR="$(DESTDIR)/share/$(BIN)/assets"
 		HIGHSCORE_DIR=$(HOMEDIR)/.$(BIN)
 		HIGHSCORE="$(HIGHSCORE_DIR)/highscore"
+		LOCKFILE="$(HIGHSCORE_DIR)/lockfile"
     endif
 endif
 
@@ -118,6 +122,11 @@ timer.o: $(IDIR)/timer.cpp $(IDIR)/timer.h
 layout.o: $(LDIR)/layout.cpp $(LDIR)/layout.h
 	$(CC) $(FLAGS) $(LDIR)/layout.cpp
 
+# ./src/system -------------------------------
+
+lockfile.o: $(QDIR)/lockfile.cpp $(QDIR)/lockfile.h
+	$(CC) $(FLAGS) -DLOCKFILE='$(LOCKFILE)' $(QDIR)/lockfile.cpp
+
 # --------------------------------------------
 
 ifdef SystemRoot
@@ -150,8 +159,8 @@ install:
 	if [ ! -d $(ASSETS_DIR) ]; then mkdir -p $(ASSETS_DIR); fi
 	$(CP) -r assets/* $(ASSETS_DIR)
 	if [ ! -d $(HIGHSCORE_DIR) ]; then mkdir -p $(HIGHSCORE_DIR); fi
-	echo 0 > $(HIGHSCORE)
-	chown $(USER) $(HIGHSCORE)
+	if [ ! -e $(HIGHSCORE) ]; then echo 0 > $(HIGHSCORE); fi
+	chown -R $(USER) $(HIGHSCORE_DIR)
 
 clean:
 	$(RM) $(call FixPath,$(OBJS)) $(call FixPath,$(BIN))
