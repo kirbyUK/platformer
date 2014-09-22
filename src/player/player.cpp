@@ -294,9 +294,11 @@ void Player::handleCollision(sf::Window* window)
 	);
 
 	//Check if any of the points are outside the screen:
-	if((r.left < 0) || ((r.left + r.width) > window->getSize().x))
-		_resetVectors();
-	if((r.top < 0) || ((r.top + r.height) > window->getSize().y))
+	if(r.left < 0)
+		_distance.offset.x += -r.left;
+	else if((r.left + r.width) > window->getSize().x)
+		_distance.offset.x += ((r.left + r.width) - window->getSize().x);
+	else if(r.top < 0)
 		_distance.offset.y += -r.top;
 }
 
