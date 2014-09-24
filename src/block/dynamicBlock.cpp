@@ -43,10 +43,10 @@ sf::FloatRect DynamicBlock::getDetectionBox(sf::Sprite& p) const
 	//Create a box around the block with space for the player:
 	return sf::FloatRect
 	(
-		(_shape.getPosition().x - p.getGlobalBounds().width),
+		(_shape.getPosition().x - (p.getGlobalBounds().width / 2)),
 		_shape.getPosition().y,
-		(_shape.getSize().x + (p.getGlobalBounds().width * 2)),
-		(_shape.getSize().y + p.getGlobalBounds().height)
+		(_shape.getSize().x + p.getGlobalBounds().width),
+		(_shape.getSize().y + (p.getGlobalBounds().height / 2))
 	);
 }
 
