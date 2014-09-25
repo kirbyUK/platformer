@@ -325,7 +325,7 @@ void Player::handleMovement()
 	if(_isJumping)
 	{
 		_jumpDistanceCovered += -_distance.player.y;
-		if(_jumpDistanceCovered >= _maxJumpHeight)
+		if((_jumpDistanceCovered >= _maxJumpHeight) || (_distance.offset.y != 0))
 		{
 			_isJumping = false;
 			_jumpDistanceCovered = 0;
@@ -334,10 +334,9 @@ void Player::handleMovement()
 	}
 
 	//Check if we collided with a platform this frame and allow jumping if so:
-	if(_distance.offset.y != 0)
+	if((_round(_distance.offset.y) == _round(_distance.player.y)) && 
+		(! _canJump))
 		_canJump = true;
-	else
-		_canJump = false;
 
 	//Flip the character if required:
 	if(_distance.player.x != 0)
