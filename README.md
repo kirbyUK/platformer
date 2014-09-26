@@ -2,17 +2,33 @@
 
 ![preview](https://raw.github.com/kirbyman62/platformer/master/preview.png)
 
-An exceedingly simple platformer game because I need to make something I can actually finish. SFML2 and C++ as always.
+An exceedingly simple platformer game because I needed to make something I can 
+actually finish. SFML2 and C++ as always.
 
-The point of the game is to run back and forth between the two platforms either side of the screen. What's in between those two pillars changes every time.
+The point of the game is to run back and forth between the two platforms either
+side of the screen. What's in between those two pillars changes every time.
+
+##Downloads
+
+I upload a new build with every 
+[release](https://github.com/kirbyman62/platformer/releases).
+
+Windows: [32-bit](https://github.com/kirbyman62/platformer/releases/download/v1.0/platformer-win32-0.1.zip)
+
+Debian builds will be available when the package updates. I have submitted a
+[bug report](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=762997) so 
+hopefully it will be bought to someone's attention. If you compile SFML from 
+source then this project compiles fine.
 
 ##Building
 
-The program requires [SFML](http://www.sfml-dev.org) ( >= 2.0). There are detailed instructions on how to install it in their tutorials section.
+The program requires [SFML](http://www.sfml-dev.org) ( >= 2.0). There are
+detailed instructions on how to install it in their tutorials section.
 
 ###Linux
 
-Provided you have SFML installed in a standard place, it should be as easy as running:
+Provided you have SFML installed in a standard place, it should be as easy as
+running:
 
 ```
 make
@@ -22,7 +38,8 @@ platformer
 
 ### Mac
 
-Along with the instructions in the Linux section, edit the Makefile similar to Windows, like so:
+Along with the instructions in the Linux section, edit the Makefile similar to
+Windows, like so:
 
 ```Makefile
 FLAGS=-Wall -c -g -I/usr/local/include
