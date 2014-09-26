@@ -13,7 +13,7 @@ side of the screen. What's in between those two pillars changes every time.
 I upload a new build with every 
 [release](https://github.com/kirbyman62/platformer/releases).
 
-Windows: [32-bit](https://github.com/kirbyman62/platformer/releases/download/v1.0/platformer-win32-0.1.zip)
+Windows: [32-bit](https://github.com/kirbyman62/platformer/releases/download/v1.0/platformer-win32-1.0.zip)
 
 Debian builds will be available when the package updates. I have submitted a
 [bug report](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=762997) so 
