@@ -15,7 +15,7 @@ OBJS=main.o player.o block.o staticBlock.o dynamicBlock.o deathBlock.o \
 ifdef SystemRoot
     CCFLAGS += -D WIN32
 	SFML_PATH=C:\SFML-2.1
-    FLAGS=-Wall -Werror -c -g -I$(SFML_PATH)\include
+    FLAGS=-Wall -Werror -c -O3 -I$(SFML_PATH)\include
     LIBS=-L$(SFML_PATH)\lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 #   DESTDIR="\""C:\Program Files (x86)"\""
 #	ASSETS_DIR="$(DESTDIR)\\$(BIN)\\assets"
@@ -30,8 +30,8 @@ else
 	HOMEDIR := $(shell grep $(USER) /etc/passwd | cut -d ":" -f6)
     ifeq ($(UNAME_S),Linux)
         CCFLAGS += -D LINUX
-        FLAGS=-Wall -Werror -c -g
-        LIBS=-lsfml-audio-d -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
+        FLAGS=-Wall -Werror -c -O3
+        LIBS=-lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
         DESTDIR=/usr/local
 		ASSETS_DIR="$(DESTDIR)/share/$(BIN)/assets"
 		HIGHSCORE_DIR=$(HOMEDIR)/.$(BIN)
@@ -41,7 +41,7 @@ else
     ifeq ($(UNAME_S),Darwin)
         CCFLAGS += -D OSX
 		SFML_PATH=/usr/local
-        FLAGS=-Wall -Werror -c -g -I$(SFML_PATH)/include
+        FLAGS=-Wall -Werror -c -O3 -I$(SFML_PATH)/include
         LIBS=-L$(SFML_PATH)/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
         DESTDIR=/usr/local
 		ASSETS_DIR="$(DESTDIR)/share/$(BIN)/assets"
@@ -54,7 +54,7 @@ endif
 all: $(BIN)
 
 $(BIN): $(OBJS)
-	$(CC) -g $(OBJS) -o $(BIN) $(LIBS)
+	$(CC) -O3 $(OBJS) -o $(BIN) $(LIBS)
 
 # ./src/ -------------------------------------
 
