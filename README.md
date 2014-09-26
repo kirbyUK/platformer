@@ -13,12 +13,9 @@ side of the screen. What's in between those two pillars changes every time.
 I upload a new build with every 
 [release](https://github.com/kirbyman62/platformer/releases).
 
-Windows: [32-bit](https://github.com/kirbyman62/platformer/releases/download/v1.0/platformer-win32-1.0.zip)
+**Windows**: [32-bit](https://github.com/kirbyman62/platformer/releases/download/v1.0/platformer-win32-1.0.zip)
 
-Debian builds will be available when the package updates. I have submitted a
-[bug report](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=762997) so 
-hopefully it will be bought to someone's attention. If you compile SFML from 
-source then this project compiles fine.
+**Debian**: [32-bit](https://github.com/kirbyman62/platformer/releases/download/v1.0/platformer_1.0-1_i386.deb)
 
 ##Building
 
