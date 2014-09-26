@@ -325,7 +325,8 @@ void Player::handleMovement()
 	if(_isJumping)
 	{
 		_jumpDistanceCovered += -_distance.player.y;
-		if((_jumpDistanceCovered >= _maxJumpHeight) || (_distance.offset.y != 0))
+		if((_jumpDistanceCovered >= _maxJumpHeight) ||
+			(_round(_distance.offset.y) == _round(_distance.player.y)))
 		{
 			_isJumping = false;
 			_jumpDistanceCovered = 0;
