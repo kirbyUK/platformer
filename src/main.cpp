@@ -57,7 +57,8 @@ int main()
 	std::srand(unsigned(std::time(0)));
 
 	//Make the window and set the icon:
-	sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), "Platformer", sf::Style::Close);
+	sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), "Platformer",
+		sf::Style::Close);
 	window.setIcon(25, 25, Player::getPixelsPointer());
 
 	sf::Event event;
@@ -71,13 +72,13 @@ int main()
 	bool death = false;
 
 	//Create the text items:
-	Text fps("FPS: ", 16, TOP_LEFT, &window, 5, 5);
 	Text score("SCORE: ", 16, TOP_RIGHT, &window, 5, 5);
 	Text high("HIGH:  ", 16, TOP_RIGHT, &window, 5, 23);
 	Timer timer(240, 5, 20, BACKGROUND);
 
-	//Used to time the difference between the player pressing and releasing space,
-	//allowing for 'short hops' if the player releases space bar quick enough:
+	//Used to time the difference between the player pressing and releasing
+	//space, allowing for 'short hops' if the player releases space bar quick
+	//enough:
 	sf::Clock jumpTimer;
 
 	//Initialises the two 'target' blocks that stand at either side of the
@@ -89,7 +90,7 @@ int main()
 	StaticBlock* targets[2] = { &b1, &b2 };
 	StaticBlock* target = targets[1];
 
-	//The block at the bottom that kills the player on contact and ends the game:
+	//The block at the bottom that kills the player and ends the game:
 	DeathBlock deathBlock(600, 15, 0, 385);
 
 	//Two arrows to teach the player at the beginning of the game:
@@ -124,7 +125,8 @@ int main()
 			//If the spacebar is released:
 			if(event.type == sf::Event::KeyReleased)
 				if(event.key.code == sf::Keyboard::Space)
-					p.setMaxJumpHeight(jumpTimer.getElapsedTime().asSeconds(), frameTime);
+					p.setMaxJumpHeight(jumpTimer.getElapsedTime().asSeconds(),
+						frameTime);
 
 			//If the window is resized, snap it back to what it should be:
 			if(event.type == sf::Event::Resized)
@@ -274,7 +276,6 @@ int main()
 		window.draw(deathBlock.getShape());
 		window.draw(b1.getShape());
 		window.draw(b2.getShape());
-		window.draw(fps.updateText(static_cast <unsigned>(1 / frameTime)));
 		window.draw(score.updateText(p.getScore()));
 		window.draw(high.updateText(p.getHighScore()));
 		if(target == targets[1])
