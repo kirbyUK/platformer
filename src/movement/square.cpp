@@ -16,8 +16,8 @@
 */
 #include "square.h"
 
-Square::Square(float velocity, float x, float y,
-	float width, float height, sf::Vector2i d)
+Square::Square(float velocity, float x, float y, float width, float height, 
+	Direction clock, sf::Vector2i d)
 {
 	_distanceMoved.x = 0;
 	_distanceMoved.y = 0;
@@ -29,11 +29,12 @@ Square::Square(float velocity, float x, float y,
 	_boundaries[1][1] = y + height;
 
 	_direction = d;
+	_clock = clock;
 }
 
 void Square::handleEvents(sf::RectangleShape& shape, float frameTime)
 {
-	//The block moves in a clockwise square shape, like so:
+	//The block moves in a square shape (clockwise or anti-clockwise), like so:
 	// * -------> *
 	// ^          |
 	// |          |
@@ -71,10 +72,12 @@ void Square::handleEvents(sf::RectangleShape& shape, float frameTime)
 	}
 
 	//Move the block:
-	shape.move((_direction.x * (_velocity * frameTime)),
-				(_direction.y * (_velocity * frameTime)));
+	shape.move(
+		(_clock * (_direction.x * (_velocity * frameTime))),
+		(_clock * (_direction.y * (_velocity * frameTime)))
+	);
 
 	//Save the distance moved:
-	_distanceMoved.x = (_direction.x * (_velocity * frameTime));
-	_distanceMoved.y = (_direction.y * (_velocity * frameTime));
+	_distanceMoved.x = (_clock * (_direction.x * (_velocity * frameTime)));
+	_distanceMoved.y = (_clock * (_direction.y * (_velocity * frameTime)));
 }

@@ -23,6 +23,7 @@
 #include "../movement/leftRight.h"
 #include "../movement/square.h"
 #include <algorithm>
+#include <cmath>
 
 //Creates all the layouts, sticks them all in a vector array and returns it:
 std::vector <std::vector<Block*>* >* initLayouts()
@@ -82,7 +83,7 @@ std::vector <std::vector<Block*>* >* initLayouts()
 	}
 	{
 		MovementType* m = new Square(
-			150, 145, 175, 200, 150, sf::Vector2i(-1, 0));
+			150, 145, 175, 200, 150, CLOCKWISE, sf::Vector2i(-1, 0));
 		DynamicBlock* b = new DynamicBlock(80, 25, 250, 325, m);
 		std::vector <Block*>* v = new std::vector<Block*>;
 		v->push_back(b);
@@ -111,9 +112,9 @@ std::vector <std::vector<Block*>* >* initLayouts()
 	}
 	{
 		MovementType* m1 = new Square(
-			160, 125, 150, 82.5, 120, sf::Vector2i(0, -1));
+			160, 125, 150, 82.5, 120, CLOCKWISE, sf::Vector2i(0, -1));
 		MovementType* m2 = new Square(
-			160, 312.5, 30, 82.5, 120, sf::Vector2i(0, 1));
+			160, 312.5, 30, 82.5, 120, CLOCKWISE, sf::Vector2i(0, 1));
 		DynamicBlock* b1 = new DynamicBlock(80, 25, 125, 150, m1);
 		DynamicBlock* b2 = new DynamicBlock(80, 25, 395, 150, m2);
 		std::vector <Block*>* v = new std::vector<Block*>;
@@ -145,15 +146,29 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		v->push_back(b3);
 		layouts->push_back(v);
 	}
-	//The following have been contributed by Che-Hien Man (@Le-Che), thanks!
 	{
-		StaticBlock* b1 = new StaticBlock(50, 280, 275, 0);
-		StaticBlock* b2 = new StaticBlock(60, 25, 120, 210);
-		StaticBlock* b3 = new StaticBlock(60, 25, 165, 275);
-		StaticBlock* b4 = new StaticBlock(60, 25, 210, 340);
-		StaticBlock* b5 = new StaticBlock(60, 25, 330, 340);
-		StaticBlock* b6 = new StaticBlock(60, 25, 375, 275);
-		StaticBlock* b7 = new StaticBlock(60, 25, 420, 210);
+		MovementType* m1 = new Square(
+			150, 150, 100, 225, 200, CLOCKWISE, sf::Vector2i(1, 0));
+		MovementType* m2 = new Square(
+			150, 150, 100, 225, 200, ANTI_CLOCKWISE, sf::Vector2i(1, 0));
+		DynamicBlock* b1 = new DynamicBlock(70, 25, 260, 100, m1);
+		DynamicBlock* b2 = new DynamicBlock(70, 25, 260, 100, m2);
+		StaticBlock* b3 = new StaticBlock(30, 150, 285, 0);
+		StaticBlock* b4 = new StaticBlock(60, 125, 270, 275);
+		std::vector <Block*>* v = new std::vector<Block*>;
+		v->push_back(b1);
+		v->push_back(b2);
+		v->push_back(b3);
+		v->push_back(b4);
+		layouts->push_back(v);
+	}
+	{
+		StaticBlock* b1 = new StaticBlock(45, 250, 170, 150);
+		StaticBlock* b2 = new StaticBlock(45, 290, 277.5, 110);
+		StaticBlock* b3 = new StaticBlock(45, 250, 385, 150);
+		StaticBlock* b4 = new StaticBlock(45, 100, 170, 0);
+		StaticBlock* b5 = new StaticBlock(45, 60, 277.5, 0);
+		StaticBlock* b6 = new StaticBlock(45, 100, 385, 0);
 		std::vector <Block*>* v = new std::vector<Block*>;
 		v->push_back(b1);
 		v->push_back(b2);
@@ -161,9 +176,30 @@ std::vector <std::vector<Block*>* >* initLayouts()
 		v->push_back(b4);
 		v->push_back(b5);
 		v->push_back(b6);
-		v->push_back(b7);
 		layouts->push_back(v);
 	}
+	{
+		MovementType* m1 = new UpDown(125, 200, 100);
+		MovementType* m2 = new UpDown(139, 180, 80);
+		MovementType* m3 = new UpDown(121, 234, 97);
+		DynamicBlock* b1 = new DynamicBlock(50, 320, 162.5, 150, m1);
+		DynamicBlock* b2 = new DynamicBlock(50, 320, 275, 178, m2);
+		DynamicBlock* b3 = new DynamicBlock(50, 320, 387.5, 201, m3);
+		std::vector <Block*>* v = new std::vector<Block*>;
+		v->push_back(b1);
+		v->push_back(b2);
+		v->push_back(b3);
+		layouts->push_back(v);
+	}
+	{
+		StaticBlock* b1 = new StaticBlock(115, 25, 100, 150);
+		StaticBlock* b2 = new StaticBlock(115, 25, 385, 150);
+		std::vector <Block*>* v = new std::vector<Block*>;
+		v->push_back(b1);
+		v->push_back(b2);
+		layouts->push_back(v);
+	}
+	//The following have been contributed by Che-Hien Man (@Le-Che), thanks!
 	{
 		MovementType* m1 = new LeftRight(175, 125, 395);
 		StaticBlock* b1 = new StaticBlock(30, 170, 285, 0);
@@ -196,6 +232,6 @@ std::vector <Block*>* shuffleLayouts(std::vector <std::vector <Block*>* >* v)
 	v->erase(v->begin());
 
 	//Shuffle all the rest of the layouts and pick a new one:
-	std::random_shuffle(v->begin(), (v->end() - 1));
+	std::random_shuffle(v->begin(), (v->end() - (std::floor(v->size() / 3))));
 	return v->front();
 }

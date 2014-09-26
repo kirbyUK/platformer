@@ -18,17 +18,22 @@
 #define SQUARE_H
 #include "movementType.h"
 
+enum Direction { ANTI_CLOCKWISE = -1, CLOCKWISE = 1 };
+
 class Square : public MovementType
 {
 	private:
-		//The direction the block is moving in:
+		//Whether the block will go clockwise or anti-clockwise:
+		Direction _clock;
+
+		//The direction the block is currently moving in:
 		sf::Vector2i _direction;
 
 		//The boundaries, which the block's origin while stay within:
 		float _boundaries[2][2];
 
 	public:
-		Square(float, float, float, float, float, sf::Vector2i);
+		Square(float, float, float, float, float, Direction, sf::Vector2i);
 		void handleEvents(sf::RectangleShape&, float);
 };
 
