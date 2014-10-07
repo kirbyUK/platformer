@@ -18,6 +18,10 @@
 #include <iostream>
 
 //The filepaths to the images, with backticks for Windows:
+#ifndef ASSETS
+	#define ASSETS "assets"
+#endif
+
 #ifdef _WIN32
 	const std::string Arrow::SPRITE_PATH = 
 		(((std::string)ASSETS) + ((std::string)"\\sprites\\arrow.png"));
