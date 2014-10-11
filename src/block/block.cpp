@@ -15,9 +15,6 @@
 * along with 'platformer'. If not, see <http://www.gnu.org/licenses/>.
 */
 #include "block.h"
-#include <iostream>
-
-extern sf::RectangleShape theone;
 
 const sf::Color Block::BLOCK_COLOUR = sf::Color(242, 241, 235);
 
