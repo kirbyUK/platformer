@@ -57,7 +57,7 @@ const float Player::X_VELOCITY = 270.0;
 const float Player::Y_VELOCITY = 340.0;
 
 //The maximum and minimum jump height in pixels:
-const float Player::MAX_JUMP_HEIGHT = 70.0;
+const float Player::MAX_JUMP_HEIGHT = 50.0;
 const float Player::MIN_JUMP_HEIGHT = MAX_JUMP_HEIGHT / 2;
 
 //Attempts to load up all the images, must be called before the constructor:
