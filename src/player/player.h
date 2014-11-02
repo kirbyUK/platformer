@@ -42,6 +42,7 @@ class Player
 		static const float MAX_JUMP_HEIGHT, MIN_JUMP_HEIGHT;
 		float _maxJumpHeight;
 		float _jumpDistanceCovered;
+		float _yVelocity;
 		bool _isJumping;
 		bool _canJump;
 

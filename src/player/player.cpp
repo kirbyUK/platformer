@@ -54,7 +54,7 @@ const char* Player::HIGHSCORE_FILE = HIGHSCORE;
 //How many pixels the character will move after a second of constant motion in
 //that direction:
 const float Player::X_VELOCITY = 270.0;
-const float Player::Y_VELOCITY = 250.0;
+const float Player::Y_VELOCITY = 340.0;
 
 //The maximum and minimum jump height in pixels:
 const float Player::MAX_JUMP_HEIGHT = 70.0;
@@ -107,6 +107,7 @@ Player::Player()
 	_canJump = true;
 	_maxJumpHeight = MAX_JUMP_HEIGHT;
 	_jumpDistanceCovered = 0;
+	_yVelocity = 0;
 	_facing = RIGHT;
 	_resetVectors();
 }
@@ -143,6 +144,7 @@ void Player::jump()
 	{
 		_isJumping = true;
 		_canJump = false;
+		_yVelocity = Y_VELOCITY;
 		_sfx.play(JUMP);
 	}
 }
@@ -168,9 +170,17 @@ void Player::setMaxJumpHeight(float seconds, float frameTime)
 void Player::move(float frameTime)
 {
 	if(_isJumping)
+	{
+		_yVelocity -= (frameTime * (Y_VELOCITY * 2.3));
 		_distance.player.y = -(Y_VELOCITY * frameTime);
+	}
 	else
-		_distance.player.y = (Y_VELOCITY * frameTime);
+	{
+		_yVelocity += (frameTime * (Y_VELOCITY * 2.3));
+		if(_yVelocity > Y_VELOCITY)
+			_yVelocity = Y_VELOCITY;
+		_distance.player.y = (_yVelocity * frameTime);
+	}
 }
 
 void Player::move(Direction d, float frameTime)
@@ -330,6 +340,7 @@ void Player::handleMovement()
 		{
 			_isJumping = false;
 			_jumpDistanceCovered = 0;
+			_yVelocity = 0;
 			_maxJumpHeight = MAX_JUMP_HEIGHT;
 		}
 	}
@@ -337,7 +348,10 @@ void Player::handleMovement()
 	//Check if we collided with a platform this frame and allow jumping if so:
 	if((_round(_distance.offset.y) == _round(_distance.player.y)) && 
 		(! _canJump))
+	{
+		_yVelocity = 0;
 		_canJump = true;
+	}
 
 	//Flip the character if required:
 	if(_distance.player.x != 0)
