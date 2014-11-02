@@ -172,7 +172,7 @@ void Player::move(float frameTime)
 	if(_isJumping)
 	{
 		_yVelocity -= (frameTime * (Y_VELOCITY * 2.3));
-		_distance.player.y = -(Y_VELOCITY * frameTime);
+		_distance.player.y = -(_yVelocity * frameTime);
 	}
 	else
 	{
