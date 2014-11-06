@@ -16,7 +16,7 @@
 #include <iostream>
 
 #ifndef ASSETS
-	#define ASSETS "./assets"
+	#define ASSETS "assets"
 #endif
 
 //The filepaths of the sound effects, with backslashes for Windows:

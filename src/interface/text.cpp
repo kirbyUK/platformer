@@ -17,7 +17,7 @@
 #include <iostream>
 
 #ifndef ASSETS
-	#define ASSETS "./assets"
+	#define ASSETS "assets"
 #endif
 
 //The filepath to the font, with backslashes for Windows:
