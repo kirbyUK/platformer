@@ -13,6 +13,7 @@
 * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 #include <vector>
+#include <array>
 #include <cstdlib>
 #include <ctime>
 #include <SFML/Graphics.hpp>
@@ -24,7 +25,7 @@
 #include "interface/screens.h"
 #include "interface/text.h"
 #include "interface/timer.h"
-#include "layout/layout.h"
+#include "level/level.h"
 #include "player/player.h"
 #include "sound/music.h"
 #include "system/lockfile.h"
@@ -48,8 +49,8 @@ int main()
 		return -1;
 
 	//Create the lockfile:
-	if(! createLockfile())
-		return -1;
+//	if(! createLockfile())
+//		return -1;
 
 	//Seed the random number generator:
 	std::srand(unsigned(std::time(0)));
@@ -86,7 +87,7 @@ int main()
 	//with the same name:
 	StaticBlock b1(100, 250, 0, (WINDOW_Y - 250));
 	StaticBlock b2(100, 250, (WINDOW_X - 100), (WINDOW_Y - 250));
-	StaticBlock* targets[2] = { &b1, &b2 };
+	std::array <StaticBlock*, 2> targets = { &b1, &b2 };
 	StaticBlock* target = targets[1];
 
 	//The block at the bottom that kills the player and ends the game:
@@ -96,11 +97,11 @@ int main()
 	Arrow helpArrow1(SOUTH, (WINDOW_X - 50), (WINDOW_Y - 280));
 	Arrow helpArrow2(SOUTH, 50, (WINDOW_Y - 280));
 
-	//The master layouts vector, containing all possible combinations of blocks
+	//The master levels vector, containing all possible combinations of blocks
 	//that go in the middle. A pointer is used to reference the currently 
 	//selected layout:
-	std::vector <std::vector<Block*>* >* layouts = initLayouts();
-	std::vector <Block*>* layout = layouts->front();
+	std::vector <Level> levels = Level::init();
+	Level* level = &levels.front();
 
 	while(window.isOpen())
 	{
@@ -111,13 +112,9 @@ int main()
 			{
 				//Write highscore to file if needed:
 				if(p.getScore() > p.getHighScore())
-				{
 					if(! p.writeScoreToFile())
-					{
-						cleanup(layouts);
 						return -1;
-					}
-				}
+
 				window.close();
 			}
 
@@ -136,26 +133,22 @@ int main()
 			{
 				delay.restart();
 				music.pause();
+
+				//Write highscore to file if needed:
 				if(! pause(&window, event, false))
-				{
-					//Write highscore to file if needed:
 					if(p.getScore() > p.getHighScore())
-					{
 						if(! p.writeScoreToFile())
-						{
-							cleanup(layouts);
 							return -1;
-						}
-					}
-				}
+
 				music.resume();
 				delayTotal += delay.getElapsedTime().asSeconds();
 			}
 		}
 
 		//Handle the block events:
-		for(unsigned int i = 0; i < layout->size(); i++)
-			layout->at(i)->handleEvents(frameTime);
+//		for(unsigned int i = 0; i < layout->size(); i++)
+//			layout->at(i)->handleEvents(frameTime);
+		level->handleEvents(frameTime);
 
 		//Handle keypresses:
 		//Pausing:
@@ -163,18 +156,13 @@ int main()
 		{
 			delay.restart();
 			music.pause();
+
+			//Write highscore to file if needed:
 			if(! pause(&window, event, true))
-			{
-				//Write highscore to file if needed:
 				if(p.getScore() > p.getHighScore())
-				{
 					if(! p.writeScoreToFile())
-					{
-						cleanup(layouts);
 						return -1;
-					}
-				}
-			}
+
 			music.resume();
 			delayTotal += delay.getElapsedTime().asSeconds();
 		}
@@ -192,19 +180,15 @@ int main()
 		p.move(frameTime);
 
 		//Check if the player is in range of a DynamicBlock, and move them:
-		for(unsigned int i = 0; i < layout->size(); i++)
-		{
-			DynamicBlock* b = dynamic_cast <DynamicBlock*>(layout->at(i));
-			if(b != NULL)
-				p.move(b);
-		}
+		for(auto& i : level->getDynamicBlocks())
+				p.move(i);
 
 		//Handle the player's movement:
 		//Check collisions for the static target blocks and the layout blocks:
-		for(unsigned int i = 0; i < 2; i++)
-			p.handleCollision(targets[i]->getShape());
-		for(unsigned int i = 0; i < layout->size(); i++)
-			p.handleCollision(layout->at(i)->getShape());
+		for(auto& i : targets)
+			p.handleCollision(i->getShape());
+		for(auto& i : level->getRectangleShapes())
+			p.handleCollision(i);
 		p.handleCollision(&window);
 		p.handleMovement();
 
@@ -226,18 +210,14 @@ int main()
 			else
 				target--;
 
-			layout = shuffleLayouts(layouts);
+			level = Level::shuffle(levels);
 		}
 
 		//Check if the player is on any death blocks contained in the layout:
-		for(unsigned int i = 0; i < layout->size(); i++)
+		for(auto& i : level->getDeathBlocks())
 		{
-			DeathBlock* d = dynamic_cast <DeathBlock*>(layout->at(i));
-			if(d != NULL)
-			{
-				if(d->isPlayerOnTop(p.getSprite()))
-					death = true;
-			}
+			if(i->isPlayerOnTop(p.getSprite()))
+				death = true;
 		}
 
 		//Otherwise, check if the player is on top of the death block, or runs
@@ -252,20 +232,16 @@ int main()
 
 			//Write highscore to file if needed:
 			if(p.getScore() > p.getHighScore())
-			{
 				if(! p.writeScoreToFile())
-				{
-					cleanup(layouts);
 					return -1;
-				}
-			}
+
 			delay.restart();
 			if(gameOver(&window, event, p.getScore(), p.getHighScore()))
 			{
 				p.reset();
 				timer.reset(0);
 				target = targets[1];
-				layout = shuffleLayouts(layouts);
+				level = Level::shuffle(levels);
 			}
 			delayTotal += delay.getElapsedTime().asSeconds();
 		}
@@ -281,8 +257,8 @@ int main()
 			window.draw(helpArrow1.getSprite());
 		else
 			window.draw(helpArrow2.getSprite());
-		for(unsigned int i = 0; i < layout->size(); i++)
-			window.draw(layout->at(i)->getShape());
+		for(auto& i : level->getRectangleShapes())
+			window.draw(i);
 		window.draw(timer.getBackground());
 		window.draw(timer.getTimer());
 		window.draw(p.getSprite());
@@ -292,7 +268,6 @@ int main()
 		frameTime = frameTimer.restart().asSeconds() - delayTotal;
 		delayTotal = 0.0;
 	}
-	removeLockfile();
-	cleanup(layouts);
+	//removeLockfile();
 	return 0;
 }

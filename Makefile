@@ -5,18 +5,19 @@ BDIR=$(SRC)/block
 MDIR=$(SRC)/movement
 SDIR=$(SRC)/sound
 IDIR=$(SRC)/interface
-LDIR=$(SRC)/layout
+LDIR=$(SRC)/level
 QDIR=$(SRC)/system
 BIN=platformer
 OBJS=main.o player.o block.o staticBlock.o dynamicBlock.o deathBlock.o \
 	 movementType.o upDown.o leftRight.o square.o sfx.o music.o screens.o \
-	 text.o arrow.o timer.o layout.o lockfile.o
+	 text.o arrow.o timer.o level.o lockfile.o
 
 ifdef SystemRoot
     CCFLAGS += -D WIN32
-	SFML_PATH=C:\SFML-2.1
-    FLAGS=-Wall -Werror -c -O3 -I$(SFML_PATH)\include
-    LIBS=-L$(SFML_PATH)\lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+	SFML_PATH=..\..\lib\SFML-2.1
+	LIBJSONCPP_PATH=..\..\lib\jsoncpp
+	FLAGS=-Wall -Werror -c -g -I$(SFML_PATH)/include -I$(LIBJSONCPP_PATH)/include
+	LIBS=-L$(SFML_PATH)/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -L$(LIBJSONCPP_PATH)/lib
 #   DESTDIR="\""C:\Program Files (x86)"\""
 #	ASSETS_DIR="$(DESTDIR)\\$(BIN)\\assets"
 #	HIGHSCORE_DIR=%appdata%\\$(BIN)
@@ -30,8 +31,8 @@ else
 	HOMEDIR := $(shell grep $(USER) /etc/passwd | cut -d ":" -f6)
     ifeq ($(UNAME_S),Linux)
         CCFLAGS += -D LINUX
-        FLAGS=-Wall -Werror -c -O3
-        LIBS=-lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+        FLAGS=-Wall -Werror -c -g -std=c++11 -I/usr/include/jsoncpp
+        LIBS=-lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -ljsoncpp
         DESTDIR=/usr/local
 		ASSETS_DIR="$(DESTDIR)/share/$(BIN)/assets"
 		HIGHSCORE_DIR=$(HOMEDIR)/.$(BIN)
@@ -41,8 +42,8 @@ else
     ifeq ($(UNAME_S),Darwin)
         CCFLAGS += -D OSX
 		SFML_PATH=/usr/local
-        FLAGS=-Wall -Werror -c -O3 -I$(SFML_PATH)/include
-        LIBS=-L$(SFML_PATH)/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+        FLAGS=-Wall -Werror -c -g -I$(SFML_PATH)/include -I$(LIBJSONCPP_PATH)/include
+        LIBS=-L$(SFML_PATH)/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -L$(LIBJSONCPP_PATH)/lib
         DESTDIR=/usr/local
 		ASSETS_DIR="$(DESTDIR)/share/$(BIN)/assets"
 		HIGHSCORE_DIR=$(HOMEDIR)/.$(BIN)
@@ -54,7 +55,7 @@ endif
 all: $(BIN)
 
 $(BIN): $(OBJS)
-	$(CC) -O3 $(OBJS) -o $(BIN) $(LIBS)
+	$(CC) -g $(OBJS) -o $(BIN) $(LIBS)
 
 # ./src/ -------------------------------------
 
@@ -117,10 +118,10 @@ arrow.o: $(IDIR)/arrow.cpp $(IDIR)/arrow.h
 timer.o: $(IDIR)/timer.cpp $(IDIR)/timer.h
 	$(CC) $(FLAGS) $(IDIR)/timer.cpp
 
-# ./src/layout -------------------------------
+# ./src/level -------------------------------
 
-layout.o: $(LDIR)/layout.cpp $(LDIR)/layout.h
-	$(CC) $(FLAGS) $(LDIR)/layout.cpp
+level.o: $(LDIR)/level.cpp $(LDIR)/level.h
+	$(CC) $(FLAGS) $(LDIR)/level.cpp
 
 # ./src/system -------------------------------
 
