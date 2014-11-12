@@ -23,13 +23,14 @@ I upload a new build with every
 
 ##Building
 
-The program requires [SFML](http://www.sfml-dev.org) ( >= 2.0). There are
-detailed instructions on how to install it in their tutorials section.
+The program requires [SFML](http://www.sfml-dev.org) (>= 2.0) and
+[libjsoncpp](https://github.com/open-source-parsers). Check your package
+manager, they seem to be available for most decent distros.
 
 ###Linux
 
-Provided you have SFML installed in a standard place, it should be as easy as
-running:
+Provided you have SFML and libjsoncpp installed in a standard place, it should
+be as easy as running:
 
 ```
 make
@@ -54,15 +55,14 @@ LIBS=-L/usr/local/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 If you have MinGW installed and in your path, you can use the supplied Makefile.
 
 1) Download the [MinGW build](http://sfml-dev.org/download/sfml/2.1/SFML-2.1-windows-gcc-4.7-mingw-32bits.zip) 
-of SFML, and extract it somewhere convinient. I placed mine in C:\
+of SFML, and extract it somewhere convinient. I placed mine in a parent
+directory called 'lib'. Do the same with libjsoncpp.
 
 2) Using cmd.exe, cd in to the directory and run the command:
 
 ```
-mingw32-make SFML_PATH=C:\SFML-2.1
+mingw32-make SFML_PATH=..\lib\SFML-2.1 LIBJSONCPP_PATH=..\lib\jsoncpp
 ```
-
-Replacing 'C:\SFML-2.1' with where ever you extract SFML to.
 
 3) Run the game
 
@@ -76,12 +76,6 @@ directory for now.
 
 ##TODO:
 
-- [x] Add a timer
-
-- [x] Add pause functionality
-
-- [x] Implement lock file
-
-- [ ] Add more layouts
+- [ ] Add more levels
 
 - [ ] Fix [bugs](https://github.com/kirbyman62/platformer/issues)
