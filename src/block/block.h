@@ -22,6 +22,7 @@ class Block
 		sf::RectangleShape _shape;
 		static const sf::Color BLOCK_COLOUR; 
 	public:
+		Block(float, float, float, float);
 		virtual ~Block() { }
 		virtual void handleEvents(float) = 0;
 

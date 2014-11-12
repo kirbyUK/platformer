@@ -17,12 +17,9 @@
 const sf::Color DeathBlock::DEATH_BLOCK_RED = sf::Color(237, 69, 69);
 const float DeathBlock::ANIMATION_TIME = 0.12;
 
-DeathBlock::DeathBlock(float width, float height, float x, float y)
+DeathBlock::DeathBlock(float width, float height, float x, float y) :
+	Block(width, height, x, y)
 {
-	//Create the rectangle:
-	_shape.setSize(sf::Vector2f(width, height));
-	_shape.setPosition(x, y);
-	_shape.setFillColor(BLOCK_COLOUR);
 }
 
 void DeathBlock::handleEvents(float f)

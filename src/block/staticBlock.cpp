@@ -14,10 +14,7 @@
 */
 #include "staticBlock.h"
 
-StaticBlock::StaticBlock(float width, float height, float x, float y)
+StaticBlock::StaticBlock(float width, float height, float x, float y) :
+	Block(width, height, x, y)
 {
-	//Create the rectangle:
-	_shape.setSize(sf::Vector2f(width, height));
-	_shape.setPosition(x, y);
-	_shape.setFillColor(BLOCK_COLOUR);
 }

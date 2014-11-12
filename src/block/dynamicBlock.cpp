@@ -14,14 +14,9 @@
 */
 #include "dynamicBlock.h"
 
-DynamicBlock::DynamicBlock(float width, float height, float x, float y, 
-							MovementType* m)
+DynamicBlock::DynamicBlock(float width, float height, float x, float y,
+	MovementType* m) : Block(width, height, x, y)
 {
-	//Create the rectangle:
-	_shape.setSize(sf::Vector2f(width, height));
-	_shape.setPosition(x, y);
-	_shape.setFillColor(BLOCK_COLOUR);
-
 	//Set the movement type:
 	_movement = m;
 }

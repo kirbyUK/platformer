@@ -16,6 +16,14 @@
 
 const sf::Color Block::BLOCK_COLOUR = sf::Color(242, 241, 235);
 
+Block::Block(float width, float height, float x, float y)
+{
+	//Create the rectangle:
+	_shape.setSize(sf::Vector2f(width, height));
+	_shape.setPosition(x, y);
+	_shape.setFillColor(BLOCK_COLOUR);
+}
+
 //Checks if the player is standing on top of the block:
 bool Block::isPlayerOnTop(sf::Sprite& player) const
 {
