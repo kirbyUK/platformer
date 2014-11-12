@@ -17,6 +17,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
+#include <memory>
 #include "../block/block.h"
 #include "../block/dynamicBlock.h"
 #include "../block/deathBlock.h"
@@ -28,7 +29,7 @@ class Level
 		static const std::string LEVEL_DIR;
 
 		//The level is basically just a vector of blocks:
-		std::vector <Block*> _level;
+		std::vector <std::shared_ptr<Block>> _level;
 
 	public:
 		//Creates all the nessecary level objects:
@@ -51,8 +52,8 @@ class Level
 		std::vector <sf::RectangleShape> getRectangleShapes();
 
 		//Gets every [x]Block:
-		std::vector <DynamicBlock*> getDynamicBlocks();
-		std::vector <DeathBlock*> getDeathBlocks();
+		std::vector <std::shared_ptr<DynamicBlock>> getDynamicBlocks();
+		std::vector <std::shared_ptr<DeathBlock>> getDeathBlocks();
 };
 
 #endif

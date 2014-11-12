@@ -66,9 +66,9 @@ std::vector <Level> Level::init()
 		std::sort(filepaths.begin(), filepaths.end());
 
 		//Make the levels:
-		for(auto i = filepaths.begin(); i != filepaths.end(); i++)
+		for(auto& i : filepaths)
 		{
-			Level level(*i);
+			Level level(i);
 			levels.push_back(level);
 		}
 	}
@@ -82,13 +82,6 @@ std::vector <Level> Level::init()
 		for(auto j = i->begin(); j != i->end(); i++)
 			delete *j;
 }*/
-
-Level::~Level()
-{
-	std::cout << "Deleting level: " << this << std::endl;
-	for(auto& i : _level)
-		delete i;
-}
 
 //Shuffles the array of levels, and returns the front element:
 Level* Level::shuffle(std::vector <Level>& v)
@@ -126,7 +119,7 @@ Level::Level(std::string filename)
 		//Make a StaticBlock:
 		if(type == "static")
 		{
-			StaticBlock* b = new StaticBlock(
+			std::shared_ptr <Block> b = std::make_shared <StaticBlock>(
 				i.get("width", 0).asFloat(),
 				i.get("height", 0).asFloat(),
 				i.get("x", 0).asFloat(),
@@ -183,7 +176,7 @@ Level::Level(std::string filename)
 			}
 
 			//Now make the actual block:
-			DynamicBlock* b = new DynamicBlock(
+			std::shared_ptr <Block> b = std::make_shared <DynamicBlock>(
 				i.get("width", 0).asFloat(),
 				i.get("height", 0).asFloat(),
 				i.get("x", 0).asFloat(),
@@ -195,7 +188,7 @@ Level::Level(std::string filename)
 		//Make a DeathBlock:
 		else if(type == "death")
 		{
-			DeathBlock* b = new DeathBlock(
+			std::shared_ptr <Block> b = std::make_shared <DeathBlock>(
 				i.get("width", 0).asFloat(),
 				i.get("height", 0).asFloat(),
 				i.get("x", 0).asFloat(),
@@ -208,6 +201,13 @@ Level::Level(std::string filename)
 			//error lol
 		}
 	}
+}
+
+Level::~Level()
+{
+	std::cout << "Deleting level: " << this << std::endl;
+//	for(auto& i : _level)
+//		delete i;
 }
 
 //Handles events for all blocks:
@@ -227,12 +227,13 @@ std::vector <sf::RectangleShape> Level::getRectangleShapes()
 }
 
 //Returns every DynamicBlock:
-std::vector <DynamicBlock*> Level::getDynamicBlocks()
+std::vector <std::shared_ptr <DynamicBlock>> Level::getDynamicBlocks()
 {
-	std::vector <DynamicBlock*> blocks;
+	std::vector <std::shared_ptr<DynamicBlock>> blocks;
 	for(auto& i : _level)
 	{
-		DynamicBlock* b = dynamic_cast <DynamicBlock*>(i);
+		std::shared_ptr<DynamicBlock> b =
+			std::dynamic_pointer_cast<DynamicBlock>(i);
 		if(b != NULL)
 			blocks.push_back(b);
 	}
@@ -240,12 +241,13 @@ std::vector <DynamicBlock*> Level::getDynamicBlocks()
 }
 
 //Returns every DynamicBlock:
-std::vector <DeathBlock*> Level::getDeathBlocks()
+std::vector <std::shared_ptr <DeathBlock>> Level::getDeathBlocks()
 {
-	std::vector <DeathBlock*> blocks;
+	std::vector <std::shared_ptr<DeathBlock>> blocks;
 	for(auto &i : _level)
 	{
-		DeathBlock* b = dynamic_cast <DeathBlock*>(i);
+		std::shared_ptr<DeathBlock> b =
+			std::dynamic_pointer_cast<DeathBlock>(i);
 		if(b != NULL)
 			blocks.push_back(b);
 	}
