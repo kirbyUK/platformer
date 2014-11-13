@@ -16,16 +16,17 @@
 #define DYNAMIC_BLOCK_H
 #include "block.h"
 #include "../movement/movementType.h"
+#include <memory>
 
 class DynamicBlock : public Block
 {
 	private:
-		MovementType* _movement;
+		std::shared_ptr <MovementType> _movement;
 
 	public:
 		//Constructor, takes the width, height, initial x/y co-ordinates and
 		//the movement type:
-		DynamicBlock(float, float, float, float, MovementType*);
+		DynamicBlock(float, float, float, float, std::shared_ptr <MovementType>);
 		~DynamicBlock();
 
 		void handleEvents(float);

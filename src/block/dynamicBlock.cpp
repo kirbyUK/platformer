@@ -15,7 +15,7 @@
 #include "dynamicBlock.h"
 
 DynamicBlock::DynamicBlock(float width, float height, float x, float y,
-	MovementType* m) : Block(width, height, x, y)
+	std::shared_ptr <MovementType> m) : Block(width, height, x, y)
 {
 	//Set the movement type:
 	_movement = m;
@@ -23,7 +23,7 @@ DynamicBlock::DynamicBlock(float width, float height, float x, float y,
 
 DynamicBlock::~DynamicBlock()
 {
-	delete _movement;
+//	delete _movement;
 }
 
 void DynamicBlock::handleEvents(float frameTime)

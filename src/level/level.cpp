@@ -17,7 +17,7 @@
 #include <algorithm>
 #include <cmath>
 #include <dirent.h>
-#include <json/json.h>
+#include <jsoncpp/json/json.h>
 #include "../block/staticBlock.h"
 #include "../movement/movementType.h"
 #include "../movement/leftRight.h"
@@ -136,37 +136,37 @@ Level::Level(std::string filename)
 			{
 				//error lol
 			}
-			MovementType* m = NULL;
-			std::string m_type = movement.get("type", "none").asString();
-			if(type == "LeftRight")
+			std::shared_ptr <MovementType> m = NULL;
+			std::string movement_type = movement.get("type", "none").asString();
+			if(movement_type == "LeftRight")
 			{
-				m = new LeftRight(
-					i.get("velocity", 0).asFloat(),
-					i.get("boundary1", 0).asFloat(),
-					i.get("boundary2", 0).asFloat()
+				m = std::make_shared <LeftRight>(
+					movement.get("velocity", 0).asFloat(),
+					movement.get("boundary1", 0).asFloat(),
+					movement.get("boundary2", 0).asFloat()
 				);
 			}
-			else if(type == "UpDown")
+			else if(movement_type == "UpDown")
 			{
-				m = new UpDown(
-					i.get("velocity", 0).asFloat(),
-					i.get("boundary1", 0).asFloat(),
-					i.get("boundary2", 0).asFloat()
+				m = std::make_shared <UpDown>(
+					movement.get("velocity", 0).asFloat(),
+					movement.get("boundary1", 0).asFloat(),
+					movement.get("boundary2", 0).asFloat()
 				);
 			}
-			else if(type == "Square")
+			else if(movement_type == "Square")
 			{
 				sf::Vector2i start(
-					i.get("startx", 0).asInt(),
-					i.get("starty", 0).asInt()
+					movement.get("startx", 0).asInt(),
+					movement.get("starty", 0).asInt()
 				);
-				m = new Square(
-					i.get("velocity", 0).asFloat(),
-					i.get("x", 0).asFloat(),
-					i.get("y", 0).asFloat(),
-					i.get("width", 0).asFloat(),
-					i.get("height", 0).asFloat(),
-					static_cast <Direction>(i.get("direction", 0).asFloat()),
+				m = std::make_shared <Square>(
+					movement.get("velocity", 0).asFloat(),
+					movement.get("x", 0).asFloat(),
+					movement.get("y", 0).asFloat(),
+					movement.get("width", 0).asFloat(),
+					movement.get("height", 0).asFloat(),
+					static_cast <Direction>(movement.get("direction", 0).asFloat()),
 					start
 				);
 			}
@@ -205,7 +205,6 @@ Level::Level(std::string filename)
 
 Level::~Level()
 {
-	std::cout << "Deleting level: " << this << std::endl;
 //	for(auto& i : _level)
 //		delete i;
 }
