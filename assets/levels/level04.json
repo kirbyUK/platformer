@@ -1,23 +1,23 @@
 [
    {
+      "x" : 157,
       "y" : 150,
       "width" : 57,
-      "type" : "static",
-      "x" : 157,
-      "height" : 25
+      "height" : 25,
+      "type" : "static"
    },
    {
+      "y" : 120,
+      "width" : 57,
       "height" : 25,
       "x" : 271,
-      "type" : "static",
-      "width" : 57,
-      "y" : 120
+      "type" : "static"
    },
    {
       "y" : 150,
       "width" : 57,
-      "type" : "static",
+      "height" : 25,
       "x" : 385,
-      "height" : 25
+      "type" : "static"
    }
 ]

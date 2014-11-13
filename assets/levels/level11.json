@@ -1,0 +1,37 @@
+[
+   {
+      "width" : 30,
+      "y" : 150,
+      "height" : 30,
+      "x" : 141.5,
+      "type" : "static"
+   },
+   {
+      "x" : 213.6,
+      "height" : 30,
+      "width" : 30,
+      "y" : 190,
+      "type" : "static"
+   },
+   {
+      "type" : "static",
+      "x" : 285.2,
+      "y" : 150,
+      "width" : 30,
+      "height" : 30
+   },
+   {
+      "type" : "static",
+      "height" : 30,
+      "y" : 110,
+      "width" : 30,
+      "x" : 356.8
+   },
+   {
+      "type" : "static",
+      "width" : 30,
+      "y" : 150,
+      "height" : 30,
+      "x" : 428.4
+   }
+]

@@ -1,38 +1,38 @@
 [
    {
-      "y" : 150,
       "type" : "dynamic",
-      "width" : 80,
-      "x" : 125,
       "movement" : {
          "width" : 82.5,
+         "direction" : 1,
          "startx" : 0,
          "y" : 150,
          "velocity" : 160,
+         "height" : 120,
          "starty" : -1,
          "x" : 125,
-         "type" : "Square",
-         "direction" : 1,
-         "height" : 120
+         "type" : "Square"
       },
-      "height" : 25
+      "height" : 25,
+      "y" : 150,
+      "width" : 80,
+      "x" : 125
    },
    {
-      "x" : 395,
-      "height" : 25,
       "movement" : {
-         "velocity" : 160,
-         "starty" : 1,
-         "x" : 312.5,
+         "direction" : 1,
          "width" : 82.5,
          "startx" : 0,
+         "x" : 312.5,
+         "starty" : 1,
+         "velocity" : 160,
          "y" : 30,
-         "direction" : 1,
          "height" : 120,
          "type" : "Square"
       },
+      "type" : "dynamic",
+      "x" : 395,
       "y" : 150,
       "width" : 80,
-      "type" : "dynamic"
+      "height" : 25
    }
 ]

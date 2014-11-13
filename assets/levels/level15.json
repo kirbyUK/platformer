@@ -1,0 +1,41 @@
+[
+   {
+      "y" : 150,
+      "width" : 50,
+      "height" : 320,
+      "x" : 162.5,
+      "type" : "dynamic",
+      "movement" : {
+         "velocity" : 125,
+         "type" : "UpDown",
+         "boundary2" : 100,
+         "boundary1" : 200
+      }
+   },
+   {
+      "type" : "dynamic",
+      "movement" : {
+         "boundary2" : 80,
+         "boundary1" : 180,
+         "type" : "UpDown",
+         "velocity" : 139
+      },
+      "height" : 320,
+      "y" : 150,
+      "width" : 50,
+      "x" : 275
+   },
+   {
+      "type" : "dynamic",
+      "movement" : {
+         "velocity" : 121,
+         "boundary1" : 234,
+         "boundary2" : 97,
+         "type" : "UpDown"
+      },
+      "width" : 50,
+      "y" : 201,
+      "height" : 320,
+      "x" : 387.5
+   }
+]

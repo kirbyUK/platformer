@@ -1,0 +1,44 @@
+[
+   {
+      "type" : "static",
+      "width" : 45,
+      "y" : 150,
+      "height" : 250,
+      "x" : 170
+   },
+   {
+      "y" : 110,
+      "width" : 45,
+      "height" : 290,
+      "x" : 277.5,
+      "type" : "static"
+   },
+   {
+      "x" : 385,
+      "width" : 45,
+      "y" : 150,
+      "height" : 250,
+      "type" : "static"
+   },
+   {
+      "type" : "static",
+      "x" : 170,
+      "height" : 100,
+      "width" : 45,
+      "y" : 0
+   },
+   {
+      "y" : 0,
+      "width" : 45,
+      "height" : 60,
+      "x" : 277.5,
+      "type" : "static"
+   },
+   {
+      "x" : 385,
+      "y" : 0,
+      "width" : 45,
+      "height" : 100,
+      "type" : "static"
+   }
+]

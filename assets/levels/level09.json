@@ -1,22 +1,22 @@
 [
    {
-      "y" : 150,
       "type" : "static",
-      "width" : 50,
       "x" : 275,
+      "y" : 150,
+      "width" : 50,
       "height" : 250
    },
    {
+      "type" : "dynamic",
       "movement" : {
-         "boundary2" : 395,
-         "type" : "LeftRight",
          "velocity" : 175,
-         "boundary1" : 125
+         "boundary2" : 395,
+         "boundary1" : 125,
+         "type" : "LeftRight"
       },
       "height" : 25,
-      "x" : 260,
-      "type" : "dynamic",
       "width" : 80,
-      "y" : 200
+      "y" : 200,
+      "x" : 260
    }
 ]

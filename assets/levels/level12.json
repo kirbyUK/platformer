@@ -1,0 +1,23 @@
+[
+   {
+      "type" : "static",
+      "x" : 137,
+      "height" : 25,
+      "y" : 150,
+      "width" : 77
+   },
+   {
+      "type" : "static",
+      "height" : 25,
+      "y" : 150,
+      "width" : 77,
+      "x" : 365
+   },
+   {
+      "y" : 150,
+      "width" : 77,
+      "height" : 25,
+      "x" : 251,
+      "type" : "death"
+   }
+]
