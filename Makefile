@@ -31,7 +31,7 @@ else
 	HOMEDIR := $(shell grep $(USER) /etc/passwd | cut -d ":" -f6)
     ifeq ($(UNAME_S),Linux)
         CCFLAGS += -D LINUX
-        FLAGS=-Wall -Werror -c -g -std=c++11 -I/usr/include/jsoncpp
+        FLAGS=-Wall -Werror -c -g -std=c++11
         LIBS=-lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -ljsoncpp
         DESTDIR=/usr/local
 		ASSETS_DIR="$(DESTDIR)/share/$(BIN)/assets"
