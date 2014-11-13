@@ -1,0 +1,15 @@
+[
+   {
+      "y" : 150,
+      "width" : 80,
+      "type" : "dynamic",
+      "x" : 150,
+      "height" : 25,
+      "movement" : {
+         "type" : "LeftRight",
+         "boundary2" : 380,
+         "boundary1" : 120,
+         "velocity" : 150
+      }
+   }
+]

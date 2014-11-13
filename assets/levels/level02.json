@@ -1,16 +1,16 @@
 [
    {
       "width" : 50,
+      "type" : "static",
       "y" : 150,
-      "x" : 200,
       "height" : 250,
-      "type" : "static"
+      "x" : 200
    },
    {
-      "x" : 350,
+      "width" : 50,
       "type" : "static",
-      "height" : 250,
       "y" : 150,
-      "width" : 50
+      "height" : 250,
+      "x" : 350
    }
 ]

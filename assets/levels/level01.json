@@ -1,9 +1,9 @@
 [
    {
       "x" : 150,
-      "type" : "static",
       "height" : 100,
       "y" : 150,
+      "type" : "static",
       "width" : 300
    }
 ]

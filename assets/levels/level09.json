@@ -1,0 +1,22 @@
+[
+   {
+      "y" : 150,
+      "type" : "static",
+      "width" : 50,
+      "x" : 275,
+      "height" : 250
+   },
+   {
+      "movement" : {
+         "boundary2" : 395,
+         "type" : "LeftRight",
+         "velocity" : 175,
+         "boundary1" : 125
+      },
+      "height" : 25,
+      "x" : 260,
+      "type" : "dynamic",
+      "width" : 80,
+      "y" : 200
+   }
+]
