@@ -1,0 +1,28 @@
+[
+   {
+      "width" : 80,
+      "y" : 70,
+      "movement" : {
+         "velocity" : 150,
+         "boundary2" : 70,
+         "type" : "UpDown",
+         "boundary1" : 230
+      },
+      "x" : 180,
+      "height" : 25,
+      "type" : "dynamic"
+   },
+   {
+      "width" : 80,
+      "y" : 230,
+      "type" : "dynamic",
+      "height" : 25,
+      "movement" : {
+         "type" : "UpDown",
+         "boundary1" : 230,
+         "velocity" : 150,
+         "boundary2" : 70
+      },
+      "x" : 340
+   }
+]

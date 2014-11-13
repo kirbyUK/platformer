@@ -1,0 +1,16 @@
+[
+   {
+      "x" : 180,
+      "type" : "static",
+      "height" : 25,
+      "y" : 150,
+      "width" : 80
+   },
+   {
+      "x" : 340,
+      "type" : "static",
+      "height" : 25,
+      "y" : 150,
+      "width" : 80
+   }
+]

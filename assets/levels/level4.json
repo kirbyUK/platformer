@@ -1,0 +1,23 @@
+[
+   {
+      "width" : 57,
+      "x" : 157,
+      "type" : "static",
+      "height" : 25,
+      "y" : 150
+   },
+   {
+      "x" : 271,
+      "type" : "static",
+      "height" : 25,
+      "y" : 120,
+      "width" : 57
+   },
+   {
+      "x" : 385,
+      "type" : "static",
+      "height" : 25,
+      "y" : 150,
+      "width" : 57
+   }
+]
