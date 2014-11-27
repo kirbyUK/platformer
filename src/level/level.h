@@ -18,6 +18,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <exception>
 #include "../block/block.h"
 #include "../block/dynamicBlock.h"
 #include "../block/deathBlock.h"
@@ -30,6 +31,17 @@ class Level
 
 		//The level is basically just a vector of blocks:
 		std::vector <std::shared_ptr<Block>> _level;
+
+		//An exception class for if we fail to read the level correctly:
+		class LevelError : public std::exception
+		{
+			private:
+				std::string _error;
+
+			public:
+				LevelError(std::string e) { _error = e; }
+				virtual const char* what() const throw() { return _error.c_str(); }
+		};
 
 	public:
 		//Creates all the nessecary level objects:

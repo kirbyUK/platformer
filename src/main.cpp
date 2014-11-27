@@ -14,6 +14,9 @@
 */
 #include <vector>
 #include <array>
+#include <iostream>
+#include <exception>
+#include <system_error>
 #include <cstdlib>
 #include <ctime>
 #include <SFML/Graphics.hpp>
@@ -34,23 +37,23 @@ int main()
 {
 	//Attempt to load all the nessecary files:
 	if(! Player::init())
-		return -1;
+		exit(EXIT_FAILURE);
 
 	if(! SoundEffect::init())
-		return -1;
+		exit(EXIT_FAILURE);
 
 	if(! Music::init())
-		return -1;
+		exit(EXIT_FAILURE);
 
 	if(! Text::init())
-		return -1;
+		exit(EXIT_FAILURE);
 
 	if(! Arrow::init())
-		return -1;
+		exit(EXIT_FAILURE);
 
 	//Create the lockfile:
 //	if(! createLockfile())
-//		return -1;
+//		exit(EXIT_FAILURE);
 
 	//Seed the random number generator:
 	std::srand(unsigned(std::time(0)));
@@ -100,8 +103,24 @@ int main()
 	//The master levels vector, containing all possible combinations of blocks
 	//that go in the middle. A pointer is used to reference the currently 
 	//selected layout:
-	std::vector <Level> levels = Level::init();
-	Level* level = &levels.front();
+	std::vector <Level> levels;
+	Level* level = NULL;
+	try
+	{
+		levels = Level::init();
+		level = &levels.front();
+	}
+	catch(std::system_error& err)
+	{
+		std::cerr << "Error: " << err.code() << " - " << err.what() << std::endl;
+		//removeLockfile();
+		exit(EXIT_FAILURE);
+	}
+	catch(std::exception& err)
+	{
+		std::cerr << "Error: " << err.what() << std::endl;
+		exit(EXIT_FAILURE);
+	}
 
 	while(window.isOpen())
 	{
@@ -113,7 +132,7 @@ int main()
 				//Write highscore to file if needed:
 				if(p.getScore() > p.getHighScore())
 					if(! p.writeScoreToFile())
-						return -1;
+						exit(EXIT_FAILURE);
 
 				window.close();
 			}
@@ -138,7 +157,7 @@ int main()
 				if(! pause(&window, event, false))
 					if(p.getScore() > p.getHighScore())
 						if(! p.writeScoreToFile())
-							return -1;
+							exit(EXIT_FAILURE);
 
 				music.resume();
 				delayTotal += delay.getElapsedTime().asSeconds();
@@ -161,7 +180,7 @@ int main()
 			if(! pause(&window, event, true))
 				if(p.getScore() > p.getHighScore())
 					if(! p.writeScoreToFile())
-						return -1;
+						exit(EXIT_FAILURE);
 
 			music.resume();
 			delayTotal += delay.getElapsedTime().asSeconds();
@@ -233,7 +252,7 @@ int main()
 			//Write highscore to file if needed:
 			if(p.getScore() > p.getHighScore())
 				if(! p.writeScoreToFile())
-					return -1;
+					exit(EXIT_FAILURE);
 
 			delay.restart();
 			if(gameOver(&window, event, p.getScore(), p.getHighScore()))

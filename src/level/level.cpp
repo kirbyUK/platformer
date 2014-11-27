@@ -16,6 +16,8 @@
 #include <fstream>
 #include <algorithm>
 #include <cmath>
+#include <system_error>
+#include <cerrno>
 #include <dirent.h>
 #include <jsoncpp/json/json.h>
 #include "../block/staticBlock.h"
@@ -44,9 +46,7 @@ std::vector <Level> Level::init()
 	std::vector <Level> levels;
 	DIR* dir = opendir(LEVEL_DIR.c_str());
 	if(dir == NULL)
-	{
-		//throw error
-	}
+		throw std::system_error(errno, std::system_category());
 	else
 	{
 		std::vector <std::string> filepaths;
@@ -107,9 +107,7 @@ Level::Level(std::string filename)
 	Json::Reader reader;
 	Json::Value root;
 	if(! reader.parse(in, root))
-	{
-		//error lol
-	}
+		throw LevelError("Failed to parse JSON data for '" + filename + "'");
 
 	for(auto& i : root)
 	{
@@ -134,7 +132,8 @@ Level::Level(std::string filename)
 			Json::Value movement = i.get("movement", Json::Value());
 			if(movement.empty())
 			{
-				//error lol
+				throw LevelError("Failed to parse '" + filename + 
+					"': Empty movement object");
 			}
 			std::shared_ptr <MovementType> m = NULL;
 			std::string movement_type = movement.get("type", "none").asString();
@@ -172,7 +171,8 @@ Level::Level(std::string filename)
 			}
 			else
 			{
-				//error lol
+				throw LevelError("Failed to parse '" + filename +
+					"': Unknown movement type");
 			}
 
 			//Now make the actual block:
@@ -198,7 +198,8 @@ Level::Level(std::string filename)
 		}
 		else
 		{
-			//error lol
+			throw LevelError("Failed to parse '" + filename +
+				"': Unknown block type");
 		}
 	}
 }
