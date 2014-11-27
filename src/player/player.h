@@ -15,6 +15,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <SFML/Graphics.hpp>
+#include <memory>
 #include <string>
 #include "../sound/sfx.h"
 #include "../block/dynamicBlock.h"
@@ -87,9 +88,9 @@ class Player
 		void setMaxJumpHeight(float, float);
 
 		//Signal the player to move in the given direction:
-		void move(float); 			//Handles y-direction movement.
-		void move(Direction, float);//Handles x-direction movement.
-		void move(DynamicBlock*);	//Handles movement from a DynamicBlock.
+		void move(float); 							//Handles y-direction movement.
+		void move(Direction, float);				//Handles x-direction movement.
+		void move(std::shared_ptr <DynamicBlock>);	//Handles movement from a DynamicBlock.
 
 		//Process events at the end of the frame:
 		void handleCollision(sf::RectangleShape);

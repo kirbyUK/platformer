@@ -192,7 +192,7 @@ void Player::move(Direction d, float frameTime)
 }
 
 //Gives a distance to offset the movement by, given by a DynamicBlock:
-void Player::move(DynamicBlock* b)
+void Player::move(std::shared_ptr <DynamicBlock> b)
 {
 	//If the player is just standing on top of the block, then we can move
 	//it as normal:
