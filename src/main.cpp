@@ -52,8 +52,8 @@ int main()
 		exit(EXIT_FAILURE);
 
 	//Create the lockfile:
-//	if(! createLockfile())
-//		exit(EXIT_FAILURE);
+	if(! createLockfile())
+		exit(EXIT_FAILURE);
 
 	//Seed the random number generator:
 	std::srand(unsigned(std::time(0)));
@@ -113,12 +113,13 @@ int main()
 	catch(std::system_error& err)
 	{
 		std::cerr << "Error: " << err.code() << " - " << err.what() << std::endl;
-		//removeLockfile();
+		removeLockfile();
 		exit(EXIT_FAILURE);
 	}
 	catch(std::exception& err)
 	{
 		std::cerr << "Error: " << err.what() << std::endl;
+		removeLockfile();
 		exit(EXIT_FAILURE);
 	}
 
@@ -131,8 +132,13 @@ int main()
 			{
 				//Write highscore to file if needed:
 				if(p.getScore() > p.getHighScore())
+				{
 					if(! p.writeScoreToFile())
+					{
+						removeLockfile();
 						exit(EXIT_FAILURE);
+					}
+				}
 
 				window.close();
 			}
@@ -155,9 +161,16 @@ int main()
 
 				//Write highscore to file if needed:
 				if(! pause(&window, event, false))
+				{
 					if(p.getScore() > p.getHighScore())
+					{
 						if(! p.writeScoreToFile())
+						{
+							removeLockfile();
 							exit(EXIT_FAILURE);
+						}
+					}
+				}
 
 				music.resume();
 				delayTotal += delay.getElapsedTime().asSeconds();
@@ -178,9 +191,16 @@ int main()
 
 			//Write highscore to file if needed:
 			if(! pause(&window, event, true))
+			{
 				if(p.getScore() > p.getHighScore())
+				{
 					if(! p.writeScoreToFile())
+					{
+						removeLockfile();
 						exit(EXIT_FAILURE);
+					}
+				}
+			}
 
 			music.resume();
 			delayTotal += delay.getElapsedTime().asSeconds();
@@ -251,8 +271,13 @@ int main()
 
 			//Write highscore to file if needed:
 			if(p.getScore() > p.getHighScore())
+			{
 				if(! p.writeScoreToFile())
+				{
+					removeLockfile();
 					exit(EXIT_FAILURE);
+				}
+			}
 
 			delay.restart();
 			if(gameOver(&window, event, p.getScore(), p.getHighScore()))
@@ -287,6 +312,6 @@ int main()
 		frameTime = frameTimer.restart().asSeconds() - delayTotal;
 		delayTotal = 0.0;
 	}
-	//removeLockfile();
+	removeLockfile();
 	return 0;
 }
