@@ -21,11 +21,6 @@ DynamicBlock::DynamicBlock(float width, float height, float x, float y,
 	_movement = m;
 }
 
-DynamicBlock::~DynamicBlock()
-{
-//	delete _movement;
-}
-
 void DynamicBlock::handleEvents(float frameTime)
 {
 	_movement->handleEvents(_shape, frameTime);

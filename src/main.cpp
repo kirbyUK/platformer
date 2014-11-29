@@ -178,8 +178,6 @@ int main()
 		}
 
 		//Handle the block events:
-//		for(unsigned int i = 0; i < layout->size(); i++)
-//			layout->at(i)->handleEvents(frameTime);
 		level->handleEvents(frameTime);
 
 		//Handle keypresses:

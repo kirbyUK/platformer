@@ -27,7 +27,6 @@ class DynamicBlock : public Block
 		//Constructor, takes the width, height, initial x/y co-ordinates and
 		//the movement type:
 		DynamicBlock(float, float, float, float, std::shared_ptr <MovementType>);
-		~DynamicBlock();
 
 		void handleEvents(float);
 

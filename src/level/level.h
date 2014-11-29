@@ -50,12 +50,8 @@ class Level
 		//Shuffles the array of levels, returns the front one:
 		static Level* shuffle(std::vector <Level>&);
 
-		//Deletes all the levels:
-//		static void cleanup(std::vector <Level>&);
-
 		//Creates the individual level object, with the given filename:
 		Level(std::string);
-		~Level();
 
 		//Handles events for all blocks:
 		void handleEvents(float);

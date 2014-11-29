@@ -75,14 +75,6 @@ std::vector <Level> Level::init()
 	return levels;
 }
 
-//Deletes all the dynamically-allocated blocks:
-/*void Level::cleanup(std::vector <Level>& v)
-{
-	for(auto i = v.begin(); i != v.end(); i++)
-		for(auto j = i->begin(); j != i->end(); i++)
-			delete *j;
-}*/
-
 //Shuffles the array of levels, and returns the front element:
 Level* Level::shuffle(std::vector <Level>& v)
 {
@@ -202,12 +194,6 @@ Level::Level(std::string filename)
 				"': Unknown block type");
 		}
 	}
-}
-
-Level::~Level()
-{
-//	for(auto& i : _level)
-//		delete i;
 }
 
 //Handles events for all blocks:
