@@ -17,7 +17,7 @@ ifdef SystemRoot
 	SFML_PATH=..\..\lib\SFML-2.1
 	LIBJSONCPP_PATH=..\..\lib\jsoncpp
 	FLAGS=-Wall -Werror -c -g -I$(SFML_PATH)/include -I$(LIBJSONCPP_PATH)/include -std=c++11
-	LIBS=-L$(SFML_PATH)/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -L$(LIBJSONCPP_PATH)/lib
+	LIBS=-L$(SFML_PATH)/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -L$(LIBJSONCPP_PATH)/lib -ljsoncpp
 #   DESTDIR="\""C:\Program Files (x86)"\""
 #	ASSETS_DIR="$(DESTDIR)\\$(BIN)\\assets"
 #	HIGHSCORE_DIR=%appdata%\\$(BIN)

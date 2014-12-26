@@ -19,7 +19,6 @@
 #include <system_error>
 #include <cerrno>
 #include <dirent.h>
-#include <jsoncpp/json/json.h>
 #include "../block/staticBlock.h"
 #include "../movement/movementType.h"
 #include "../movement/leftRight.h"
@@ -33,9 +32,11 @@
 #endif
 
 #ifdef _WIN32
+	#include <json/json.h>
 	const std::string Level::LEVEL_DIR = (
 		static_cast <std::string>(ASSETS) + "\\levels\\");
 #else
+	#include <jsoncpp/json/json.h>
 	const std::string Level::LEVEL_DIR = (
 		static_cast <std::string>(ASSETS) + "/levels/");
 #endif
