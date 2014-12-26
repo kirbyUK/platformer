@@ -61,7 +61,7 @@ directory called 'lib'. Do the same with libjsoncpp.
 2) Using cmd.exe, cd in to the directory and run the command:
 
 ```
-mingw32-make SFML_PATH=..\lib\SFML-2.1 LIBJSONCPP_PATH=..\lib\jsoncpp
+mingw32-make SFML_PATH=..\lib\SFML-2.1 JSONCPP_PATH=..\lib\jsoncpp
 ```
 
 3) Run the game
