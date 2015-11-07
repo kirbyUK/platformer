@@ -1,6 +1,6 @@
 #platformer
 
-![preview](https://raw.github.com/kirbyman62/platformer/master/preview.png)
+![preview](https://raw.github.com/kirbyUK/platformer/master/preview.png)
 
 An exceedingly simple platformer game because I needed to make something I can 
 actually finish. SFML2 and C++ as always.
@@ -11,20 +11,20 @@ side of the screen. What's in between those two pillars changes every time.
 ##Downloads
 
 I upload a new build with every 
-[release](https://github.com/kirbyman62/platformer/releases).
+[release](https://github.com/kirbyUK/platformer/releases).
 
 **Windows**:
-[32-bit](https://github.com/kirbyman62/platformer/releases/download/v1.1/platformer_win32-1.1.zip)
+[32-bit](https://github.com/kirbyUK/platformer/releases/download/v1.1/platformer_win32-1.1.zip)
 
 **Debian**:
-[32-bit](https://github.com/kirbyman62/platformer/releases/download/v1.1/platformer_1.1-1_i386.deb)
+[32-bit](https://github.com/kirbyUK/platformer/releases/download/v1.1/platformer_1.1-1_i386.deb)
 |
-[64-bit](https://github.com/kirbyman62/platformer/releases/download/v1.1/platformer_1.1-1_amd64.deb)
+[64-bit](https://github.com/kirbyUK/platformer/releases/download/v1.1/platformer_1.1-1_amd64.deb)
 
 ##Building
 
 The program requires [SFML](http://www.sfml-dev.org) (>= 2.0) and
-[libjsoncpp](https://github.com/open-source-parsers). Check your package
+[libjsoncpp](https://github.com/open-source-parsers/jsoncpp). Check your package
 manager, they seem to be available for most decent distros.
 
 ###Linux
@@ -78,4 +78,4 @@ directory for now.
 
 - [ ] Add more levels
 
-- [ ] Fix [bugs](https://github.com/kirbyman62/platformer/issues)
+- [ ] Fix [bugs](https://github.com/kirbyUK/platformer/issues)
