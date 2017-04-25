@@ -36,7 +36,13 @@
 	const std::string Level::LEVEL_DIR = (
 		static_cast <std::string>(ASSETS) + "\\levels\\");
 #else
-	#include <jsoncpp/json/json.h>
+	#if __has_include(<jsoncpp/json/json.h>)
+		#include <jsoncpp/json/json.h>
+	#elif __has_include(<json/json.h>)
+		#include <json/json.h>
+	#else
+		#error Lib jsoncpp header not found
+	#endif
 	const std::string Level::LEVEL_DIR = (
 		static_cast <std::string>(ASSETS) + "/levels/");
 #endif

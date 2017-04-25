@@ -27,7 +27,7 @@ ifdef SystemRoot
 	LOCKFILE="lockfile"
 else
     UNAME_S := $(shell uname -s)
-	USER := $(shell logname)
+	USER := $(shell whoami)
 	HOMEDIR := $(shell grep $(USER) /etc/passwd | cut -d ":" -f6)
     ifeq ($(UNAME_S),Linux)
         CCFLAGS += -D LINUX

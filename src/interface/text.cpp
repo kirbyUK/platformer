@@ -49,7 +49,7 @@ Text::Text(std::string string, unsigned int charSize, Corner corner,
 {
 	_text.setFont(_font);
 	_text.setCharacterSize(charSize);
-	_text.setColor(TEXT_COLOUR);
+	_text.setFillColor(TEXT_COLOUR);
 	_string = string;
 
 	//Set the string premptively so we can get the size:
@@ -81,7 +81,7 @@ Text::Text(unsigned int charSize, float x, float y)
 {
 	_text.setFont(_font);
 	_text.setCharacterSize(charSize);
-	_text.setColor(TEXT_COLOUR);
+	_text.setFillColor(TEXT_COLOUR);
 	_text.setPosition(x, y);
 }
 
